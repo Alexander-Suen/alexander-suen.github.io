@@ -1,7 +1,7 @@
 
 # Alexander Suen's Academic GitHub Personal Webpage
 
-Welcome to my academic GitHub personal webpage repository! This repository serves as the source code and content for my personal webpage showcasing my academic achievements, projects, and interests.
+Welcome to my academic GitHub personal webpage repository! This repository serves as the source code and content for my personal webpage showcasing my academic achievements, projects, and interests. See [My Homepage](https://alexander-suen.github.io/).
 
 ## Table of Contents
 - [About Me](#about-me)
