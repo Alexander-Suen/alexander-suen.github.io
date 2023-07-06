@@ -7,9 +7,9 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Alex-Suen"
+title                    : "Alexander Suen"
 title_separator          : "-"
-name                     : &name "Alexander Suen"
+name                     : &name "Alexander Suen??"
 description              : &description "personal description"
 url                      : https://alexander-suen.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"

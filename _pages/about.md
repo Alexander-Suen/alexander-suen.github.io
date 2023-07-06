@@ -1,6 +1,6 @@
 ---
 permalink: /
-title:  "Alexander Suen"
+title:  "Alex Suen"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
