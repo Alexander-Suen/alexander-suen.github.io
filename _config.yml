@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Alexander Suen"
+title                    : "Alex-Suen"
 title_separator          : "-"
 name                     : &name "Alexander Suen"
 description              : &description "personal description"
@@ -80,9 +80,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "Alexander Suen (Minghao Sun)"
+  name             : "Alexander Suen"
   avatar           : "profile_sun.jpg"
-  bio              : "An undergraduate in Zhejiang University"
+  bio              : "Undergraduate"
   location         : "Hangzhou, China"
   employer         :
   pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
