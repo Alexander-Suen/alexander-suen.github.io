@@ -9,11 +9,11 @@
 locale                   : "en-US"
 title                    : "Alexander Suen"
 title_separator          : "-"
-name                     : &name "Your Name"
+name                     : &name "Alexander Suen"
 description              : &description "personal description"
 url                      : https://alexander-suen.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
-repository               : "academicpages/academicpages.github.io"
+repository               : "alexander-suen/alexander-suen.github.io"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
@@ -80,7 +80,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "Alexander Suen"
+  name             : "Alexander Suen (Minghao Sun)"
   avatar           : "profile_sun.jpg"
   bio              : "An undergraduate in Zhejiang University"
   location         : "Hangzhou, China"
