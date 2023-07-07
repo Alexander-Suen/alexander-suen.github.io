@@ -1,7 +1,9 @@
 ---
-title: "Portfolio item number 1"
-excerpt: "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+title: "A simple IgA Nephropathy Grading Diagnosis System Based on CNN"
+excerpt: "Short description of portfolio item number 1<br/><img src='/images/glob.png'>"
 collection: portfolio
 ---
 
-This is an item in your portfolio. It can be have images or nice text. If you name the file .md, it will be parsed as markdown. If you name the file .html, it will be parsed as HTML. 
+A simple IgA Nephropathy Grading Diagnosis System Based on CNN | Python, PyTorch October 2020
+• Performed the detection, segmentation, and classification of glomerulus with varying degeneration degrees based on Convolutional Neural Networks.
+• Utilized the PyTorch framework to create a pathological grading system for IgA nephrosis.

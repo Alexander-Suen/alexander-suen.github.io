@@ -2,7 +2,7 @@
 title: "Molecular phylogenetic analysis of the AIG family in vertebrates"
 collection: publications
 permalink: /publication/2021-07-30-paper-title-number-3
-excerpt: 'This paper is about the phylogenetic analysis of gene family ADTRP/AIG1.'
+excerpt: 'We focused on investigating the evolutionary relationships and patterns within the ADTRP/AIG1 family across different vertebrate species.'
 date: 2021-07-30
 venue: 'Genes'
 paperurl: 'https://doi.org/10.3390/genes12081190'
