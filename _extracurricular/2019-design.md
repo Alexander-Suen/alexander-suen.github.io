@@ -1,10 +1,10 @@
 ---
-title: "Certified outstanding volunteer of Zhejiang University"
+title: "Some trivial design skills"
 collection: extracurricular
 type: "Activity"
 permalink: /extracurricular/2019-design
 venue: "Zhejiang Province, China"
-date: 2019-01-01
+date: 2018-12-01
 location: "City, Country"
 ---
 
