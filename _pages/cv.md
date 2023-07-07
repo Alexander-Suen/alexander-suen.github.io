@@ -11,30 +11,35 @@ redirect_from:
 
 Education
 ======
-* B.S. in GitHub, GitHub University, 2012
-* M.S. in Jekyll, GitHub University, 2014
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
+* B.S. in Zhejiang University, China, 2024 (Expected)
+<!-- * M.S. in Jekyll, GitHub University, 2014
+* Ph.D in Version Control Theory, GitHub University, 2018 (expected) -->
 
 Work experience
 ======
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
+* Oct. 2019 - Dec. 2021: Research Assistant
+  * Zhejiang University, Department of Veterinary Medicine
+  * Performed phylogenetic analysis on gene family ADTRP, mining the evolutinary relation by maximum likelihood.
+  * Incorporated scripts using Python and Shell to aggregate RNA sequencing results into an organized format and to load
+the latest results onto the server, so that automatic analysis can be performed.
+  * Characterized Liver Enriched-Gene 1 (LEG1) from expression profile, glycosylation type and secretion characteristics.
+  * Performed RNA-seq analysis on Ischemic Cardiomyopathy samples and recognized potential transcriptional regulators.
+  * Supervisor: Prof. Jin He & Lenan Zhuang (ZhuangLab)
 
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+* May. 2020 - Aug. 2021: Student Research Training Program (SRTP)
+  * Zhejiang University, School of Medicine
+  * Assisted in development of a kidney disease grading system based on the stained pathological sections.
+  * Worked with clinical doctors to pick suitable metrics and complete pathological grading of biopsies.
+  * Collaborated with team members using version control systems such as Git to organize modifications and assign tasks.
+  * Rated as a national-level student research training program.
+  * Supervisor: Prof. Hong Deng
   
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Python & PyTorch
+* Linux
+* R
+* Some (but not so much) wet lab skills
 
 Publications
 ======
@@ -42,7 +47,7 @@ Publications
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
-Talks
+<!-- Talks
 ======
   <ul>{% for post in site.talks %}
     {% include archive-single-talk-cv.html %}
@@ -56,4 +61,4 @@ Teaching
   
 Service and leadership
 ======
-* Currently signed in to 43 different slack teams
+* Currently signed in to 43 different slack teams -->
