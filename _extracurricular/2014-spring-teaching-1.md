@@ -1,5 +1,5 @@
 ---
-title: "Teaching experience 1"
+title: "Extracurricular experience 1"
 collection: extracurricular
 type: "Undergraduate course"
 permalink: /extracurricular/2014-spring-teaching-1
@@ -20,4 +20,3 @@ Heading 3
 ======
 
 
-<!-- Module disabled -->

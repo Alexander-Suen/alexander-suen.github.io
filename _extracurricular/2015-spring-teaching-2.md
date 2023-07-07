@@ -1,5 +1,5 @@
 ---
-title: "Teaching experience 2"
+title: "Extracurricular experience 2"
 collection: extracurricular
 type: "Workshop"
 permalink: /extracurricular/2015-spring-teaching-1
