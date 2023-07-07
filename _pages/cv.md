@@ -38,8 +38,10 @@ the latest results onto the server, so that automatic analysis can be performed.
 Skills
 ======
 * Python & PyTorch
+* Data Analysis Tools: Pandas, NumPy, Matplotlib, SciPy
+* Basic R for statistics
 * Linux
-* R
+* Version Control: Git
 * Some (but not so much) wet lab skills
 
 Publications
