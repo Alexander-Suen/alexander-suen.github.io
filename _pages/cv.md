@@ -11,7 +11,8 @@ redirect_from:
 
 Education
 ======
-* B.S. in Zhejiang University, China, 2024 (Expected)
+* B.S. in Zhejiang University, China, 2018 - 2024 (Expected)
+* Major in Veterinary Medicine and Statistics, Minor in Computer Science
 
 Work experience
 ======
