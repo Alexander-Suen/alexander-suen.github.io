@@ -1,10 +1,10 @@
 ---
 title: "Certified outstanding volunteer of Zhejiang University"
 collection: extracurricular
-type: "Volunteering"
-permalink: /extracurricular/2021-Volunteer
+type: "Activity"
+permalink: /extracurricular/2019-design
 venue: "Zhejiang Province, China"
-date: 
+date: 2019-01-01
 location: "City, Country"
 ---
 

@@ -4,7 +4,7 @@ collection: extracurricular
 type: "Volunteering"
 permalink: /extracurricular/2021-Volunteer
 venue: "Zhejiang Province, China"
-date: 
+date: 2018-10-01
 location: "City, Country"
 ---
 
