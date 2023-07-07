@@ -9,6 +9,8 @@ redirect_from:
 
 {% include base_path %}
 
+[Download](http://alexander-suen.github.io/files/CV_M.H.Sun_Mar_2023.pdf)
+
 Education
 ======
 * B.S. in Zhejiang University, China, 2018 - 2024 (Expected)
