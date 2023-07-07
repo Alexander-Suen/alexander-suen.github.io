@@ -4,7 +4,7 @@ collection: extracurricular
 type: "Activity"
 permalink: /extracurricular/2021-Community
 venue: "Zhejiang Province, China"
-date: 2021-02-01
+date: 2021-02
 location: "City, Country"
 ---
 

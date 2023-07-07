@@ -1,19 +1,24 @@
 ---
-title: "Internship as Veterinary Assistant"
+title: "Certified outstanding volunteer of Zhejiang University"
 collection: extracurricular
-type: "Internship"
-permalink: /extracurricular/2021-Vet
-venue: "Zhejiang University Affiliated Animal Hospital"
-date: 2021-03 ~ 2021-06
+type: "Volunteering"
+permalink: /extracurricular/2021-Volunteer
+venue: "Zhejiang Province, China"
+date: 
 location: "City, Country"
 ---
 
-During my tenure as a veterinary assistant at Zhejiang University Affiliated Animal Hospital, I gained extensive hands-on experience and played a vital role in supporting the healthcare team in providing comprehensive veterinary care to a diverse range of animal patients. My responsibilities encompassed various facets of veterinary assistance, including animal reception, disease counseling, patient care, drug preparation, ultrasonography assistance, doctor support, and clinical laboratory testing.
+As a Certified Outstanding Volunteer (5-star volunteer in Chinese) at Zhejiang University, I have dedicated over 300 hours to various volunteering initiatives, demonstrating my commitment to serving the community and making a positive impact. Here are some selected experiences:
 
-However, this experience served as a catalyst in inspiring me to explore the intersection of veterinary medicine and cutting-edge technologies, particularly in the fields of medical AI, drug discovery, and AI-aided diagnosis. During my time as a veterinary assistant, I witnessed the challenges faced by veterinary professionals in diagnosing complex diseases and designing effective treatment strategies. I became acutely aware of the immense volume of data generated through patient records, diagnostic tests, and medical imaging, and the need for innovative approaches to leverage this wealth of information.
+Local Hospital Volunteering:
+I actively participated in volunteer programs at a local hospital, where I assisted healthcare professionals in providing care and support to patients. I facilitated patient comfort by offering companionship, providing assistance with daily activities, and engaging in recreational activities to uplift their spirits. This experience deepened my understanding of the healthcare system and the importance of compassion in patient care.
 
-This exposure motivated me to delve deeper into the potential of medical AI. I recognized that by harnessing the power of artificial intelligence and machine learning, we can extract meaningful insights from vast datasets, accelerate drug discovery processes, and enhance diagnostic accuracy. This realization ignited my passion for exploring how AI can revolutionize veterinary and human healthcare.
+Innovation and Entrepreneurship Competition Volunteering:
+I enthusiastically contributed to an innovation and entrepreneurship competition (Internet Plus) organized at Zhejiang Province. As a volunteer, I played a crucial role in event coordination, ensuring smooth logistics, participant registration, and venue setup. This experience allowed me to witness the transformative power of Internet and innovation in driving societal progress.
 
-The experience of working alongside veterinarians and witnessing their expertise and dedication reinforced the importance of developing AI tools to aid in medical decision-making. The complexity and variability of disease presentations highlighted the need for sophisticated algorithms capable of analyzing diverse data points, recognizing patterns, and providing actionable insights that can assist veterinarians in making accurate diagnoses and recommending optimal treatment plans.
+Throughout my volunteering experiences, I have developed essential skills such as effective communication, teamwork, and adaptability. These experiences have broadened my perspective, enhanced my cultural competence, and nurtured a deep sense of empathy and social responsibility.
 
-Moreover, my exposure to drug preparation and disease counseling underscored the significance of advancements in AI-enabled drug discovery. I recognized the potential for AI algorithms to analyze molecular structures, predict drug efficacy, and identify novel therapeutic targets. These capabilities have the potential to significantly expedite the discovery and development of new treatments, benefiting both veterinary and human patients alike.
+
+
+
+
