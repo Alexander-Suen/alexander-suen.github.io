@@ -9,7 +9,7 @@
 locale                   : "en-US"
 title                    : "Alexander Suen"
 title_separator          : "-"
-name                     : &name "Alexander Suen??"
+name                     : &name "Alexander Suen"   # left lower side
 description              : &description "personal description"
 url                      : https://alexander-suen.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
