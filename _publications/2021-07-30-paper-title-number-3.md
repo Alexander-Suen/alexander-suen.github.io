@@ -13,6 +13,8 @@ citation: 'Huang Yuqi #, Sun Minghao #, Lenan Zhuang, and He Jin. Molecular Phyl
 
 <!-- Huang Yuqi #, Sun Minghao #, Lenan Zhuang, and He Jin. Molecular Phylogenetic Analysis of the AIG Family in Vertebrates. Genes. 2021 Jul 30;12(8):1190. -->
 
+In this paper, we studied the genetic sequences of <i>ADTRP/AIG1</i> gene family to determine their evolutionary history and relatedness. By comparing the DNAs sequences, constructing phylogenetic trees, and performing selection force analysis, we identified common ancestry and potential functional implications of the <i>ADTRP/AIG1</i> family. 
+
 This paper is about the number 3. The number 4 is left for future work.
 
 [Download paper here](http://alexander-suen.github.io/files/(2021) Molecular Phylogenetic Analysis of the AIG Family.pdf)
