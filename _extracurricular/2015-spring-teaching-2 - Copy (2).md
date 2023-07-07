@@ -1,10 +1,10 @@
 ---
-title: "Extracurricular experience 1"
+title: "Extracurricular experience 2"
 collection: extracurricular
-type: "Undergraduate course"
-permalink: /extracurricular/2014-spring-teaching-1
+type: "Workshop"
+permalink: /extracurricular/2015-spring-teaching-1
 venue: "University 1, Department"
-date: 2014-01-01
+date: 2015-01-01
 location: "City, Country"
 ---
 
@@ -18,5 +18,3 @@ Heading 2
 
 Heading 3
 ======
-
-
