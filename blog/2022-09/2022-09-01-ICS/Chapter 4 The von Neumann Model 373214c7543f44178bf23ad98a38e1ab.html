@@ -1,0 +1,850 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Chapter 4 The von Neumann Model</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="373214c7-543f-4417-8bf2-3ad98a38e1ab" class="page serif"><header><div class="page-header-icon undefined"><span class="icon">🌫️</span></div><h1 class="page-title">Chapter 4 The von Neumann Model</h1><p class="page-description"></p></header><div class="page-body"><p id="16da7d2c-1fcd-4cf1-b2f3-ee44fa8036cf" class="">
+</p><nav id="11685dba-38a8-4039-9743-38f85248eb28" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#eb1dadd4-ced1-4118-b375-caa92770c875">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#427b231d-5b8d-4289-937f-499f1852cf45">Memory</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e66eb3d2-b282-4420-8fb2-50ba1fb89b14">Size of memory</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2fb82c27-6f6c-4cc3-8de2-e4063bc8dd6f">Interface / Communication between Memory and Processing Unit</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f1c5c0fc-40ac-4ec2-bb78-07c3081a097f">Processing Unit</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3be7a116-5551-41d5-8c89-14fc44bd0ce3">ALU</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#12a8bcee-6e00-412f-8dbb-0f8a5dea73be">Registers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5e7965c0-65c0-4f8b-bdbd-b0c5feed8654">Input &amp; Output</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6bc25cad-ee0f-491c-aec4-8004848299ce">Control Unit</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9e3726cc-9eaa-4f44-90d3-c08ac410ed8c">Instruction</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b715237f-a8c6-498b-b158-d5717fdbb635">ISA (instruction set architecture)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#310d2f00-c6f1-4946-be14-be7778ae7803">Types of instructions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#779b880e-82e3-425d-85bc-02cb690518cc">The instruction cycle</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8a1e80be-0a11-4815-ba0a-268e7bf6f1c1">FETCH</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#daa2de0a-6f92-4a6f-a594-fdf5efae96b4">DECODE</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fd489f5b-14a2-49ea-8222-ac5b9a92cd8a">EVALUATE ADDRESS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#252a3469-4e36-4a59-bb86-2d4332db09b0">FETCH OPERANDS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4e10dffc-ae3b-4717-9f1c-2160b8859ef4">EXECUTE</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#23a7b023-d100-4ad8-8be8-a96812036531">STORE RESULTS</a></div></nav><h2 id="eb1dadd4-ced1-4118-b375-caa92770c875" class="">Overview</h2><p id="afc43119-0c0a-4876-bd3b-334147109c0b" class="">von Neumann Model</p><p id="799444ff-11b5-401e-a64d-782034d9f5ec" class="">
+</p><p id="6d2d03ac-661b-47f6-9ccd-9153b2075256" class="">Theoretical Computer: Turing Machine</p><p id="06f13aff-7fb0-4ffe-b68d-0002037bc7f1" class="">1943, the first physical / electronic computer, University of Pennsylvania</p><p id="2b9c22c7-9a36-4adf-af8f-399f335b042e" class="">1940s, John von Neumann, proposed the basic computer model (von Neumann Machine)</p><p id="d435e013-642b-46d3-9b60-e3e3d828d7d0" class="">
+</p><p id="68205772-f80c-46f0-aded-5d09b4773bff" class="">Components: see P126</p><ul id="ad5d255f-32ce-48f3-b062-6537a234738b" class="bulleted-list"><li style="list-style-type:disc">Memory: contain instructions and data, MAR + MDR</li></ul><ul id="97fab7ae-cff8-4641-a717-1a8f39f23229" class="bulleted-list"><li style="list-style-type:disc">Processing Unit: performing arithmetic and logic operations, ALU (LC-3, ADD, AND, NOT) + TEMP (registers for storing temporary values)</li></ul><ul id="34eab84f-1d77-45c6-86ae-7997e07cd80a" class="bulleted-list"><li style="list-style-type:disc">Control Unit: for interpreting instructions, PC + IR</li></ul><ul id="903de84c-44d6-4203-9ad3-c84497e578a1" class="bulleted-list"><li style="list-style-type:disc">Input: disk, keyboard (can act in LC-3), scanner, mouse</li></ul><ul id="a664c162-de90-4e02-ad9b-59450d78b6da" class="bulleted-list"><li style="list-style-type:disc">Output: disk, monitor (can act in LC-3), printer, LED</li></ul><p id="a709faa8-df5c-4499-8397-40d35046d51d" class="">disk belongs to input/output!!!!</p><p id="51b3e3b1-ba8c-4a25-b7c0-391cc8709795" class="">
+</p><p id="7a944bcf-bbd8-48c0-a9aa-dc00e3a59d69" class="">von Neumann Model:</p><figure id="6898bd4d-bea7-4991-9526-68b2c50fb484" class="image"><a href="Chapter%204%20The%20von%20Neumann%20Model%20373214c7543f44178bf23ad98a38e1ab/Untitled.png"><img style="width:468px" src="Chapter%204%20The%20von%20Neumann%20Model%20373214c7543f44178bf23ad98a38e1ab/Untitled.png"/></a></figure><p id="8e09fd5a-201f-4a69-9707-38c3c3c8b157" class="">Processing Unit (ALU, TEMP), Control Unit (PC, IR), Memory (MAR, MDR), Input (disk), Output</p><p id="32f1e596-2e03-4303-ba92-599cae83a3a3" class="">
+</p><h2 id="427b231d-5b8d-4289-937f-499f1852cf45" class="">Memory</h2><h3 id="e66eb3d2-b282-4420-8fb2-50ba1fb89b14" class="">Size of memory</h3><p id="04648a68-05f4-4946-89b3-1c709485547b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>10</mn></msup><mi>b</mi><mi>i</mi><mi>t</mi><mo>=</mo><mn>1024</mn><mi>b</mi><mi>i</mi><mi>t</mi><mo>=</mo><mn>1</mn><mi>K</mi></mrow><annotation encoding="application/x-tex">2^{10} bit = 1024bit = 1K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mord mathnormal">bi</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">1024</span><span class="mord mathnormal">bi</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span></span><span>﻿</span></span></p><p id="16bdc834-e2ae-4564-9683-1d90ac1451d9" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>20</mn></msup><mi>b</mi><mi>i</mi><mi>t</mi><mo>=</mo><mn>1024</mn><mi>K</mi><mo>=</mo><mn>1</mn><mi>M</mi></mrow><annotation encoding="application/x-tex">2^{20}bit = 1024K = 1M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span><span class="mord mathnormal">bi</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1024</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span></span><span>﻿</span></span></p><p id="2181fc9a-67f9-4192-af31-618403636c26" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>30</mn></msup><mi>b</mi><mi>i</mi><mi>t</mi><mo>=</mo><mn>1024</mn><mi>M</mi><mo>=</mo><mn>1</mn><mi>G</mi></mrow><annotation encoding="application/x-tex">2^{30} bit = 1024 M = 1G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">30</span></span></span></span></span></span></span></span></span><span class="mord mathnormal">bi</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1024</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord mathnormal">G</span></span></span></span></span><span>﻿</span></span></p><p id="255ac1f6-cfa4-4616-8378-96419891bf83" class="">
+</p><p id="17ec6487-57ac-4f2a-bdb7-aa9fb0f248ff" class="">A <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>34</mn></msup><mo>−</mo><mi>b</mi><mi>y</mi><mo>−</mo><mn>8</mn><mi>b</mi><mi>i</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">2^{34} - by - 8 bit</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">34</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mord mathnormal">bi</span><span class="mord mathnormal">t</span></span></span></span></span><span>﻿</span></span> memory computer:</p><p id="bd141d50-55ac-4cf0-a836-8d838a2fe34d" class="">Address space: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>34</mn></msup></mrow><annotation encoding="application/x-tex">2^{34}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">34</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> uniquely identifiable locations, 16 G</p><p id="300bbe42-2ab7-4ec8-8248-c3630bcc8d1e" class="">Addressability: 8 bits (1 byte) stored in each location</p><p id="c36a1741-a340-47ea-af05-c31d0d2ba8ce" class="">
+</p><p id="9b173d35-3c40-4497-b6cd-29b3cf004e02" class="">LC-3: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>−</mo><mi>b</mi><mi>y</mi><mo>−</mo><mn>16</mn><mi>b</mi><mi>i</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">2^{16} -by-16 bit</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">16</span><span class="mord mathnormal">bi</span><span class="mord mathnormal">t</span></span></span></span></span><span>﻿</span></span></p><p id="c2a81418-349b-422c-94dc-42b3fc2b4e8f" class="">So, there are totally 16 bits to indicate the address, 16 bits per location (length of instructions)</p><p id="bc5540a9-1043-4398-a2b1-cbcbbc5fa071" class="">
+</p><h3 id="2fb82c27-6f6c-4cc3-8de2-e4063bc8dd6f" class="">Interface / Communication between Memory and Processing Unit</h3><p id="3102b0fa-7800-49c5-9af3-37d638c559d6" class="">MAR: memory address register</p><p id="b6742708-a430-4190-9b67-88b0cac40209" class="">MDR: memory data register</p><p id="3be6137a-27af-4575-ae71-52d47855c5d4" class="">
+</p><p id="f25adc16-d9e1-4b16-8f82-a9d8088ad7f9" class="">To read contents of a memory location:</p><ol type="1" id="024134c3-4d9b-4f60-90e1-33f3d99348cf" class="numbered-list" start="1"><li>Place the address into MAR</li></ol><ol type="1" id="516609ed-6edd-43ab-9c1a-9a737377fc94" class="numbered-list" start="2"><li>Interrogate the computer’s memory / send a read signal to the memory</li></ol><ol type="1" id="624d4a78-7650-4006-9748-b99db812e74e" class="numbered-list" start="3"><li>Put the data / information in that location into MDR.</li></ol><p id="3ec9bfb2-8989-4d54-a96c-882a98d9ec15" class="">
+</p><p id="c37a3258-a0ba-47bc-b330-1882a376c7dc" class="">To write / store a value in a memory location:</p><ol type="1" id="b29b038b-2f5b-4858-b712-c699cb9c8ea0" class="numbered-list" start="1"><li>Write the address of that location into MAR</li></ol><ol type="1" id="3dfc3fc3-539d-49fe-85f0-28340e82e098" class="numbered-list" start="2"><li>Write the value to be stored into MDR</li></ol><ol type="1" id="93b2a2d0-60ea-4dbf-8ff8-1987bc517a7a" class="numbered-list" start="3"><li>Interrogate the memory with WE asserted (send a <mark class="highlight-red">write signal</mark> to the memory.</li></ol><ol type="1" id="1cf2fb81-f99c-49d8-b255-118b579100fd" class="numbered-list" start="4"><li>Then the information contained in MDR will be written into the memory location specified by the value in MAR.</li></ol><p id="1cf772d5-a284-4991-901a-3ac2023fb047" class="">
+</p><p id="b89741f4-5c59-4dff-9ff6-0f1ab4401a2b" class="">
+</p><h2 id="f1c5c0fc-40ac-4ec2-bb78-07c3081a097f" class="">Processing Unit</h2><p id="5b1e4a12-6fae-462e-a107-3ce4b758f0f2" class="">The processing unit carry out processing of information in the computer. </p><h3 id="3be7a116-5551-41d5-8c89-14fc44bd0ce3" class="">ALU</h3><p id="c30b20d0-2c62-4e48-bb37-88d0305487e6" class="">Arithmetic and Logic Unit, the simplest processing unit</p><p id="26239f41-2578-4add-9b71-7e39f091e00e" class="">Function: performing base arithmetic functions (ADD, SUBTRACT) and base logic operations (bit-wise AND, OR, NOT).</p><p id="a586fcf3-e1a5-4abe-b081-81d0d2aa754c" class="">The ALU of LC-3 can perform: <mark class="highlight-yellow">AND, NOT, ADD</mark>.</p><p id="c8c036de-2897-4aef-bb65-7ea78aea142e" class="">
+</p><p id="e0b214b5-bb6c-4160-96f5-903fca560e77" class="">Word size: ALU processes data elements (words) of a fixed size (word length). E.g., ALU receives two words as two inputs and output one word. Most microprocessors have a word length of 64 bits (64位处理器) or 32 bits. A 64-bit processor refers to <strong>a microprocessor that can process data and instructions in chunks of 64 bits.</strong></p><p id="58254e31-791c-48e1-9ce7-067d7a9efb51" class="">For LC-3, ALU processes 16-bit words (word length = 16).</p><p id="336c2eb3-c336-44a3-bf97-e11141f096b3" class="">
+</p><h3 id="12a8bcee-6e00-412f-8dbb-0f8a5dea73be" class="">Registers</h3><p id="d1a48316-9f26-4c05-a668-5e767850c1a9" class="">Temporary storage. It’s faster to access temporary storage than to access memory locations. Typically, each register contains one word (= word size). For LC-3, there are 8 general purpose registers. </p><p id="53626255-0b17-4e69-a1af-87cdfc340d09" class="">
+</p><p id="9f256026-9f53-4ac6-af48-3c7c63d348de" class="">
+</p><h2 id="5e7965c0-65c0-4f8b-bdbd-b0c5feed8654" class="">Input &amp; Output</h2><p id="40065139-fb08-4395-8270-ad5e1c45ecbd" class="">Including disk!!!!!!!!!!!!!</p><p id="5673bc77-e626-4eb3-abb4-2d08cd5d3a1f" class="">Devices for getting data into or out of the computer memory.</p><p id="9f4aef93-d174-45dc-b772-78997f42a9ef" class="">Input: disk, keyboard, mouse, scanner;</p><p id="38415aa8-7b76-4fa3-813d-4143f51813f9" class="">Output: disk, monitor, LED, printer</p><p id="ea889d6c-b2b9-4ee3-a021-9a915d2a857f" class="">
+</p><p id="bab72253-e3da-4aff-93aa-fe7afd4f6975" class="">Each device has its own device register (similar to MAR and MDR), own interface.</p><p id="023dc2fb-7e3e-4131-9ef3-a4a7769574ac" class="">LC-3 support keyboard (input) and monitor (output).</p><p id="4f4ae742-575c-4865-8918-72a37f73a154" class="">Keyboard: KBDR and KBSR</p><p id="1051b1b0-8894-4855-85ad-a2170dc92b4d" class="">Monitor: DDR (display data register) and DSR (display status register)</p><p id="d9b25d5f-435c-4f34-9559-f7dbc8d6ac86" class="">Driver: programs that control access to a device (including I/O, 设备的驱动程序).</p><p id="48229c61-676a-4d75-b96b-e5e6271b8780" class="">
+</p><h2 id="6bc25cad-ee0f-491c-aec4-8004848299ce" class="">Control Unit</h2><p id="650795cf-da90-48d1-9d79-94b913406c77" class="">Including PC and IR (in von Neumann Model). Reading an instruction from memory. Keeping track of where we are in the processing of the program / instruction. </p><p id="8a62920a-4a97-4839-acc6-8bd599e87c5f" class="">IR (instruction register): contains the current instruction.</p><p id="e556a2fc-137b-4f8e-ab42-7b6a4f97d881" class="">PC (program counter): contains the address of the next instruction to be executed. </p><p id="840c43fb-6309-46f8-84bd-ceace9ed9cd2" class="">
+</p><h2 id="9e3726cc-9eaa-4f44-90d3-c08ac410ed8c" class="">Instruction</h2><h3 id="b715237f-a8c6-498b-b158-d5717fdbb635" class="">ISA (instruction set architecture)</h3><p id="6382e4b0-7e6f-4043-a591-05be54a81d69" class="">All of a computer’s instructions and their formats. It acts as an interface between software and hardware. E.g., x86</p><p id="ad38ef48-61fc-456f-8aea-e39f2bf7cf22" class="">ISA specifies:</p><ul id="5c52cf26-ff7c-4a7c-ac46-ff851c79040b" class="bulleted-list"><li style="list-style-type:disc">Opcode</li></ul><ul id="13aff04f-36b8-400e-90c8-33f4b14433d2" class="bulleted-list"><li style="list-style-type:disc">Operand</li></ul><ul id="9602d736-2655-4fd3-ab53-086ba499f517" class="bulleted-list"><li style="list-style-type:disc">Addressing modes</li></ul><p id="656691f5-462f-4dda-a857-d3047c23898c" class="">
+</p><h3 id="310d2f00-c6f1-4946-be14-be7778ae7803" class="">Types of instructions</h3><ul id="4fed312f-71c4-40e5-8a65-ecf619341208" class="bulleted-list"><li style="list-style-type:disc">Operate instructions: ADD, AND…</li></ul><ul id="e3aeb7d2-ca75-4e5f-b909-2cd1b9b9ff27" class="bulleted-list"><li style="list-style-type:disc">Data movement instructions: LD, ST…</li></ul><ul id="09e4af2e-748e-4d59-9c26-71a3dfb2b722" class="bulleted-list"><li style="list-style-type:disc">Control instructions: BR (conditional), JSR, JMP (unconditional)</li></ul><p id="544429fe-5d11-414e-8558-b9f1d8545411" class="">
+</p><p id="daf52bb0-2b79-4ae6-9c9e-b1a528fa96fe" class="">
+</p><h2 id="779b880e-82e3-425d-85bc-02cb690518cc" class="">The instruction cycle</h2><ul id="f40cdf16-3ccb-4eab-84ff-6f422def74df" class="bulleted-list"><li style="list-style-type:disc">FETCH</li></ul><ul id="e9aaa484-26ad-41f2-9c7a-6d00c408b049" class="bulleted-list"><li style="list-style-type:disc">DECODE</li></ul><ul id="487fd82c-04d9-40ba-9567-24a714400852" class="bulleted-list"><li style="list-style-type:disc">EVALUATE ADDRESS</li></ul><ul id="0ed84bb5-d732-4287-a41c-a05984143ca8" class="bulleted-list"><li style="list-style-type:disc">FETCH OPERANDS</li></ul><ul id="4513dc2c-fbd9-44c9-ba0f-b247be7eb928" class="bulleted-list"><li style="list-style-type:disc">EXECUTE</li></ul><ul id="26183b48-f067-425f-aabf-7b9625d45e9e" class="bulleted-list"><li style="list-style-type:disc">STORE RESULT</li></ul><figure id="e08988ae-5d7e-4b30-a743-8dbc7caa3bf6" class="image"><a href="Chapter%204%20The%20von%20Neumann%20Model%20373214c7543f44178bf23ad98a38e1ab/Untitled%201.png"><img style="width:893px" src="Chapter%204%20The%20von%20Neumann%20Model%20373214c7543f44178bf23ad98a38e1ab/Untitled%201.png"/></a></figure><p id="d72fb444-ce2f-4881-be9c-c8607946e7dd" class="">
+</p><figure id="3302f589-abf2-4162-9f07-f62e27bff9ed" class="image"><a href="Chapter%204%20The%20von%20Neumann%20Model%20373214c7543f44178bf23ad98a38e1ab/Untitled%202.png"><img style="width:534px" src="Chapter%204%20The%20von%20Neumann%20Model%20373214c7543f44178bf23ad98a38e1ab/Untitled%202.png"/></a></figure><p id="01d24b6e-7590-44d2-8579-1ab07fdefcfc" class="">The instruction cycle is controlled by a synchronous finite machine. </p><p id="a9cd8558-ed33-43d3-a649-cf8b37e862be" class="">
+</p><p id="8f0e54c2-65ba-4458-9f23-403d4d01bb22" class="">
+</p><h3 id="8a1e80be-0a11-4815-ba0a-268e7bf6f1c1" class="">FETCH</h3><p id="2fb997fe-32ef-4bf9-8eff-e83822a334b1" class="">Load the instruction from the memory. </p><ul id="242ed867-43bf-4e8b-be69-9e508045ce4b" class="bulleted-list"><li style="list-style-type:disc">MAR ← PC; PC ← PC + 1; </li></ul><ul id="5474e2ee-ed4c-4c31-816d-cd1253bd7cc0" class="bulleted-list"><li style="list-style-type:disc">MDR ← M[MAR]</li></ul><ul id="582d12d8-0430-4487-86b8-062d1b5ac78a" class="bulleted-list"><li style="list-style-type:disc">IR ← MDR</li></ul><p id="3af0dbcb-a141-47f6-8773-ba55acf2b8af" class="">
+</p><h3 id="daa2de0a-6f92-4a6f-a594-fdf5efae96b4" class="">DECODE</h3><ul id="864b303c-279f-4d37-ac63-96652b54b98d" class="bulleted-list"><li style="list-style-type:disc">Identify the opcode (a 4-to-16 decoder asserts a control line corresponding to the desired opcode line).</li></ul><ul id="aa265feb-4a88-4ff6-adf3-25ec6eb64c31" class="bulleted-list"><li style="list-style-type:disc">Depending on the opcode, identify other patterns from the remaining bits.</li></ul><p id="0d580f23-08eb-4665-b9f6-f85416fba2a3" class="">
+</p><h3 id="fd489f5b-14a2-49ea-8222-ac5b9a92cd8a" class="">EVALUATE ADDRESS</h3><p id="366f803e-c76f-4d54-9e28-de99a12a4ae7" class="">Only for those instructions that require memory access (compute address used for access).</p><p id="02d9cd07-84dd-4714-ab03-b7c36f64776d" class="">E.g., LDR, add offset to base value of a register</p><p id="51d7552e-549e-445c-98c5-85c900ae6f9b" class="">Note: Some instructions such as ADD, AND, NOT don’t need this part because they only effect among registers.</p><p id="00298d51-60dd-477d-ab17-fa58d3f22670" class="">
+</p><h3 id="252a3469-4e36-4a59-bb86-2d4332db09b0" class="">FETCH OPERANDS</h3><p id="e5f536f6-8349-4e2d-b149-1c081007585c" class="">Obtain source operands for operation. </p><ul id="be7c7cdb-c794-4ad9-89d2-28b646570393" class="bulleted-list"><li style="list-style-type:disc">load data from memory location (LDR). In LD, 1) loading MAR with the address calculated in the EVALUATE ADDRESS phase and 2) reading memory,  place that source operand value into MDR.</li></ul><ul id="eddc5e4c-816d-4742-a37a-dfccdd1f226c" class="bulleted-list"><li style="list-style-type:disc">read data from registers (ADD).</li></ul><p id="15128696-d943-4f36-b872-3d0605b30304" class="">
+</p><h3 id="4e10dffc-ae3b-4717-9f1c-2160b8859ef4" class="">EXECUTE</h3><p id="bb4b8890-e6b6-4af0-a595-8795c0c5f828" class="">Perform the operation using the fetched operands.</p><p id="291eee9f-38cb-4649-be58-01095a331cee" class="">E.g., add the value of SR1 and SR2 (send operands to ALU and specifies ADD by the ALUK control signal (from finite state machine))</p><p id="e482280a-fe59-4b9c-8432-b3e0cf1bf687" class="">Note: load and store will do nothing in this stage.</p><p id="5807f2ea-1771-4880-9028-88c2534856cc" class="">
+</p><h3 id="23a7b023-d100-4ad8-8be8-a96812036531" class="">STORE RESULTS</h3><p id="2ef5991f-997c-4df2-973f-97653031938b" class="">Store the results of execution to the destination (memory or register). </p><p id="559332da-9d81-4044-9327-2aa3161f7bcb" class="">E.g., result of ADD is placed in destination register; result of memory load is placed in register; result of ST is placed in the memory location (write address to MAR, data to MDR, write signal asserted to memory). </p><p id="8c85e4f3-08cf-4520-b501-520476ed3f6f" class="">
+</p><p id="7f2acdd5-377d-4b14-b95c-7f03e4d8358a" class="">
+</p><p id="1a7a176f-2ed4-40c9-8d15-b8dcf37a0098" class="">
+</p><p id="1578610d-2787-4368-8b08-f112dc20e820" class="">
+</p><p id="249f0020-5f03-4142-96c0-2624e2923eb7" class="">
+</p><p id="3be5f8a8-23b6-4572-b8a4-0ec3fa3f258e" class="">
+</p><p id="cea528af-5b0f-4bd5-9484-4268bddc8ced" class="">
+</p><p id="4834e12a-ecc5-491f-b486-b97f9cb94d06" class="">
+</p><p id="6f5b998d-5c51-4127-86df-5e63e0799960" class="">
+</p><p id="48cf5fdf-5a98-4564-8998-f892bf07b5e5" class="">
+</p><p id="3d13e3d8-3dd4-4b25-b305-dd15334fb423" class="">
+</p><p id="a96c1ec0-36b5-44f0-b246-5e0222e55834" class="">
+</p><p id="6b15f0f3-e794-41d6-8347-7daf6aae47ff" class="">
+</p><p id="217177f2-05b4-49ee-a0d5-d63c4f9136a9" class="">
+</p><p id="ff398974-c33f-4e6b-8652-f8eb3f48a979" class="">
+</p><p id="007b1a39-f7fc-48e4-a2b1-0b2d35aa98ad" class="">
+</p><p id="43346664-5ad0-4061-92a5-e891a52fde37" class="">
+</p><p id="020cb77e-a717-4aa4-9992-a99092036207" class="">
+</p><p id="27a11a67-631b-4941-9db0-407cd0241a22" class="">
+</p><p id="8494bb01-7f90-43dc-aaee-73d2710ae589" class="">
+</p><p id="6b6bc451-c41b-46b9-b3c2-abb683d4312e" class="">
+</p><p id="8c0284fc-a8c9-4969-86e3-b7d36bd4c4f0" class="">
+</p><p id="40fe3bdb-e067-4eb8-8734-d3b1eb9155be" class="">
+</p><p id="7cc6924a-fd5d-4b8c-a567-52bf3465cec4" class="">
+</p><p id="f56bf422-b08e-454b-9c50-a4044405b85a" class="">
+</p><p id="861404ce-ac47-4ffb-b2d6-36cd9b1b8fd6" class="">
+</p><p id="922d2c7c-6be5-4b62-a467-9f1cd15c255b" class="">
+</p><p id="36b9a82a-2964-48c6-8a2e-09e58eab9f69" class="">
+</p><p id="961bce93-f0df-4386-8e55-b14243362fb3" class="">
+</p><p id="8cf90b1f-a895-448f-a060-0a18753e07f2" class="">
+</p><p id="2ce80f41-d458-4652-b693-0c234da61e5b" class="">
+</p><p id="29e59a2a-a61b-4b26-945b-f524c06ee5d5" class="">
+</p><p id="33fa0712-990d-4782-8463-72d1a59daee0" class="">
+</p><p id="05660a95-b569-4541-a95c-292c7d34eede" class="">
+</p><p id="f41802b7-a01b-4a6c-90b3-f0a532e257a3" class="">
+</p><p id="64204b50-e53b-4093-b96b-e16f8cf29f23" class="">
+</p><p id="35d991b7-df44-4c55-9ac2-190fc5eb42f9" class="">
+</p><p id="6faa7fc7-3c5e-4ad0-a0e5-ea7b7b32941d" class="">
+</p><p id="31895641-e4ec-4b7d-8927-696b6e8b415d" class="">
+</p><p id="8741d5bf-1971-429b-b36f-545c9bc3e0f4" class="">
+</p><p id="f36c5128-d61c-4fc3-a2d3-562a6455518f" class="">
+</p><p id="26744c9c-b445-4133-a7ac-c32cc11d79d7" class="">
+</p><p id="574bb158-bef3-4ea3-bf78-6e2409d73841" class="">
+</p><p id="e03f1fe4-c9bb-459e-9b64-49ff917b49a5" class="">
+</p><p id="c9e30223-1da5-4c9d-9399-a3d3651364e7" class="">
+</p><p id="ad0ad902-2251-42de-bd96-0286869aff7f" class="">
+</p><p id="2ab80bbe-2cce-4eba-8b2d-cdc6da9c4cd3" class="">
+</p><p id="da6909a0-3c80-4b3b-8240-3c0622520a39" class="">
+</p><p id="e1b79e48-1ac0-4489-8358-88d429d0764d" class="">
+</p><p id="9455714a-6a55-4c26-b94c-195dd59d2908" class="">
+</p><p id="19a37f07-f28d-4128-987c-81c9d9fe2360" class="">
+</p><p id="6e656d18-0d05-4ca8-9c4e-2d5ccccabf5d" class="">
+</p><p id="e8f5497f-aa30-4da8-b4d1-d42459c200c1" class="">
+</p><p id="67208dd8-26cd-4179-9813-26de31b10745" class="">
+</p><p id="adc2488f-72d0-4ce4-ad06-3e34ca23af17" class="">
+</p><p id="70c99b0e-7209-4bee-9de6-47f4e972c98f" class="">
+</p><p id="cf2fa0d7-0684-4aa4-91f5-3047af0c2cc6" class="">
+</p><p id="3adfb6b2-9a67-4441-b729-4caa8d2089f4" class="">
+</p><p id="4cfac04d-c19d-4572-9fd1-518087a6fa3e" class="">
+</p><p id="3a96219e-5fb1-47a3-babf-842abc0bdf70" class="">
+</p><p id="6400c667-6930-42b4-a5ae-4c2f1f8588bc" class="">
+</p><p id="bffd984a-6d9b-4fd0-a7cd-ff56cd494bf9" class="">
+</p><p id="6edf1c0e-b8fb-476b-8958-7c1f6f93be43" class="">
+</p><p id="a190a374-f2bf-4ada-80ab-18612b0774bc" class="">
+</p><p id="5c8ffa99-0723-492d-bfeb-063a5e88f752" class="">
+</p><p id="6846247f-0a52-4e38-b347-8c2655d45605" class="">
+</p><p id="730d203f-40c3-49a7-9514-d3b1595e9861" class="">
+</p><p id="d64c1bfe-f992-482f-a76e-ba379588f5c7" class="">
+</p><p id="505b9c0b-79bf-4feb-905d-13fb7fcff7d3" class="">
+</p><p id="6a6e227a-eb3d-4540-977f-4a4ca16f9940" class="">
+</p><p id="11f006c7-fca6-4586-a47b-160ea6c95f08" class="">
+</p><p id="b529ce48-3b9e-4559-9319-b21042c2ef83" class="">
+</p><p id="890ea344-cac0-439d-b561-4eeed494efb6" class="">
+</p><p id="7310e7a9-ee4f-485e-9d0c-3c1ee7bab979" class="">
+</p><p id="9dbd95e6-9b3f-4ad1-b8fd-aa295f7ff852" class="">
+</p><p id="df4a823c-0cae-468b-bb37-f0c92d63e4b2" class="">
+</p><p id="e1b91763-e32a-4609-9375-3b83cf3eb1ff" class="">
+</p><p id="63cf21cc-25ca-4d64-b82b-45bdfcb640ef" class="">
+</p><p id="5b45d987-d8ae-4c3a-8c8f-e47f3f03962f" class="">
+</p><p id="2b522240-6eff-49e8-be09-e48883cdbe3c" class="">
+</p><p id="82e11001-839f-4b97-b3b8-32f047954e66" class="">
+</p><p id="eff16bb2-871c-45da-84d1-76333b154e41" class="">
+</p><p id="7357bad5-79bf-4be9-88b1-19c9f2f9ae88" class="">
+</p><p id="6c3c74e0-4d05-4d53-86e1-5fe1ec3fb5c3" class="">
+</p><p id="7da67a5b-4895-455a-b79f-82eaf80d2cc0" class="">
+</p><p id="6d456a50-49d3-41e2-9d4a-29ecae3b15e4" class="">
+</p><p id="b1132bcb-3652-48fe-a963-061f3dd64be7" class="">
+</p><p id="1f6fced2-9da2-47f7-baca-a014e81bc80d" class="">
+</p><p id="3ca408a5-9157-43c1-9722-961e94003b0a" class="">
+</p><p id="505c7f39-43be-49d3-b8e2-45bf6c0d617e" class="">
+</p><p id="8dfde5cf-5c21-4250-ac9e-20c6be67d87a" class="">
+</p><p id="2fd0cb50-339f-49fa-bf3f-a3e382d58517" class="">
+</p><p id="39ec91bc-336d-4cb7-a7f5-021c58076a74" class="">
+</p><p id="b0612d21-247e-48e8-a0b9-0d12455fb639" class="">
+</p><p id="222d5846-ee45-44ea-b6f6-53d2c1cef63f" class="">
+</p><p id="190278f0-541e-4806-891f-1486435e62e3" class="">
+</p><p id="169ddc92-5be1-42a0-be9c-c0a586bd70b2" class="">
+</p><p id="fdb29757-01e2-4af8-9696-944b159c9f22" class="">
+</p><p id="7bf207a9-ff20-4c99-86f7-a978b6c467eb" class="">
+</p><p id="0f4c0b9e-9cc2-47d2-8496-c435116d223e" class="">
+</p><p id="c8bab4d2-9b47-4550-9bdb-dda9aa748bf7" class="">
+</p><p id="cf66c5bd-1388-4b9f-9ab5-2f26199062c6" class="">
+</p><p id="dad6806f-2a84-48d7-8273-b29ce2a2c7f5" class="">
+</p><p id="9530b07e-9e38-45f3-94e7-e48ca9cc52db" class="">
+</p><p id="44131c50-f0c9-4fae-a852-1df0abfa2254" class="">
+</p><p id="5640a7c9-e0fa-4fd0-b36e-442705b14487" class="">
+</p><p id="1d1822dc-303d-462f-98ed-3c49521baf43" class="">
+</p><p id="76603b64-c3b4-405e-9a32-815f634f6654" class="">
+</p><p id="c6ef8a62-8ad4-4a9e-aba6-57e03f78f99f" class="">
+</p><p id="89ab3613-b2f0-4b9a-bb7c-601fbe8fc287" class="">
+</p><p id="dd7f1565-c87e-421a-a0cf-e75ca3c567b5" class="">
+</p><p id="6ddf39d2-1a22-4491-871f-607f649e071a" class="">
+</p><p id="662dd458-6116-4762-b7e1-31149d4f6a2a" class="">
+</p><p id="8c83c3c2-bf54-4522-9ce1-5b33d3dc11a6" class="">
+</p><p id="4a4350d6-3b09-434f-a87a-52c48f41ed88" class="">
+</p><p id="87bc053f-c79a-454b-ab93-3a1f797ca131" class="">
+</p><p id="b969a832-4472-4196-ba63-9b2c0758bf7f" class="">
+</p><p id="4b60c05d-47bf-4ad8-8cb4-083ae35d8e6f" class="">
+</p><p id="6ef0ae8d-1244-4ac8-95f3-c31f1201391c" class="">
+</p><p id="7952f8e7-2927-4e3c-bf7f-955a312f9e8a" class="">
+</p><p id="0740f50a-4b8d-41a2-9756-a230abde11d9" class="">
+</p><p id="21ae4e30-6fb3-4f92-96f0-1ccd5fa9b38c" class="">
+</p><p id="f9b0e3a8-7906-4f23-97f8-79369f97df73" class="">
+</p><p id="577b8b04-a4ae-46da-a92b-b2e592e4a3cf" class="">
+</p><p id="990f3315-e535-4098-bd7c-9303c4e5f0cf" class="">
+</p><p id="baab0153-7550-4890-9d1f-a4e5ad2526c4" class="">
+</p><p id="2bf1d51b-0aea-4360-99ef-e914552028ab" class="">
+</p><p id="33a57623-42ea-4ed5-8040-9ec4bac19b1e" class="">
+</p><p id="ac114f18-5b0f-46fa-8334-89098f791186" class="">
+</p><p id="473a01c3-6ccd-417d-91dc-a093722a2feb" class="">
+</p><p id="1453ab1e-5b0a-4120-b248-5f0bef6de82b" class="">
+</p><p id="b1de0fed-43b0-449a-83f0-8c8ddd9ebcd0" class="">
+</p><p id="4e41a4e9-e0a5-44c8-a6c6-0771ac2b069a" class="">
+</p><p id="4234eff2-d2b2-4353-b84a-84c2180eb40f" class="">
+</p><p id="e985203e-1aa2-4aa9-bf94-82531aa82c05" class="">
+</p><p id="e8f29629-3814-4409-99cd-7b8504d98533" class="">
+</p><p id="8a81b1b7-716d-4215-babb-0f037253a09c" class="">
+</p><p id="2d866fd3-24d9-4e7c-9c86-0e040fb3bf1d" class="">
+</p><p id="71823a0e-b4c0-49b4-9159-4338fd4b6d31" class="">
+</p><p id="4a6c9055-2a98-4956-860b-a4ea9d3622bb" class="">
+</p><p id="e447183b-9da9-4a5e-8f6d-531958f0d2c4" class="">
+</p><p id="85b40b1b-22d7-4ade-bbc6-94878d85096b" class="">
+</p><p id="711cb3b3-13bc-47d9-83cd-57a2ae05959a" class="">
+</p><p id="b73a9898-9e9a-432c-8477-e306ebe3bc14" class="">
+</p></div></article></body></html>
