@@ -10,5 +10,5 @@ collection: portfolio
 
 • Visulization: The project utilized C++ visualization packages, such as matplotlibcpp, to create visual representations of the K-Means clustering process. These visualizations helped in better understanding and analyzing the clustering results.
 
-[Project Link](http://alexander-suen.github.io/files/xxxx.pdf)
+[Project Link](https://github.com/Alexander-Suen/simple-multi-thread-kmeans)
 
