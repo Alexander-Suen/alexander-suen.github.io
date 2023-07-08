@@ -4,7 +4,7 @@ collection: extracurricular
 type: "Activity"
 permalink: /extracurricular/2019-design
 venue: "Zhejiang Province, China"
-date: 2018-12-01
+date: 2018-10-01
 location: "City, Country"
 ---
 
