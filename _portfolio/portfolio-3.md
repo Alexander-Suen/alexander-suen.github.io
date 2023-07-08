@@ -1,5 +1,5 @@
 ---
-title: "RISC-V microprocessor based on RVI32"
+title: "RISC-V Microprocessor Based On RVI32"
 excerpt: "A toy implementation of pipelined RVI32, course project of Computer Organization. <br/><img src='/images/riscv.png' width='500' height='600'>"
 collection: portfolio
 ---

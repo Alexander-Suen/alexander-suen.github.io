@@ -1,5 +1,5 @@
 ---
-title: "A simple IgA Nephropathy Grading Diagnosis System Based on CNN"
+title: "A Simple IgA Nephropathy Grading Diagnosis System Based on CNN"
 excerpt: "Performed the detection, segmentation, and classification of glomerulus with varying degeneration degrees based on Convolutional Neural Networks; Utilized the PyTorch framework to create a pathological grading system for IgA nephrosis.<br/><img src='/images/glob.png' width='500' height='600'>"
 collection: portfolio
 ---

@@ -19,13 +19,13 @@ Education
 Research Experience
 ======
 * Oct. 2019 - Dec. 2021: Research Assistant
-  * Zhejiang University, Department of Veterinary Medicine
+  * Zhejiang University, Department of Veterinary Medicine (ZhuangLab)
   * Performed phylogenetic analysis on gene family ADTRP, mining the evolutinary relation by maximum likelihood.
   * Incorporated scripts using Python and Shell to aggregate RNA sequencing results into an organized format and to load
 the latest results onto the server, so that automatic analysis can be performed.
   * Characterized Liver Enriched-Gene 1 (LEG1) from expression profile, glycosylation type and secretion characteristics.
   * Performed RNA-seq analysis on Ischemic Cardiomyopathy samples and recognized potential transcriptional regulators.
-  * Supervisor: Prof. Jin He & Lenan Zhuang (ZhuangLab)
+  * Supervisor: Prof. Jin He & Lenan Zhuang
 
 * May. 2020 - Aug. 2021: Student Research Training Program (SRTP)
   * Zhejiang University, School of Medicine
@@ -42,7 +42,7 @@ Skills
 * Basic R for statistics
 * Linux
 * Version Control: Git
-* Some (but not so much) wet lab skills
+* Some <!-- (but not so much) --> wet lab skills
 
 Publications
 ======
