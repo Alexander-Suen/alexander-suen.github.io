@@ -1,0 +1,783 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Chapter 8 Data Structure</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5684a20b-e8fb-4b3f-bb45-99371a3c2f2d" class="page serif"><header><div class="page-header-icon undefined"><span class="icon">🥅</span></div><h1 class="page-title">Chapter 8 Data Structure</h1><p class="page-description"></p></header><div class="page-body"><nav id="2916ecee-a5df-4061-a9a5-7a37ce81b53c" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#39585946-53a2-4b79-b840-5381af6d1a72">Subroutines</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d7afec30-f574-46ea-b476-b1b451044b23">Call / Return Mechanism</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#80e444dd-c7c8-48d0-ae67-7cab69bd95ae">Saving &amp; Restoring Registers</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f78c64c2-c15f-44f2-9366-14348c421992">Library Routines</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8e2993ad-be55-4c7c-ae0e-1176374ee28d">Linking of executable image</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#866dd4ce-1f28-4321-93c1-0009ade3e680">Stack</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5c9e420d-1a2e-4695-a325-28db71881a5a">Push &amp; Pop</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#87789426-7d86-4b76-ade3-54ff95bb00c5">Underflow &amp; Overflow</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5e08032e-340c-49fa-99e2-6ab2a72273ef">The Complete Picture</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1ac68a2a-35a2-4981-a286-03c92a7879c7">Recursion</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ff1c9963-5589-4d15-b3aa-73c1cb8c6d2c">Queue</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#649c7d5c-1b6f-428c-95f0-3670403a498d">Remove from FRONT, Insert at REAR</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#13097520-6a6c-4d89-ba33-558886e82eb1">Wrap-Around</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a261e897-c083-461f-bc4d-c744ef6b53f8">Number of elements in a queue</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#798fca29-2bd8-4ecd-8dba-28e50a501c14">Tests for underflow, overflow</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#315b07fe-d41b-41aa-a1d2-5543c44aa045">Complete Picture</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#97a0abda-4774-41b9-8fd7-3c9b154f6673">Character Strings</a></div></nav><p id="e63de286-2c60-4897-962f-f0f6a3dbd917" class="">
+</p><h2 id="39585946-53a2-4b79-b840-5381af6d1a72" class="">Subroutines</h2><p id="220870fa-d7b9-4ae1-aa2b-c2d595e4538f" class="">subroutines / functions / procedures</p><h3 id="d7afec30-f574-46ea-b476-b1b451044b23" class="">Call / Return Mechanism</h3><p id="75e7aade-d6b7-40e4-b4e5-ba871058b9a8" class="">Two instructions:</p><ul id="2dc2c448-93d8-449d-a71d-4a192dd0eeb8" class="bulleted-list"><li style="list-style-type:disc">JSR:  loads R7 with the next address immediately after the address <mark class="highlight-yellow">(return linkage</mark>) of JSR; Loads the PC with the starting address of subroutine (PCoffset11). (<span style="border-bottom:0.05em solid">R7 first!!!!!!)</span></li></ul><ul id="d8bae7ac-ea80-457d-81e0-0b0969a1c166" class="bulleted-list"><li style="list-style-type:disc">JSRR: loads R7 with the next address immediately after JSRR. Loads the PC with the address contained in R3 (BaseR, jump to that address).</li></ul><ul id="bf654080-5537-419b-b909-77150aa4a0c4" class="bulleted-list"><li style="list-style-type:disc">JMP R7 (RET): the last instruction in subroutine, returning back to the “return linkage” of the caller.</li></ul><figure id="0cef6ef8-1e61-48fc-ae58-4f375a565d64" class="image"><a href="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled.png"><img style="width:591px" src="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled.png"/></a></figure><p id="862b3b8c-5555-47f0-888f-916bea205a63" class="">Call instruction (in caller) → code A (callee) → return instruction</p><p id="cf0f783a-aa78-4f59-b79f-82da8135dc40" class="">
+</p><h3 id="80e444dd-c7c8-48d0-ae67-7cab69bd95ae" class="">Saving &amp; Restoring Registers</h3><p id="44349e9f-4eef-4557-884f-c642b9525285" class="">Previous contents of registers would be stored in memory locations (are set aside for saving those register values).</p><ul id="f477bd79-7989-4d1f-bc53-c341588f389a" class="bulleted-list"><li style="list-style-type:disc">Callee save: the subroutine (the callee) saves and restores the registers.</li></ul><ul id="ddabc6c0-473d-4924-80b9-fd75bb5340bf" class="bulleted-list"><li style="list-style-type:disc">Caller save: the caller program save all the registers before JSR (jump to subroutine). E.g., R7.</li></ul><p id="85f44945-cd33-4bc3-9b49-5f95f23924b3" class="">
+</p><ul id="91eb8d89-9e9f-4991-bee8-8f6adb7bd70c" class="bulleted-list"><li style="list-style-type:disc">ST: save the register values</li></ul><ul id="1cce5b70-81a8-40fd-bd0d-2737db887734" class="bulleted-list"><li style="list-style-type:disc">LD: restore the register values</li></ul><ul id="6c6a72ca-3a4a-41ed-8a05-bff4800f9d23" class="bulleted-list"><li style="list-style-type:disc">Pseudo-op: .BLKW, set blocks to store the register values.</li></ul><p id="84776889-e21c-424d-98b2-77f40af8b451" class="">
+</p><h3 id="f78c64c2-c15f-44f2-9366-14348c421992" class="">Library Routines</h3><p id="8eed0143-d69a-4b13-b43c-b3de715d255d" class="">Hide implementation details of some complex functions.</p><p id="1fca2bd6-5a80-4e82-ad10-4ebdd81167d3" class="">Pseudo-op .EXTERNAL tells the assembler that the label (e.g., SQRT in MATH library) will be supplied by some other program fragment (module).  That module will be linked together to create the executable image.</p><p id="22ed61dc-7af1-4d76-959a-d28753400e1c" class="">
+</p><h3 id="8e2993ad-be55-4c7c-ae0e-1176374ee28d" class="">Linking of executable image</h3><p id="14a46ed4-bbc1-4399-b89a-ecb995369d0a" class="">source → assemble → 1.obj + symbol table → link as executable image ← module for library.obj + symbol table for library.</p><p id="e7832961-fc77-47e5-8f49-aa63fdaab93b" class="">Libraries are pre-assembled. </p><figure id="9669c859-394e-4bc0-a719-7c8620afa452" class="image"><a href="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%201.png"><img style="width:678px" src="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%201.png"/></a></figure><p id="0c828acb-d984-4c3e-b13d-b113302ac531" class="">
+</p><h2 id="866dd4ce-1f28-4321-93c1-0009ade3e680" class="">Stack</h2><p id="b1d76f1b-0eed-4dbb-90a5-3b7f8e6fb31a" class="">LIFO, Last in, first out.</p><p id="80ea5d14-8922-42bb-8f9e-64ae4d3e6cd0" class="">
+</p><h3 id="5c9e420d-1a2e-4695-a325-28db71881a5a" class="">Push &amp; Pop</h3><p id="3dc82066-51a0-4f42-88e1-1a8e28a3e2cd" class="">Stack pointer: keeps track of the top of the stack. (contain the address of the top of the stack.</p><figure id="63926ce9-de13-41d3-893f-843299504450" class="image"><a href="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%202.png"><img style="width:772px" src="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%202.png"/></a><figcaption>This stack grows towards zero. </figcaption></figure><pre id="b2963a1b-e295-431d-a85d-3d8b67573992" class="code"><code>PUSH  ADD R6, R6, #-1   ; R6--
+      STR R0, R6, #0    ; BaseR + #0, R0 -&gt; mem[R5 + 0]</code></pre><p id="84cd73c6-7b8b-4d23-9f58-281136045a8a" class="">R6 contains the address of the top element so the value in R6 should be accessed by BaseR + #0 (STR for push, LDR for pop).</p><pre id="03c8bb90-f870-4351-84bc-ef3e5491a3e9" class="code"><code>POP  LDR R0, R6, #0   ; R0 &lt;- mem[R6 + 0]
+     ADD R6, R6, #1   </code></pre><p id="ab8402a6-c767-495b-84a7-df94b839fa27" class="">
+</p><h3 id="87789426-7d86-4b76-ade3-54ff95bb00c5" class="">Underflow &amp; Overflow</h3><ul id="51eb4fff-245d-4fea-a77c-71babc310e36" class="bulleted-list"><li style="list-style-type:disc">Underflow: try to pop values when the stack is empty.</li></ul><ul id="7017172c-f780-4088-bbef-86edcd127cd9" class="bulleted-list"><li style="list-style-type:disc">Overflow: we can’t store a value on top of the stack because there is no space.</li></ul><p id="3095314e-8f40-478a-a194-57619479cd95" class="">As a default, R6 = the stack pointer</p><pre id="b28c70af-d46b-4bf1-89b4-b4ecd5160e3b" class="code"><code>; Test the underflow if the R6 contains x4000
+POP     R1, EMPTY
+        ADD R2, R6, R1 ; Compare stack
+        BRnz UNDERFLOW ; points to x4000
+        
+        LDR R0, R6, #0 ; POP
+        ADD R6, R6, #1
+        
+        RET
+EMPTY   .FILL xC000 
+; negative of x4000 (0100 0000 0000 0000) 
+; = xC000 (1 + 1011 1111 1111 1111 = 1100 0000 0000 0000)</code></pre><p id="a49cf223-1511-4593-a4d7-168666f4b091" class="">
+</p><pre id="037b702f-77bb-4007-8422-cce57b96f0a4" class="code"><code>; Test overflow if the stack has topped over x3FFB
+PUSH        R1, FULL ; Negative of x3FFB -&gt; R1
+            ADD R2, R6, R1
+            BRnz OVERFLOW
+            
+            ADD R6, R6, #-1
+            STR R2, R6, #0
+            
+            RET
+FULL        .FILL xC005
+; x3FFB = 0011 1111 1111 1011
+; Negative of x3FFB = 1100 0000 0000 0101 = xC005</code></pre><p id="bfe62e59-8ca7-46d9-855a-37eb4223342b" class="">
+</p><h3 id="5e08032e-340c-49fa-99e2-6ab2a72273ef" class="">The Complete Picture</h3><p id="42534edd-aec7-424a-a7d6-a14ff0192282" class="">Note: success_exit - R5 positive</p><p id="e39d2c5b-c219-49b7-92b3-faa94262e8c3" class="">failure_exit - R5 negative</p><p id="ffa84804-030d-4bc1-ba26-b34c232e1596" class="">ST / LD value of R1, R2</p><pre id="9f2bf1f9-18e2-40ab-99bc-f52f4821e463" class="code"><code>; SAVE
+ST R1, SaveR1
+ST R2, SaveR2
+
+; RESTORE
+LD R1, SaveR1
+LD R2, SaveR2
+
+; Memory for storage
+SaveR1 .FILL x0000 ; the value x0000 will be overwritten
+SaveR2 .FILL x0000</code></pre><figure id="cae578fd-2647-46e2-8944-f5370a18720c" class="image"><a href="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%203.png"><img style="width:758px" src="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%203.png"/></a></figure><p id="815eafa8-3454-4c3f-9842-4f07e7effc58" class="">
+</p><h2 id="1ac68a2a-35a2-4981-a286-03c92a7879c7" class="">Recursion</h2><p id="223080d7-17b4-4045-be59-ccc88fba6a26" class="">See Chapter 17, P569</p><ul id="7f0e0797-f9b9-4a01-a08e-06aa7b79e599" class="bulleted-list"><li style="list-style-type:disc">Towers of Hanoi</li></ul><ul id="a7a5ab03-4607-4237-8a92-f7485c09d71d" class="bulleted-list"><li style="list-style-type:disc">Maze</li></ul><ul id="b36f6386-7041-4673-9dfe-493d7d1e2bb8" class="bulleted-list"><li style="list-style-type:disc">Recursion vs Iteration</li></ul><h2 id="ff1c9963-5589-4d15-b3aa-73c1cb8c6d2c" class="">Queue</h2><p id="1296e3e6-1a42-4901-8496-71188283db7a" class="">FIFO, First in, first out.</p><p id="08e564a1-742b-42d2-9c2d-d2962b98d31e" class="">FRONT (R3): the location before the first element (R3), the value in the address of R3 is removed. </p><p id="eb393d06-50b8-46bd-9743-247a1b66d7fc" class="">REAR (R4): the location containing the most recent element that was added to the queue.</p><figure id="eb6ed429-b803-4fc6-8b59-de36edd2e36f" class="image"><a href="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%204.png"><img style="width:928px" src="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%204.png"/></a><figcaption>In (a), the first value is in x8002 (23) while the last value is 74 (in x8004). The value in FRONT has been removed from the queue.</figcaption></figure><p id="ebb8d3a0-2c80-4f19-abd4-53839a03483c" class="">
+</p><h3 id="649c7d5c-1b6f-428c-95f0-3670403a498d" class="">Remove from FRONT, Insert at REAR</h3><p id="218be623-17ed-4b83-a909-855e8ae03f54" class="">Remove from FRONT</p><pre id="df291f13-17df-427d-946a-6de7b0c6da3b" class="code"><code>REMOVE  ADD R3, R3, #1 ; R3 points to the position before the first element
+				LDR R0, R3, #0
+</code></pre><p id="134abc60-80a0-4d14-908c-8322dd5f2a71" class="">
+</p><p id="e7149ea4-6efc-4a74-88eb-9cfe4f334cd0" class="">Insert at REAR</p><pre id="b333d449-4335-43c1-bc8c-4d0d0c009803" class="code"><code>INSERT  ADD R4, R4, #1
+				STR R0, R4, #0</code></pre><p id="1e97ced6-895c-4778-81dd-313b5971ff68" class="">
+</p><h3 id="13097520-6a6c-4d89-ba33-558886e82eb1" class="">Wrap-Around</h3><pre id="2f1eb12f-ac59-4a45-ae04-f0176b4966f8" class="code"><code>; If R4 (REAR) contains x8005, then wrap-around
+REMOVE  LD R2, LAST     ; R2 &lt;- x7FFB
+        ADD R2, R3, R2  ; if R3 != x8005, Branch to SKIP_1, FRONT++
+        BRnp SKIP_1
+        
+        LD R3, FIRST ; if R3 == x8005, Then set FRONT == x8000 (to the start)
+        BR SKIP_2
+SKIP_1  ADD R3, R3, #1
+SKIP_2  LDR R0, R3, #0 ; R0 &lt;- m[R3] = the value in x8000 (restart)
+        RET
+LAST    .FILL x7FFB ; negative of x8005
+FIRST   .FILL x8000 ; the first position
+
+
+; If the queue has been inserted over x8005, then wrap-around
+INSERT  LD R2, LAST ; R2 &lt;- x7FFB
+        ADD R2, R4, R2 ; 
+        BRnp SKIP_1
+        
+        ; REAR == x8005
+        LD R4, FIRST ; Restart again
+        BR SKIP_2
+        
+SKIP_1  ADD R4, R4, #1
+SKIP_2  STR R0, R4, #0 ; R0 gets the front of the queue
+        RET
+LAST    .FILL x7FFB
+FIRST   .FILL x8000</code></pre><p id="72e52bf6-20ce-4d8a-a2ba-b275fde3e751" class="">
+</p><h3 id="a261e897-c083-461f-bc4d-c744ef6b53f8" class="">Number of elements in a queue</h3><p id="b00c4145-2a8b-40a1-864a-b53e72db0703" class="">We allow only n - 1 elements to be stored in a n-sized queue to avoid that the state of full and that of empty are identical.</p><figure id="2fd67d55-c57e-4eed-a789-4ac1e44ac1f6" class="image"><a href="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%205.png"><img style="width:640px" src="Chapter%208%20Data%20Structure%205684a20be8fb4b3fbb4599371a3c2f2d/Untitled%205.png"/></a></figure><p id="8b05d129-5404-43a5-8e36-94b304ffa8b3" class="">For a full queue, REAR + 1 == FRONT;</p><p id="afede893-26fc-48ac-a684-eda8879c05a8" class="">For a empty queue, REAR == FRONT;</p><p id="7a878962-ad0c-401e-9a82-3e6606885d25" class="">
+</p><h3 id="798fca29-2bd8-4ecd-8dba-28e50a501c14" class="">Tests for underflow, overflow</h3><p id="93326e57-42c1-4b1b-a6e9-bc429cef931f" class="">Underflow: if the queue is empty (FRONT == REAR), then you would fail to Remove elements. You should also set the R5 as 1 to indicate the error.</p><p id="4f263443-2403-40d0-b005-4243ba0bcdae" class="">Overflow: test if REAR + 1 - FRONT == 0, if true, R5 ← #1 and RET to caller.</p><pre id="2cd6e0cc-b19b-4c6d-a8be-6924322c920a" class="code"><code>; Test underflow
+TESTU   AND R5, R5, #0 ; R5 to indicate it succeeds or not
+        ; See if REAR == FRONT
+        NOT R2, R3
+        ADD R2, R2, #1 ; R2 &lt;- -R3
+        ADD R2, R2, R4 ; See if FRONT - REAR == 0
+        BRz UNDERFLOW ; ERROR, FRONT == REAR
+        
+UNDERFLOW ADD R5, R5, #1 ; ERROR PROMPT
+          RET
+
+
+; Test Overflow
+TESTO   AND R5, R5, #0
+        NOT R2, R3
+        ADD R2, R2, #1 ; R2 &lt;- -R3 = -FRONT
+        ADD R2, R2, R4 ; R4 = REAR
+        ADD R2, R2, #1 ; Test if REAR + 1 - FRONT == 0
+        
+        BRz OVERFLOW
+OVERFLOW  ADD R5, R5, #1
+          RET</code></pre><p id="6b1bd97c-eb72-4a12-9fbe-ceab20a28fab" class="">
+</p><h3 id="315b07fe-d41b-41aa-a1d2-5543c44aa045" class="">Complete Picture</h3><p id="fc96970b-7706-4cf7-a2f4-41880cac86c6" class="">See P299</p><h2 id="97a0abda-4774-41b9-8fd7-3c9b154f6673" class="">Character Strings</h2><p id="60857126-e4cc-4f3d-a94a-5630ca3b2ff9" class=""><mark class="highlight-yellow">A sequence of keyboard characters </mark>(letters, digits, and other symbols) is organized as a one-dimensional array of <mark class="highlight-yellow">ASCII codes</mark>. Terminating with null character ‘\n’ (x0000).</p><p id="ba542293-5678-4b11-aa9e-44fa88b4bdf2" class="">
+</p><p id="13e55628-d290-49d0-8aa6-2abce9bbd8e4" class="">Using strings to represent lone integers. “7982384”</p><p id="1820fc9f-d312-4e0e-9438-adf51da8d629" class="">
+</p><p id="03778c06-5157-4400-861b-1c1b4dd4a5c4" class="">
+</p><p id="2668ed3f-a18c-4915-b5e8-17a306382cfe" class="">
+</p><p id="bf34c89d-6013-41c2-8800-399bc719070e" class="">
+</p></div></article></body></html>

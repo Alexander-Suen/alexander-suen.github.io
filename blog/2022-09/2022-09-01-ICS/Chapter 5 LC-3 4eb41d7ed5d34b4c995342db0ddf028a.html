@@ -1,0 +1,779 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Chapter 5 LC-3</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4eb41d7e-d5d3-4b4c-9953-42db0ddf028a" class="page serif"><header><div class="page-header-icon undefined"><span class="icon">🛎️</span></div><h1 class="page-title">Chapter 5 LC-3</h1><p class="page-description"></p></header><div class="page-body"><p id="ec5349a5-14e5-44e5-bf8c-d7be0ca5816f" class="">
+</p><nav id="85ca4b54-cb46-4e39-a502-ecbdacfb1f99" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1c53caf8-fd00-4d8c-aa99-0f71077febe8">ISA</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a44de798-1e52-4374-9f17-81ae3190f998">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4fda8c42-93c9-43c9-9a8b-c35b765aeb3e">Operate instructions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ac62bd6e-9939-46cf-ab8a-d19312835600">NOT</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e7a81b4a-d821-4032-8650-3fe6121a39ae">ADD / AND</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e725432b-225f-45f6-bb15-d07d216ff1bd">Data Movement Instructions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#93d8d359-5bae-41ce-ac4a-c358c9fb4ee1">load</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5e36177e-77bb-40dc-acb7-1bf1f0f2f6c3">LDR</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c75e9b3f-3701-4e73-ad72-d5a789bd7db9">store</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#325ad91b-28f1-4de1-b4a5-97a7b9daccad">LEA</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0adba0c2-59b9-4abf-80e9-bc201c162014">Control Instructions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#faeb4d45-7dbc-496f-90ff-ce8a797b798d">TRAP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#51c120eb-0fc5-467b-8038-ca061249bd55">BR</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#52b85188-3e63-4c43-ad9b-3277ec30e292">JMP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#05884f0b-2902-498e-ad56-0760f9849b53">Data Path (Revisited) P175</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#04c6b811-5e87-41a2-81e6-0a3bbee17c9a">Global Bus</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#22ce41d0-a5b5-430e-80f9-006470edc504">Memory</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bfdf6411-943e-480d-9005-a6f88e2af056">ALU</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb16ea82-3b99-4a77-92bc-f038388cb59c">Register File</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f066cdcb-3d56-48a8-9b59-932c4824f5c3">PC, PCMUX</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#042a2c45-363d-4267-8f05-bee9402403f1">MAR, MARMUX</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#da71cccf-8a09-436b-96c9-e8b417a38460">Condition Code Logic</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b99c8140-6b20-42ed-afb0-ec9db88461c5">Control Unit - Finite State Machine</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#588e6029-b778-4dbb-946b-e3303b3dae7a">Instruction Cycle of LC-3</a></div></nav><p id="3b658972-2280-42fa-abcf-1b97999a77cb" class="">
+</p><p id="c4f13032-1865-480b-95bb-a318ae21afb8" class="">
+</p><h2 id="1c53caf8-fd00-4d8c-aa99-0f71077febe8" class="">ISA</h2><p id="ff3b2cb9-8442-4ad5-9057-b515b1b9122b" class="">ISA Tells programmers how to write machine language.</p><ul id="8c8773b3-0b00-4b89-87d2-5051edb54542" class="bulleted-list"><li style="list-style-type:disc">memory organization: address space, addressability</li></ul><ul id="270f2d19-b45f-4033-b536-14177f9297c6" class="bulleted-list"><li style="list-style-type:disc">register set: how many, size?</li></ul><ul id="d26eafd5-31b1-42ee-89d7-33d521cb5b80" class="bulleted-list"><li style="list-style-type:disc">instruction set: xxxx</li></ul><p id="dcb34819-9ade-4b89-814b-fddc61ec0aeb" class="">instruction set specifies: </p><ul id="aa99d3a9-e9e6-430b-af26-49794f8f46bd" class="bulleted-list"><li style="list-style-type:disc">opcodes (describe the operation)</li></ul><ul id="fc6272e8-1f87-40a1-a9a8-6b036d1d02b4" class="bulleted-list"><li style="list-style-type:disc">addressing modes (figure out where the operands are located)</li></ul><ul id="fecf00da-6dcb-4c48-a73c-0c6ceec0b35d" class="bulleted-list"><li style="list-style-type:disc">data types (acceptable representations for operands)</li></ul><p id="8978e6e4-4263-4693-ba65-7e6738c7896d" class="">
+</p><p id="4d03d2f4-c595-47a7-a7e3-da2ad00ef489" class="">instruction:</p><ul id="d9704e28-b9ed-4557-bb91-b4a8c587970b" class="bulleted-list"><li style="list-style-type:disc">opcode</li></ul><ul id="254b849e-906b-4d7d-a928-2ac1ccfb91e3" class="bulleted-list"><li style="list-style-type:disc">operand</li></ul><p id="ceee6e8e-91a2-4ca9-98e3-086d2f39c43d" class="">
+</p><h2 id="a44de798-1e52-4374-9f17-81ae3190f998" class="">Overview</h2><p id="a0a062aa-57b9-436a-9597-d3292d092fd2" class="">LC-3: memory <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>−</mo><mi>b</mi><mi>y</mi><mo>−</mo><mn>16</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">2^{16} -by-16 bits</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">16</span><span class="mord mathnormal">bi</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span></span></span></span></span><span>﻿</span></span></p><p id="81482316-8c9b-490f-9679-4c4336488b9a" class="">address space = 64K, addressability = 16 bits (size of each memory location)</p><p id="83e5ac8d-8424-4961-bf1a-281ea16b4ba6" class="">Registers: TEMP, temporary storage (access time of registers is much shorter than that of memory)</p><p id="63f62639-6770-4319-a42e-adb6b55bdce4" class="">GPR (general purpose register): R0-R7, 3-bit to identify their number, each 16 bits wide</p><p id="d21e182d-19ac-4fb5-b441-515349af6b6b" class="">
+</p><p id="69fe2b56-8f61-471f-bb39-db8eb7d71b2b" class="">Opcodes:</p><ul id="49a57d5f-0fcf-45dc-9a93-d580b3ab2f5f" class="bulleted-list"><li style="list-style-type:disc">Operate instructions: ADD, AND, NOT</li></ul><ul id="5c01a5dd-94cb-4a4f-8139-b005991d3930" class="bulleted-list"><li style="list-style-type:disc">Data Movement instructions: LD, LDR, LDI, LEA, ST, STR, STI</li></ul><ul id="30037f37-5c96-4f5c-8614-a55b479239cd" class="bulleted-list"><li style="list-style-type:disc">Control instructions: BR, JSR/JSRR, JMP, RET, RTI, TRAP</li></ul><p id="67acef5c-4ad4-4c50-aa7d-366befbf9be3" class="">Condition code setting instructions (these instructions write values into registers, based on the last instruction that altered a register): <mark class="highlight-yellow">LD, LDI, LDR, ADD, AND, NOT</mark></p><p id="b8cf7f04-fd2f-45cd-82fc-c82dc7c3c492" class="">
+</p><p id="8a36b825-3064-47a8-8e10-6528b66c20df" class="">Data type:</p><p id="94784ae8-1e49-4829-affc-a441241849cb" class="">16-bit 2’s complement integer</p><p id="ae714fc8-0849-45a5-a463-84a28da3f847" class="">
+</p><p id="51aedbd2-0f9c-4129-9957-80996dc49df9" class="">Addressing mode:</p><ul id="117f6421-fc9f-42a6-b5a2-89b4c721a800" class="bulleted-list"><li style="list-style-type:disc">PC-relative (LD)</li></ul><ul id="14412b88-22b5-42c7-8206-b35ad617873d" class="bulleted-list"><li style="list-style-type:disc">BaseR + offset (STR)</li></ul><ul id="c084a232-94c2-4952-a62f-e2211e81904c" class="bulleted-list"><li style="list-style-type:disc">Immediate (ADD)</li></ul><ul id="0a6c613d-e536-49e4-a42a-f6296af69620" class="bulleted-list"><li style="list-style-type:disc">Indirect (LDI)</li></ul><ul id="7845536d-967e-411a-af96-4afeb2b6dcae" class="bulleted-list"><li style="list-style-type:disc">Register (ADD)</li></ul><p id="a5dc7ea1-fdaf-4180-ab00-81681269c635" class="">
+</p><p id="aa3a1a82-57fc-462e-a6f9-de624dc43237" class="">
+</p><p id="e2ec451b-21c0-463a-ba77-3ce359a525b0" class="">
+</p><h2 id="4fda8c42-93c9-43c9-9a8b-c35b765aeb3e" class="">Operate instructions</h2><p id="11bcf858-6f4f-41ac-bd0e-f89405818cd2" class="">ADD, AND, NOT</p><p id="10af2a53-b40e-48b4-b681-dda039f32522" class="">
+</p><h3 id="ac62bd6e-9939-46cf-ab8a-d19312835600" class="">NOT</h3><p id="78af31f4-c4c6-4bf7-8278-ec1b3ce10c1f" class="">In the processing unit</p><p id="5cdf3c59-1a30-4808-a62a-b16f4da6fa7c" class="">ALU + REG FILE (TEMP)</p><figure id="0a200d92-5a7a-425d-876f-0dff98f12a9e" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled.png"><img style="width:592px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled.png"/></a></figure><p id="f713f9a8-6fec-42c1-8c54-99bdb34ff83a" class="">P704, REG FILE (src) → SR1 OUT → ALU → GateALU → Processing bus → REG FILE  (dst)</p><p id="27ddd499-f744-4d59-bf30-beffe9f49850" class="">
+</p><h3 id="e7a81b4a-d821-4032-8650-3fe6121a39ae" class="">ADD / AND</h3><p id="afd98d41-4ca5-4aa0-bf7f-b78fcbfda518" class="">(DR, SR1, SR2)</p><figure id="8fc50e1c-9a48-4dbd-8048-a233a016b914" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%201.png"><img style="width:258px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%201.png"/></a></figure><figure id="4ace8212-f45d-4674-ae5b-acaf3599230f" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%202.png"><img style="width:664px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%202.png"/></a></figure><p id="5749328b-869f-43d7-bd03-e7b52eb397ae" class="">See P704, SR2MUX is selected by IR[5], specifying whether use imm5 or SR2.</p><p id="c79155e8-104f-444e-a36d-4da8b47bc02d" class="">
+</p><p id="3bf583ba-96ec-4a99-b530-d8edf97152ba" class="">
+</p><h2 id="e725432b-225f-45f6-bb15-d07d216ff1bd" class="">Data Movement Instructions</h2><p id="15081c97-5cf3-4989-ab75-9300b8c3b944" class="">The location of the destination operand is over written with the source operand. </p><ul id="d2740bec-d248-4afd-9030-715d1c2f6b22" class="bulleted-list"><li style="list-style-type:disc">load</li></ul><ul id="641b7dc2-4e9a-4db7-a2dc-82586dc4802f" class="bulleted-list"><li style="list-style-type:disc">store</li></ul><ul id="b12b6a63-ca4f-4db7-a65f-91359c9aa29f" class="bulleted-list"><li style="list-style-type:disc">LEA</li></ul><p id="7f8d3923-401e-4bc2-88c0-14def549f893" class="">
+</p><h3 id="93d8d359-5bae-41ce-ac4a-c358c9fb4ee1" class="">load</h3><p id="c456acc5-2e61-4b6e-ac60-91e931261593" class="">data: register ← memory</p><p id="3d6a40fa-5117-4d90-89be-13cc8560c8a5" class="">LD: PC-relative, PCoffset9, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>256</mn><mo>≤</mo><mi>o</mi><mi>f</mi><mi>f</mi><mi>s</mi><mi>e</mi><mi>t</mi><mn>9</mn><mo>≤</mo><mo>+</mo><mn>255</mn></mrow><annotation encoding="application/x-tex">-256 \le offset9 \le +255</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">−</span><span class="mord">256</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.10764em;">ff</span><span class="mord mathnormal">se</span><span class="mord mathnormal">t</span><span class="mord">9</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">255</span></span></span></span></span><span>﻿</span></span>, </p><p id="d34271d1-f7bf-479f-b78a-34f3eaaaef08" class="">LDR: base + offset</p><p id="cef181a3-5218-4525-9253-93eba4660032" class="">LDI: indirect, read address from memory location and load / store that address</p><p id="a159625f-336b-4ec3-b7c8-2cf82771fdd8" class="">Note: PC incremented is done in FETCH, which is before the EVALUATE ADDRESS stage.</p><p id="8e71bb81-9893-44f1-9eb3-fe8692030b96" class="">
+</p><p id="077351c1-b2c6-40ba-bdca-f947a5d9a38d" class="">LD:</p><figure id="83bc1166-bac9-4fea-8252-73cafeecebc9" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%203.png"><img style="width:724px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%203.png"/></a></figure><p id="c1804736-8a13-422f-a2f6-f9f0a54c2c60" class="">P704, IR → SEXT[8:0] → ADDR2MUX + ADDR1MUX (PC) → MARMUX → GateMARMUX → MAR → Memory → MDR → GateMDR → REG FILE (dst) + condition code</p><p id="8bdcba95-70ae-41d7-8f10-f5ead973a2ea" class="">
+</p><p id="f04f70e6-5ae5-49bb-a085-275ca123835f" class="">LDI:</p><p id="48aa9a7a-f85e-4c55-9a44-903bd641e6ad" class="">IR → SEXT[8:0] → ADDR2MUX + ADDR1MUX (PC) → MARMUX → Processor Bus → <mark class="highlight-yellow">MAR → Memory → MDR (for this time, it contains an address (value) for the next interrogate) → GateMDR → processor bus → MAR (that value as the new address) → Memory → MDR</mark> → GateMDR → processor bus → REG FILE</p><figure id="1c81925d-4bec-4786-b63a-9e56744309df" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%204.png"><img style="width:720px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%204.png"/></a></figure><p id="fd82737f-1f73-4e04-88c0-3617593f2640" class="">
+</p><h3 id="5e36177e-77bb-40dc-acb7-1bf1f0f2f6c3" class="">LDR</h3><p id="2d7d93f8-3dc4-402d-85e4-1f473ee7daac" class="">IR → SEXT[5:0] → ADDR2MUX + ADDR1MUX (SR1, instead of PC) → MARMUX → GateMARMUX → processor unit → MAR → Memory → MDR → GateMDR → REG FILE (DR)</p><figure id="c92de5b9-d1db-4b46-ac43-573295551329" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%205.png"><img style="width:721px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%205.png"/></a></figure><p id="cd2f2ecf-fb24-4b1f-81cd-e05424d7eb17" class="">
+</p><p id="5cfe4541-be7d-4b13-81a1-5c36e0505486" class="">
+</p><p id="7697451f-307f-414b-a113-c463b8d267fe" class="">
+</p><h3 id="c75e9b3f-3701-4e73-ad72-d5a789bd7db9" class="">store</h3><p id="454b4725-de4d-4dbc-bc89-042c8ffa8c13" class="">data: register → memory</p><p id="66618be2-0912-4d98-85cf-2a6af8ec3ef9" class="">ST: PC-relative</p><p id="38beb7fe-5751-45d1-85c1-9d7e00c558b1" class="">STR: base + offset</p><p id="4bce7d1f-d8cf-4159-b8a6-12d8a1d60765" class="">STI: indirect</p><p id="b81d9e69-416e-4565-a0b3-9a6de9234517" class="">Note: to store a value in a memory location, you should have both the address (in MAR) and the value (in MDR).</p><p id="135c44d0-e428-4e64-81f2-efc920433474" class="">
+</p><p id="8557a946-4ac2-4338-be27-24a0df552dd8" class="">ST:</p><figure id="cbe2a36c-3313-4397-a35a-b53cc3d015e0" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%206.png"><img style="width:784px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%206.png"/></a></figure><p id="74e5c119-7538-4706-b3d6-1c4dd7148eb4" class="">Compared to LD, the MDR is reversed. </p><p id="7ff61adf-27db-4cf6-a754-549db657a53e" class="">
+</p><p id="2d94f88a-e426-4a81-8fd7-b9d8f71dd623" class="">STI: P704</p><p id="b9043bf6-1e03-4545-94d3-55539acc389a" class="">IR → SEXT[8:0] → ADDR2MUX + ADDR1MUX (PC) → MARMUX → GateMARMUX → Processor bus → MAR → Memory → MDR → Processor bus → MAR (as an address to store the value) </p><p id="3f7da8f0-de87-42ef-a503-4d9c1085ce87" class="">Src → MDR </p><p id="92d2c44a-8267-434b-9af7-aea9f33d055d" class="">Access the memory and write that value in MDR to that memory location.</p><figure id="db6408f0-5ab5-4395-a403-c25211c6d252" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%207.png"><img style="width:744px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%207.png"/></a></figure><p id="91a243a4-7766-4834-a931-a5ea09cf194b" class="">
+</p><p id="8fb9f8e0-c9e3-4edd-8416-5dd72c5d6a4d" class="">STR:</p><p id="a70c5060-d358-49c1-ada9-586ea42ca648" class="">IR → SEXT[5:0] → ADDR2MUX + ADDR1MUX (BaseR) → MARMUX → GateMARMUX → processor unit → MAR → Memory</p><p id="127bebc9-1e48-420a-839a-9bbbe81f785e" class="">Src (REG FILE) → </p><figure id="3789c7fa-7559-4a4c-9f01-54105ab2c1b4" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%208.png"><img style="width:703px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%208.png"/></a></figure><p id="8dcb106e-16ec-4c45-9bf1-d3e8898f3f48" class="">
+</p><p id="1c7b34c3-6c7c-41b9-ba13-088a612f7726" class="">
+</p><p id="74c048da-3685-4f21-b2c1-2a1518b1f125" class="">
+</p><p id="dc253ba2-f24a-46a7-a16c-77d44151f90a" class="">
+</p><p id="aac944a3-eaab-497c-abee-6e99560220f6" class="">
+</p><h3 id="325ad91b-28f1-4de1-b4a5-97a7b9daccad" class="">LEA</h3><p id="a010cb34-8085-40f0-8ad9-42fb5ae27003" class="">Load effective address, load / compute the address (specified by PCoffset9) value and store the value into DR.</p><p id="e4966c06-6d95-4bcc-9c14-4124fbd7c0e6" class="">It <mark class="highlight-yellow">doesn’t read memory </mark>and doesn’t set condition codes. (No MAR and MDR)</p><p id="b8cc9ab8-e963-4feb-b5fa-dc82fb1e5675" class="">It is not adde<mark class="highlight-yellow">d in ALU. ALU only implements operation (ADD, NOT, AND) from REG FILE or immediate n</mark>umber.</p><p id="e91b3b69-de9a-4f0c-80ea-213c22adad54" class="">IR → SEXT[8:0] → ADDR2MUX + ADDR1MUX (PC) → Get the effective address → MARMUX → GateMARMUX → processor bus → REG FILE (Dst)</p><figure id="1b1312af-1fa1-44dd-b1fc-7421cc2b9658" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%209.png"><img style="width:708px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%209.png"/></a></figure><p id="8bd1cb88-8622-4c09-b08d-53d7334b3598" class="">
+</p><p id="049ebae7-dc9c-4628-9ccf-1994f58d4613" class="">
+</p><p id="a7e98908-49f3-4d41-9f21-5adb08b32e26" class="">
+</p><h2 id="0adba0c2-59b9-4abf-80e9-bc201c162014" class="">Control Instructions</h2><h3 id="faeb4d45-7dbc-496f-90ff-ce8a797b798d" class="">TRAP</h3><p id="b1142e79-8e2c-4ac7-95d1-fd486abf28ef" class="">service call, the called service routine is specified by trapvector8</p><ul id="661ce405-0bbd-4d72-90e7-4f7038d6f88d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Changes PC to the address of an OS “service routine”</mark></li></ul><ul id="f5c68a83-7f90-41fa-8b8e-e08e2ef2070f" class="bulleted-list"><li style="list-style-type:disc">routine will return control to the next instruction after TRAP (e.g., IN)</li></ul><p id="a5ffdb21-3ffc-4cdc-8eb7-5d2a7f8f044f" class="">
+</p><h3 id="51c120eb-0fc5-467b-8038-ca061249bd55" class="">BR</h3><p id="8433c09a-b9e7-4a04-84c6-5339c4ea7bd8" class="">Conditional branch</p><p id="de77f3f3-6a10-4e22-87aa-05c1b9ead8b7" class="">Take condition code registers’ value as control signal of PCMUX </p><p id="605db95e-3b74-4285-ace6-f1b4fc13a4cd" class="">The address of the next instruction PC = PC (has incremented) + offset9</p><figure id="aeff22c3-082d-4b45-8c50-ab4bf8f15137" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%2010.png"><img style="width:727px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%2010.png"/></a></figure><p id="bb63e0b0-7629-4143-bd58-8233ddf1cead" class="">
+</p><p id="81c609fa-bcab-4852-a84e-b1ab6f03830c" class="">Methods of loop control:</p><ul id="ef138b71-3dd3-4c7f-8bd1-5230fda86c09" class="bulleted-list"><li style="list-style-type:disc">Counter</li></ul><ul id="b8090994-b0ad-4277-b297-47f8b007a3b6" class="bulleted-list"><li style="list-style-type:disc">Sentinel</li></ul><p id="60324ebf-4aaa-4cf6-85a7-ff4157d406da" class="">
+</p><h3 id="52b85188-3e63-4c43-ad9b-3277ec30e292" class="">JMP</h3><p id="8f4d364b-8424-4ad4-9db7-8eefce0fff4b" class="">REG FILE → SR1 OUT → ALU → GateALU → processor bus → PCMUX</p><figure id="d7ee614d-42fc-4061-9db6-c1cfa96dc7de" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%2011.png"><img style="width:724px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%2011.png"/></a></figure><p id="e4d0b972-66b2-4c15-accc-e89bda0a37bf" class="">
+</p><p id="3c35226d-215c-41a2-9ae8-5cc5593f180a" class="">
+</p><p id="d535c1ae-f0eb-47ff-bbcc-2333b73cb648" class="">
+</p><h2 id="05884f0b-2902-498e-ad56-0760f9849b53" class="">Data Path (Revisited) P175</h2><h3 id="04c6b811-5e87-41a2-81e6-0a3bbee17c9a" class="">Global Bus</h3><p id="8e9bead7-78a6-4f70-9c41-f23f0e5d087c" class="">Consist of 16 wires, allowing one structure to transfer up to 16 bits of information to another structure. Exactly one value (word) can be transferred over the global bus. </p><p id="6fe63b7f-22ad-4010-87f9-876f9e898923" class="block-color-red">Any components can read the global bus.</p><p id="9dd3e475-0b8a-488b-aa4a-9567e8d96954" class="">
+</p><p id="d53afd34-7b6a-44ef-95cd-23f5fbfe2b4b" class="">Tristate device: The input arrow into the global bus always follows a not filled-in triangle, allowing the computer’s control logic to <mark class="highlight-red">enable exactly one supplier to provide information to the bus at any one time</mark>. See GateMARMUX, GateMDR… in P704.</p><p id="8298efbe-7d8f-4dda-95ae-b661d0cc27d9" class="">
+</p><p id="02d14802-3d6f-41e5-85af-15752e0aadd2" class="">Register only captures the data from the global bus if it’s write-enabled by the control unit. </p><p id="4cc331b7-de68-431f-a657-a9af29fde1de" class="">The structure wishing to obtain the value being supplied can do so by asserting its LD.x (load enable) signal (similar to write enable in Gated D Latch).</p><p id="0a70078b-0a01-4911-8ca0-2fa8dce7e123" class="">See LD.REG, LD.PC, LD.MDR, LD.MAR… in P704.</p><p id="394f1aba-5aa2-42e8-9de8-023e6e6762fc" class="">
+</p><h3 id="22ce41d0-a5b5-430e-80f9-006470edc504" class="">Memory</h3><ul id="fca4f4cb-7cdf-463b-b002-c7a2fdb3c1ed" class="bulleted-list"><li style="list-style-type:disc">Memory is accessed by loading the MAR with the address of the location to be accessed. Then control signals reads the contents of that location and the result of that read is delivered by the memory to the MDR. </li></ul><ul id="4ea1c482-a814-44db-bb3f-0b520ffd994b" class="toggle"><li><details open=""><summary>M[MAR] in memory locations → control signals → delivered to MDR by the memory. </summary></details></li></ul><ul id="afdf1a6c-f659-406c-8051-1811cc23569d" class="bulleted-list"><li style="list-style-type:disc">Store: what is to be stored is loaded into the MDR. Then control signals asset a write enable signal in order to store the value contained in MDR in the memory location specified by MAR (so, MDR and MAR both point to the memory).</li></ul><ul id="7706e885-cd4e-4e18-b124-5ec0d385e1cc" class="toggle"><li><details open=""><summary>The value to be stored → MDR → write enable signal (LD.MDR) → store the contents in MDR into the address specified in MAR ← MAR (LD.MAR)</summary></details></li></ul><p id="c2edc90c-6928-4817-b2d3-c3f9c3b17b98" class="">
+</p><h3 id="bfdf6411-943e-480d-9005-a6f88e2af056" class="">ALU</h3><p id="ec5936c8-ebda-46aa-a83a-17e4f4a2ccbb" class="">AND, ADD, NOT (in LC-3)</p><p id="55047ad1-7675-4ced-a2c7-d367642cb694" class="">ALU only accepts values from REG FILE (SR1, SR2) or SEXT immediate numbers(SR2). </p><p id="8408bea1-de07-44ce-8b7a-d6e9a5ec6e21" class="">Which to choose is determined by select line of the SR2MUX (IR[5], control signal).</p><p id="852f1303-0cd7-4363-8551-82dead99e2b9" class="">
+</p><h3 id="bb16ea82-3b99-4a77-92bc-f038388cb59c" class="">Register File</h3><p id="12066fb2-b521-4b0d-91b8-83ddd0511b97" class="">Two read addresses (SR1, SR2), one write addresses (DR).</p><p id="7bd7fb22-c7dd-4497-8528-7e9a9e6f8668" class="">Input only from global bus (from ALU / REG FILE or memory read (LD)).</p><p id="d6d45dfc-9944-4241-bc43-bf399be3cbf1" class=""><mark class="highlight-yellow">Data for storing in the memory passes through ALU</mark>. </p><figure id="2aa4c957-501c-43a9-bd08-1e786753a572" class="image"><a href="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%2012.png"><img style="width:566px" src="Chapter%205%20LC-3%204eb41d7ed5d34b4c995342db0ddf028a/Untitled%2012.png"/></a><figcaption>STR, store the value of the register into MDR, then into memory.</figcaption></figure><p id="0f9cb43c-9004-44b7-8eef-7b8dcb1a420d" class="">
+</p><h3 id="f066cdcb-3d56-48a8-9b59-932c4824f5c3" class="">PC, PCMUX</h3><p id="a0c5af69-72fb-4588-a826-578479c86dc0" class="">(MAR ← PC) <mark class="highlight-blue">At the start of each instruction cycle, PC is supplied to MAR over global bus.</mark></p><p id="32d9cf51-6240-4ef7-b709-665ae144106f" class="">PCMUX: (left to right)</p><ul id="abdfd3ec-f616-4598-89d8-b106bb074bf6" class="bulleted-list"><li style="list-style-type:disc">TRAP (from the global bus)</li></ul><ul id="becfa2ab-76af-4833-b315-d06d9ce53623" class="bulleted-list"><li style="list-style-type:disc">JMP, BR (from address adder, like PC + offset9, not ALU)</li></ul><ul id="d6370223-b61e-4715-8bfa-5029cb46732e" class="bulleted-list"><li style="list-style-type:disc">PC increment</li></ul><p id="8b96e7d4-74ac-4cd7-b339-0c8cf0031a16" class="">
+</p><h3 id="042a2c45-363d-4267-8f05-bee9402403f1" class="">MAR, MARMUX</h3><p id="9e57e058-508a-49ca-ae7f-10cc83abfe6f" class="">Two inputs:</p><ul id="ca5255bf-9a91-4db9-b1c8-597958cb8675" class="bulleted-list"><li style="list-style-type:disc">ZEXT, trapvector, system call, TRAP</li></ul><ul id="751bb8ac-c015-465a-8418-a422b3d4f4f9" class="bulleted-list"><li style="list-style-type:disc">Special address adder, PCoffset, BaseRoffset… including ADDR2MUX and ADDR1MUX.</li></ul><p id="dbd375fc-f6d1-4540-b87b-368153a4462b" class="">
+</p><h3 id="da71cccf-8a09-436b-96c9-e8b417a38460" class="">Condition Code Logic</h3><p id="e3bda40f-c49f-4b0f-80d8-c41903b665a1" class="">Looks at value on the bus to determine N, Z, P.</p><p id="03f00514-7b7d-40e0-ae46-be155e18231c" class="">Only set when <a href="http://LD.CC">LD.CC</a> enables them (instructions: LD, LDI, LDR, ADD, AND, NOT)</p><p id="73daadc0-5d28-4df7-8439-704e19c84c15" class="">
+</p><h3 id="b99c8140-6b20-42ed-afb0-ec9db88461c5" class="">Control Unit - Finite State Machine</h3><p id="1dbac7eb-5802-4041-97bf-a96c15021936" class="">Provide control signals for the machine cycle.</p><ul id="46045afe-1e95-4ad9-b75f-151d57bf4d89" class="bulleted-list"><li style="list-style-type:disc">Who drives the bus? GateMARMUX, GateALU, GateMDR</li></ul><ul id="09c45611-65f4-452b-a4a6-38c513a4dfd7" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Which register is write enabled</mark>? LD.CC, LD.MDR, LD.REG</li></ul><ul id="9f23705c-d993-4347-ac84-64dbe27ca19d" class="bulleted-list"><li style="list-style-type:disc">Which operation can ALU perform? ALUK…</li></ul><ul id="9c1d23af-c883-4b58-b870-98d3e7b82d17" class="bulleted-list"><li style="list-style-type:disc">…</li></ul><p id="877b9e48-83fe-4d02-b2f5-0efb3b1ec7e2" class="">Load enable (LD.REG…) is aimed at registers. </p><p id="ac18a8d3-3835-43dd-8695-ab9d333517e6" class="">
+</p><h2 id="588e6029-b778-4dbb-946b-e3303b3dae7a" class="">Instruction Cycle of LC-3</h2><ul id="45ba0cce-a7ac-43d0-ba85-8cfa7559223b" class="bulleted-list"><li style="list-style-type:disc">FETCH: MAR ← PC, PC ← PC + 1; MDR ← M[MAR]; IR ← MDR</li></ul><ul id="b82ab295-4b60-48d1-86b4-d25f51f19d10" class="bulleted-list"><li style="list-style-type:disc">DECODE: </li></ul><ul id="48e128d5-b334-4004-ae46-a63f609febf9" class="bulleted-list"><li style="list-style-type:disc">EVALUATE ADDRESS: e.g., ADDR1MUX + ADDR2MUX (address adder)</li></ul><ul id="ba50b689-30eb-4be1-b16e-7792a7af4192" class="bulleted-list"><li style="list-style-type:disc">FETCH OPERAND: MAR - operand address in the memory location; MDR - value of the operand (operand fetch)</li></ul><ul id="eaca64c9-7f18-4f24-b85b-33957d8be60e" class="bulleted-list"><li style="list-style-type:disc">EXECUTE: E.g., ALU (ADD, NOT, AND)</li></ul><ul id="1c989b72-173a-4bb5-ab83-ac519bd9839d" class="bulleted-list"><li style="list-style-type:disc">STORE RESULT: store the result into the destination. E.g., store the result of ALU in the Register (ADD), or load the value in MDR in GPR. Setting the condition code.</li></ul><p id="77adf898-47fd-4dc5-aa1f-1598700b6883" class="">Note: ADD, AND, NOT don’t need EVALUATE ADDRESS; LD, LDI, LDR don’t need EXECUTE.</p><p id="b2f151f1-7d21-4e8c-839b-b16cc2fb3cc1" class="">
+</p><p id="62c14134-48cf-4880-9035-613ccda28d50" class="">
+</p><p id="96c2786e-9552-4b62-915e-d34de5a82717" class="">
+</p><p id="8cc40885-d3b2-4d09-9b11-4e1666b439df" class="">
+</p><p id="b8c96ffc-6945-4273-8b76-aa979be509eb" class="">
+</p><p id="120ead47-df80-40fd-b164-6cf4c035f978" class="">
+</p><p id="8974f76c-8201-4fa9-822c-fb711db5dc3a" class="">
+</p><p id="6033ae78-d7c0-4504-9b12-39f2519ceea8" class="">
+</p><p id="ed1e4284-8ee5-4090-babe-f68b178b89f5" class="">
+</p><p id="ececbeaf-8348-4c99-92c8-dda3abeac334" class="">
+</p><p id="5bac57e6-66ba-45e8-ad33-cff032ac7e2b" class="">
+</p><p id="be1a5af1-87ac-4dce-8566-5abca7382643" class="">
+</p><p id="8a3a517b-e93d-4046-bf73-73075ad1efd2" class="">
+</p><p id="c0963226-b6c5-47ae-bc7b-5ed555f5d0df" class="">
+</p><p id="ec689fbc-a1ca-423d-8bc2-5086ec21debe" class="">
+</p><p id="9727c3c9-00f4-4805-aec9-9b7ad53bf6af" class="">
+</p><p id="0db6d571-c76a-47c6-a2ef-623d2283b7b5" class="">
+</p><p id="8727852f-15ab-4e4e-a31c-f3529f04b84a" class="">
+</p><p id="928e1ace-059f-422f-83bb-41eb7065dd9d" class="">
+</p><p id="20f97c25-e3db-4802-baa2-b200c859bb1b" class="">
+</p><p id="7ddafa1b-ca5a-4d7e-b015-70f582f8c84a" class="">
+</p><p id="986334f0-f461-49f9-8f83-fde17288841a" class="">
+</p><p id="78696165-2aa0-4992-8ce0-11ee82d83661" class="">
+</p><p id="5e4b7c45-4265-4441-a357-30e2f58c7e35" class="">
+</p><p id="2333f940-7375-431d-b827-05895052e0ab" class="">
+</p><p id="5617576e-c9d5-4c3b-9a13-1ec81bba2c9a" class="">
+</p><p id="8f23ea43-26bd-4a4d-acff-e79ac0341bf7" class="">
+</p><p id="adef7655-bec5-42c3-8382-e117d8fcac95" class="">
+</p><p id="df75e6c9-5ee2-49a1-80e5-122b66cb557e" class="">
+</p><p id="3047a731-4646-4f99-9e5b-2a4b52080a08" class="">
+</p><p id="cac4f74b-edae-4165-97f6-5f7959b36cbf" class="">
+</p><p id="a54dabbe-c40c-4c18-9827-5e49a087004b" class="">
+</p><p id="6d4dbffd-3fe4-47b5-b537-26f73a20ee91" class="">
+</p><p id="47b2bef9-318f-49fe-b069-9d4f764d6b17" class="">
+</p><p id="6fb9158f-16d3-4f3f-81f8-3fb4c6186b13" class="">
+</p><p id="70a588d9-f349-44cb-9012-942a09ba095f" class="">
+</p><p id="2d550023-a319-4b73-8f1e-898cea34fd0f" class="">
+</p><p id="5689fcd4-507c-40fb-b6f7-9637484397db" class="">
+</p><p id="fc056fd8-4881-483b-bc93-728814995bcc" class="">
+</p><p id="ebae557c-d4be-4619-b4f5-63a4a99c71f2" class="">
+</p><p id="313559cf-5766-4adc-9c66-09bf0e9646ac" class="">
+</p><p id="04a56702-db0d-4712-abf3-48a580a7ced4" class="">
+</p><p id="07de5014-89a9-4bce-8624-06991f16bba7" class="">
+</p><p id="d872279e-2e28-4801-9846-3308c89998f5" class="">
+</p><p id="5abd773d-cf3a-4b66-a239-f8eee521e50f" class="">
+</p><p id="f28f2415-7e64-4cc7-ad61-b829825eb423" class="">
+</p><p id="1195681d-efe4-4a94-bcee-c773c2806551" class="">
+</p><p id="790da949-986f-4bea-8dfd-9c7de1a54659" class="">
+</p><p id="2ec0bc58-d273-4964-85cf-dbcfc09bba53" class="">
+</p><p id="52228763-60e6-4028-bd34-61e411868fb7" class="">
+</p><p id="53a3c34a-5803-470e-b3f9-811f8f32b057" class="">
+</p><p id="533cf40a-15b4-419d-b866-dcd6b0420cba" class="">
+</p><p id="7c5e1db4-8d3e-40cb-99f5-bfbc88dd26c6" class="">
+</p><p id="30c282ee-2dbc-4046-9d9d-056de6f732e1" class="">
+</p></div></article></body></html>

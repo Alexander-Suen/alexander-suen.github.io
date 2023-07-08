@@ -1,0 +1,698 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Chapter 7 Assembly Language</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="bad36638-02e3-4e93-a058-352ae838770b" class="page serif"><header><div class="page-header-icon undefined"><span class="icon">📺</span></div><h1 class="page-title">Chapter 7 Assembly Language</h1><p class="page-description"></p></header><div class="page-body"><nav id="af8c5c23-9d95-4724-9194-147f199bbb8d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#69718c85-7615-495e-81e3-e46929f394c3">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#083b8468-c444-4408-8aca-f77271d34668">Symbolic Name (labels)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb41dd9a-9cd5-4d59-a74a-3d4621a31ca6">Pseudo-ops (assembler directives)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7d8a2782-574d-467f-9058-50aeee1af5db">Operands</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0fc7616b-4cce-4893-9506-6ce6d4165a39">Registers</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a8b063f5-151c-4cba-9d4c-4c17c186b1b5">Numbers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8163b56e-dcaf-4518-9368-35b5005907ca">Assembly Process</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#97cec6de-aa04-49c5-8944-31eabdad8e5e">First pass: constructing the symbol table</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#77bd8ff5-e55c-437b-8c34-b57514850371">Second pass: generating the machine language program</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3b04b195-9b64-4aa7-845e-149e9525eedd">After Assemble</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb8644e8-6e7a-4bff-8bb5-7619b7c8eb32">Linking</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9c695b92-803f-4647-b00d-e124f913524b">Loading</a></div></nav><h2 id="69718c85-7615-495e-81e3-e46929f394c3" class="">Overview</h2><p id="d15dc0ef-f55f-49c9-95aa-6fede5591630" class="">Assembler: Convert assembly language into machine instructions (codes). Assembler is ISA-specific (e.g., LC-3 assembly, x86 assembly)</p><p id="6ecb0481-28c6-40f1-bc87-c02571d9b4a9" class="">Compiler: Convert high-level programming language into machine instructions. High-level language is ISA-independent. </p><p id="d004091c-a185-46eb-a354-860acaa03a77" class="">See CSAPP P41</p><figure id="4ac15168-fd55-4b1a-a505-069e8342d09f" class="image"><a href="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled.png"><img style="width:682px" src="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled.png"/></a></figure><p id="f4bf9a01-1a3e-4dc4-ae05-499fb826e7f6" class="">
+</p><figure id="64427dd4-345e-441f-a553-ed90872d6c04" class="image"><a href="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%201.png"><img style="width:842px" src="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%201.png"/></a></figure><p id="966c2f42-6a11-4541-ab58-0bb25f61b2fc" class="">
+</p><p id="00c2ce78-b657-4aa8-8c11-06c27ffba79e" class="">
+</p><p id="fb9d2ab2-7c8a-490c-bf4f-f6dbf6b13374" class="">
+</p><h2 id="083b8468-c444-4408-8aca-f77271d34668" class="">Symbolic Name (labels)</h2><p id="c3183e98-e410-4ed4-ab19-762856c2be2a" class="">Placed at the beginning. Used to identify memory locations. Give a symbolic name to a memory location (address). </p><ul id="06050063-ee2c-422c-938c-27a2dfef5bc0" class="bulleted-list"><li style="list-style-type:disc">As a target of branch. AGAIN in the example</li></ul><ul id="ced9cb4b-a8d7-476d-b0e1-3213e3c5e754" class="bulleted-list"><li style="list-style-type:disc">As values stored / loaded in that location. E.g., NUMBER, SIX.</li></ul><p id="eba47672-2d94-473f-a9df-08365dd01261" class="">
+</p><h3 id="fb41dd9a-9cd5-4d59-a74a-3d4621a31ca6" class="">Pseudo-ops (assembler directives)</h3><ul id="8cf94613-e36d-4531-bd56-8ec4181ce841" class="bulleted-list"><li style="list-style-type:disc">They are not operations executed by the program</li></ul><ul id="821a1a30-66ad-4a39-ac88-91c7bb8b50cf" class="bulleted-list"><li style="list-style-type:disc">Used by assembler</li></ul><ul id="bd88373c-d41f-43f7-9c1e-1cee61043857" class="bulleted-list"><li style="list-style-type:disc">Starts with dot</li></ul><figure id="58434bda-ef11-45ab-a436-3d854c050f59" class="image"><a href="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%202.png"><img style="width:683px" src="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%202.png"/></a></figure><ul id="b26fdc97-c1e5-498a-b66b-5bf0a9c7bc26" class="bulleted-list"><li style="list-style-type:disc">.ORIG x3000 ; Set the starting address of the program as x3000. Tells the assembler where in memory to place the LC-3 program. </li></ul><ul id="472ddc1d-e0f4-4e5f-ab2c-4f04ba48838f" class="bulleted-list"><li style="list-style-type:disc">.END ; End of program. Telling the assembler where the assembly language program ends. </li></ul><ul id="ed7c38e8-ab9b-4fb0-9ee9-e0db63422765" class="bulleted-list"><li style="list-style-type:disc">.BLKW ; Block of words, set aside some number of sequential memory locations in the program.</li></ul><ul id="d1f15e4e-bab9-4d0b-86ef-979576dcbd07" class="bulleted-list"><li style="list-style-type:disc">.FILL x00FA; allocate one word, initialized with value n</li></ul><ul id="6ff61df8-dd9a-48ee-8e22-ebaf198e2f84" class="bulleted-list"><li style="list-style-type:disc">.STRINGZ “Power Overwhelming”; n-character string, allocate n + 1 memory locations, initialized with characters within the quotes and a terminator. The characters should be zero-extended ASCII codes. x0048 - ‘H’</li></ul><p id="c8dcbe23-910f-4070-88e3-146926be77f6" class="">
+</p><figure id="b8d844d6-0e50-49ef-a6d2-f1b755d4f379" class="image"><a href="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%203.png"><img style="width:696px" src="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%203.png"/></a></figure><p id="d1ce0eeb-3c8a-40ab-9991-c138964c051f" class="">
+</p><p id="a6d318e9-3199-4af5-b3d9-b6dc2765b12b" class="">
+</p><h2 id="7d8a2782-574d-467f-9058-50aeee1af5db" class="">Operands</h2><h3 id="0fc7616b-4cce-4893-9506-6ce6d4165a39" class="">Registers</h3><p id="c7762b70-8893-4283-97fd-77df4e377de2" class="">R0 - R7 (LC-3)</p><p id="8db07ace-34f6-4a4b-9dc1-75efdb96335c" class="">
+</p><h3 id="a8b063f5-151c-4cba-9d4c-4c17c186b1b5" class="">Numbers</h3><ul id="521dd1c6-e8bc-40eb-afe6-8b83985fa36a" class="bulleted-list"><li style="list-style-type:disc">Binary: b1032</li></ul><ul id="0f3aef32-0169-4296-96f9-701278ddc67e" class="bulleted-list"><li style="list-style-type:disc">Decimal: #3</li></ul><ul id="e2e1fed2-d22c-4cea-8542-528912b50baa" class="bulleted-list"><li style="list-style-type:disc">Hexadecimal: x38FA</li></ul><h2 id="8163b56e-dcaf-4518-9368-35b5005907ca" class="">Assembly Process</h2><p id="3ad4228c-2a62-42c9-9700-64b21172bc44" class="">Convert assembly language file (.asm) into an executable file (.obj, machine code) for the LC-3 simulator.</p><figure id="ceeeface-f320-45da-b992-ea6230a6a019" class="image"><a href="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%204.png"><img style="width:659px" src="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%204.png"/></a></figure><p id="1c335b2a-8d13-4359-aabf-bfd65328a8ad" class="">
+</p><p id="df12656e-e3e9-4290-874f-db3df01835dd" class="">Assembly program → 1st pass (scan the program file, finding <mark class="highlight-yellow">all labels</mark> and <mark class="highlight-yellow">their corresponding addresses</mark> (called the symbol table) → 2nd pass (<mark class="highlight-yellow">Convert instructions to machine code</mark> using information from the symbol table) → executable image</p><p id="f605b2e7-587d-49f0-bfae-ab34040455ec" class="">
+</p><h3 id="97cec6de-aa04-49c5-8944-31eabdad8e5e" class="">First pass: constructing the symbol table</h3><p id="a4c65aa4-e957-4093-917f-636e4596a4b4" class="">It assumes that the entire program exists between .ORIG and .END pseudo-ops. </p><p id="00405532-1beb-45a4-82ae-8e6a9b9cd800" class="">LC (location counter): keep track of the location assigned to each instruction by LC. It works during assembling. </p><p id="7fd40a9a-8f3f-403a-bf12-0002c7c0a3fd" class="">The assembler examines each instruction (non-empty line) in sequence and creates a symbol entry (including label name and its address in LC) if a label is met. </p><p id="76820485-2086-4c77-8073-43e063d520ea" class="">
+</p><h3 id="77bd8ff5-e55c-437b-8c34-b57514850371" class="">Second pass: generating the machine language program</h3><p id="fb0ff58b-731d-449e-b32c-7829b2105819" class="">Translate the assembly language instructions into LC-3 machine language instruction. </p><p id="e6c8c015-844d-4c2a-801b-748e7124f3b1" class="">See P243, the object file</p><p id="00f6faff-44e1-44d0-95bf-e13f3130b0d4" class="">.ORIG, the address will be put in the first line of the object file</p><p id="39064782-ad81-4ffa-b5f0-bfb9fdcc90fc" class="">Note: the value of PCoffset is computed by the address of label in the symbol table and the address of the current instruction (PC). You translate the value of PCoffset instead of the value of label address itself. </p><p id="77e8249e-d78f-484f-a3ef-b4c37bac4637" class=""><mark class="highlight-yellow">Note: object file includes the starting address (.ORIG) and machine codes of instructions.</mark></p><p id="d536daaa-3d23-4412-b249-4b2f637659c0" class="">
+</p><h2 id="3b04b195-9b64-4aa7-845e-149e9525eedd" class="">After Assemble</h2><p id="2c67da28-a768-43b2-92b1-e218079a6c66" class="">You will get some list files, symbol table (.sym), and the object file (which will be loaded into simulator)</p><figure id="99af686a-935d-448c-9ffa-6ba3d4e714e9" class="image"><a href="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%205.png"><img style="width:699px" src="Chapter%207%20Assembly%20Language%20bad3663802e34e93a058352ae838770b/Untitled%205.png"/></a></figure><p id="c6fe17aa-726b-4973-a18d-40ac6f6d5727" class="">
+</p><p id="ce1b18ef-9ebb-428c-ab83-b8db4324b7a5" class="">
+</p><h3 id="bb8644e8-6e7a-4bff-8bb5-7619b7c8eb32" class="">Linking</h3><ul id="3451d365-dc45-475f-a3e5-09d6ad4bc92b" class="bulleted-list"><li style="list-style-type:disc">Resolving symbols between independent object files. Then you may use a symbol defined in another module. Linker will search symbol tables of other modules to resolve symbols and complete code generation before loading.</li></ul><ul id="73321a6a-d2ad-4b27-9631-f14542c13759" class="bulleted-list"><li style="list-style-type:disc">.EXTERNAL, specifies a symbolic name of an address which is not known yet. It tells the assembler that a symbol is defined in another module. </li></ul><p id="c344fdcd-1e52-4c61-aff3-7b16cb96167f" class="">
+</p><h3 id="9c695b92-803f-4647-b00d-e124f913524b" class="">Loading</h3><p id="0c3ed9d1-ea0c-4bc0-9342-0e811aa9f783" class="">Loading: the process of<mark class="highlight-yellow"> copying an executable image into memory</mark>. Loaders would relocate images to fit into available memory. </p><p id="9521ad1e-8305-4470-9dac-5a7c075da50f" class="">LC-3 simulator can load multiple object files into memory. </p><ul id="71ce592a-90cf-4f28-b7ba-cb627b9ef5a5" class="bulleted-list"><li style="list-style-type:disc">System routines such as INPUT, are loaded automatically into “System Memory” below x3000.</li></ul><ul id="939dcf31-6271-48d4-adf0-f3e9219942ae" class="bulleted-list"><li style="list-style-type:disc">User code should be loaded between x3000 and xFDFF.</li></ul><ul id="132d556e-0a6a-4c16-865c-150053df57cb" class="bulleted-list"><li style="list-style-type:disc">Each object file includes a starting address.</li></ul><p id="952163de-171a-4bea-8ff3-9e8b5f56c33b" class="">
+</p><p id="b04ba9f8-cb45-4c5b-9337-b8f4003b839f" class="">
+</p><p id="99d9440a-3950-4120-835e-4c7e209e4ef2" class="">
+</p><p id="f8eef0ca-55dc-4500-9668-696ac6d30be8" class="">
+</p><p id="24459ae2-44b6-433b-b434-4d30979375cf" class="">
+</p><p id="ca24dca0-284d-4bbf-b8f6-da450c599f83" class="">
+</p></div></article></body></html>

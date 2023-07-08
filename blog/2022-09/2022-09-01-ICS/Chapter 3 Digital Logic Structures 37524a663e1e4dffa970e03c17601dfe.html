@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Chapter 3 Digital Logic Structures</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="37524a66-3e1e-4dff-a970-e03c17601dfe" class="page serif"><header><div class="page-header-icon undefined"><span class="icon">🕘</span></div><h1 class="page-title">Chapter 3 Digital Logic Structures</h1><p class="page-description"></p></header><div class="page-body"><nav id="e822cbbd-f58b-487e-977d-7434712c7c88" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#80cf03f6-5689-473d-8c78-9cb348c2daad">Important</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2ea8fc49-e414-4461-8810-4b149d6f6056">Transistors (晶体管): p/n-type MOS transistor</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7680a9e6-bcff-4591-8f6b-0dc68ce4b854">Logic Gates</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#72ebedd6-bd0c-4609-8b5c-e0181a4ba5a4">Inverter (NOT gate)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5c2b42de-dfb4-4481-b395-304dd8aa3a75">NOR gate (NOT OR)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ce968acd-28e7-4235-8ef6-6e6028ded36a">OR gate (Inverter / NOT + NOR)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#88f6b914-179e-4699-858b-0696f904cda4">NAND Gate (NOT-AND)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0107e2da-ebec-406e-b9d7-96250dc36b6e">AND gate (NOT + NAND)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#938def91-fde1-466f-9289-194c877bba86">5 basic logic gates:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e06e1ad6-4116-42a3-8915-bb898fc89455">Functions constructed by logic gates</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#438caed9-4b94-405b-92b7-8c8470fbcb09">Decoder</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b18c61be-5c5d-45f7-b265-18b32a502252">Multiplexer (MUX)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f9f2ce54-0683-40af-b002-f0d4b3d54eb5">Full Adder</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb00f49a-9d1d-4fb7-8f9c-8a1c507ce102">Logic completeness</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#09eb6c45-010f-422e-9970-191b3b91eb0d">R-S latch （门闩）</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#db8e53a0-c993-4cba-93da-0507bd02ff5e">Gated D-Latch</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fce210c4-a366-462f-82a4-af2f0235f0a4">Register</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#65582b93-c4f4-4b31-a6ec-96b11e4879df">Memory</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c7ac54b9-e34f-468b-9663-13f2222f3b4a">Outline</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5ccdaa6b-5a17-4935-958a-ddce83505e21">RAM, ROM</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d6b67e90-ebe0-47f0-af5b-01f9a9d97d01">Sequential Logic Circuits</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#11b6ff82-7173-47f4-9ff5-68c6ce835096">State Machine</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#89b2fc93-164e-4a10-aeb8-01911904f11a">State diagram</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#06e72a5d-78ed-4a8a-b44e-afa3ac263da4">The Clock</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#445d4468-a2d9-41f2-b529-2aa71a76776d">Master-Slave Flipflop (触发器)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#211ee099-ba00-4ba8-b90f-dd4cd142b7ea">Data Path</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e1d27103-55b0-41ef-91d2-1b2116b0c740">Combinational logic of data path</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0252fdae-8dd0-4a65-867f-ac817814519e">Sequential logic of data path</a></div></nav><h2 id="80cf03f6-5689-473d-8c78-9cb348c2daad" class="">Important</h2><p id="0175a153-f69f-4093-bb85-1d5f4cccb994" class="">MOS transistor (Metal Oxide Semiconductor):</p><ul id="65e5e0cf-3131-4d64-bdb4-d6ba7a032e28" class="bulleted-list"><li style="list-style-type:disc">n-type MOS transistor</li></ul><ul id="7ce9e7fa-3b80-4015-9861-d9df1b0e2a35" class="bulleted-list"><li style="list-style-type:disc">p-type MOS transistor</li></ul><p id="13c4202b-100a-4d55-ba2c-02dc8bae2350" class="">CMOS circuit: </p><ul id="66b598ca-9190-4ba3-9aa1-9f60d7e997a3" class="bulleted-list"><li style="list-style-type:disc">p-type + n-type MOS transistors</li></ul><ul id="70b21bee-71f0-46b3-8c46-34a91e8abe89" class="bulleted-list"><li style="list-style-type:disc">to form logic gates</li></ul><p id="23c7f747-21e6-4f1d-be88-c09fbd8d69fa" class="">
+</p><h2 id="2ea8fc49-e414-4461-8810-4b149d6f6056" class="">Transistors (晶体管): p/n-type MOS transistor</h2><p id="3f1439f1-1eb5-49b1-99ed-ed3f4d29a3fc" class="">Transistor (switch) → combined to logic gates (logic functions) AND, OR, NOT → combined to build higher-level structures (Adder, multiplexer, decoder, register…) → combined to build processor (LC-3)</p><p id="f29e799e-6496-4101-a4f9-625c85c53835" class="">
+</p><p id="7c863b65-1320-45a6-a384-25cd0c40253b" class="">switch-based circuits (2 states): open/closed, on/off, voltage/no voltage.</p><p id="097f5ff8-16e7-43b1-81f4-b382a0481ae4" class="">switch open: 开关打开，no current</p><p id="2144aea4-574a-4030-974d-692a58f994ba" class="">switch closed: 闭合, current flows</p><p id="6c7aa3d1-2079-4a60-8ab4-838d4d476026" class="">
+</p><ul id="f16c91dd-4efb-4586-a87a-d2b05e8bed8d" class="toggle"><li><details open=""><summary>MOS: Metal oxide semiconductor</summary><p id="168cafad-cb0c-4f9a-a694-051f8710d730" class="">CMOS: Complementary Metal Oxide Semiconductor</p></details></li></ul><ul id="fd7eb70a-dfb7-4569-83bc-215774d60dc9" class="bulleted-list"><li style="list-style-type:disc">n-type MOS transistor:</li></ul><p id="a0573465-7412-42fb-a490-9c1db0ec211f" class="">gate <mark class="highlight-yellow">positive (positive voltage): closed, short circuit （短路）</mark></p><p id="61de948a-2548-47f1-a144-f0b481024549" class="">gate neg (<mark class="highlight-yellow">zero voltage</mark>): open, open circuit (开路，断路）</p><p id="84f58f75-75d9-4130-86bc-710aa3b64e0b" class="">if n-type is turned on (closed), pull down to 0 (GND).</p><p id="4ad9ec04-fb79-4565-a1c5-5b70b9081333" class="">#2 to the ground (GND, 0V)</p><figure id="efbe6808-519f-49e5-82d1-fa67c30a60d0" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled.png"><img style="width:489px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled.png"/></a></figure><p id="c3a8e818-1477-4dc4-ac48-5959a6bb3020" class="">n-type: #2 to the GND</p><p id="2b66fe87-aa8d-45cf-94db-9b32d4111546" class="">
+</p><ul id="1a904aec-7600-4d50-92e2-91aa5fb9fcef" class="bulleted-list"><li style="list-style-type:disc">p-type MOS transistor (complementary to n-type): </li></ul><p id="f9cb1325-abf9-4693-8d9d-188d6ec849ec" class="">gate positive voltage: open, open circuit</p><p id="91ee0895-9a37-4161-8a2b-9be639df22c3" class="">gate 0 voltage: closed, short circuit</p><p id="8afd60d0-902a-4dab-844f-a69bfb487385" class="">if p-type is turned on (closed), pull up to 2.9V (1).</p><figure id="7a33c504-b6d2-4af0-a32a-845a57c751bf" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%201.png"><img style="width:489px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%201.png"/></a></figure><p id="232f40c3-0038-4b6d-b833-07266e16e25b" class="">p-type: #1 to the +2.9V</p><p id="b7a674a4-6ba5-4bc8-9ea0-79ecef5c86f5" class="">
+</p><h2 id="7680a9e6-bcff-4591-8f6b-0dc68ce4b854" class="">Logic Gates</h2><p id="01d16238-b56c-4e8c-9b68-4fea45fae24c" class="">Use MOS transistor switch to implement logic gates: AND, OR, NOT</p><p id="0b1ca7bf-b7f0-4bc2-8015-bf142a932b16" class="">CMOS: Complementary Metal Oxide Semiconductor, use both n-type and p-type MOS transistors.</p><p id="7e334bcf-2bf2-4467-b9ee-9e30a90791e4" class="">
+</p><h3 id="72ebedd6-bd0c-4609-8b5c-e0181a4ba5a4" class="">Inverter (NOT gate)</h3><p id="786f3fba-e902-4820-8ca3-1888798ca6b9" class="">1 p-type (to the 2.9V #1) + 1 n-type (to the ground #2) transistor</p><figure id="08792664-4c56-470d-baf6-64d9f9945965" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%202.png"><img style="width:269px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%202.png"/></a></figure><p id="3f396015-a069-46d9-bfba-e4f28fd17788" class="">
+</p><h3 id="5c2b42de-dfb4-4481-b395-304dd8aa3a75" class="">NOR gate (NOT OR)</h3><p id="ef8236be-d116-4700-a956-4c4bad2a88fc" class="">if that circuit is open, then C will connect to the ground (0V);</p><p id="dc275119-db70-44b0-b8a6-cf14bfa1686d" class="">if the circuit is closed, C will connect to both +2.9V and the ground, but resulting in 0V in C.</p><figure id="aa5883b4-a6aa-4818-8196-9afa6edc3f1e" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%203.png"><img style="width:257px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%203.png"/></a></figure><figure id="5ccfcdd9-cc49-4a6f-9bcb-03f7bc4d4321" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%204.png"><img style="width:114px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%204.png"/></a></figure><p id="85882c07-be3e-4860-9a1d-f413a0c9e891" class="">
+</p><h3 id="ce968acd-28e7-4235-8ef6-6e6028ded36a" class="">OR gate (Inverter / NOT + NOR)</h3><figure id="8c456fcb-e386-46d4-a8dc-a7c8546eaa1c" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%205.png"><img style="width:494px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%205.png"/></a></figure><p id="45427281-7a54-4cd6-a7ab-f4133cdbf810" class="">
+</p><p id="42d82b75-ad46-4067-8228-ec2f4c814524" class="">
+</p><h3 id="88f6b914-179e-4699-858b-0696f904cda4" class="">NAND Gate (NOT-AND)</h3><figure id="23588bce-9214-428a-bf48-6e860bdd361d" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%206.png"><img style="width:484px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%206.png"/></a></figure><p id="79d234a1-c3c4-4dc0-a8e4-1991a586b573" class="">
+</p><h3 id="0107e2da-ebec-406e-b9d7-96250dc36b6e" class="">AND gate (NOT + NAND)</h3><figure id="ee1f46e8-910c-4b38-82f9-f9c104e0e54d" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%207.png"><img style="width:491px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%207.png"/></a></figure><p id="9a7b49d0-2c1e-4d63-9abd-8f5baa2a4bc9" class="">
+</p><h3 id="938def91-fde1-466f-9289-194c877bba86" class="">5 basic logic gates:</h3><p id="f3e6dd4f-b5ef-4e0b-8cd8-e47eca303ad8" class="">A new level of abstraction (implemented by MOS transistors / CMOS circuits)</p><ul id="5ce02581-6e10-4d79-9b48-139c763d003a" class="bulleted-list"><li style="list-style-type:disc">NOT</li></ul><ul id="971c259a-36e9-4bb0-8b03-0216c9eb6025" class="bulleted-list"><li style="list-style-type:disc">AND</li></ul><ul id="651bd550-0ea5-4e5c-a531-b5b79ae127c2" class="bulleted-list"><li style="list-style-type:disc">NAND</li></ul><ul id="ea202ecb-2e17-42d5-9124-ad0e45a61b8a" class="bulleted-list"><li style="list-style-type:disc">OR (A+B)</li></ul><ul id="1d48292e-f20c-4920-a635-7a9919039f14" class="bulleted-list"><li style="list-style-type:disc">NOR( <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mrow><mi>A</mi><mi>B</mi></mrow><mo stretchy="true">‾</mo></mover></mrow><annotation encoding="application/x-tex">\overline{AB}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8833300000000001em;vertical-align:0em;"></span><span class="mord overline"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8833300000000001em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span><span style="top:-3.80333em;"><span class="pstrut" style="height:3em;"></span><span class="overline-line" style="border-bottom-width:0.04em;"></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>)</li></ul><figure id="6616e5f5-2c39-47e5-9bb1-34a05abc34d4" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%208.png"><img style="width:436px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%208.png"/></a></figure><p id="2b07d28d-3993-4af5-81a6-3aef4c45c470" class="">
+</p><p id="190adae5-a421-407b-809f-ae3239fc3dc3" class="">
+</p><p id="34b76a99-c592-435d-8fa0-d48cb6ad21f0" class="">
+</p><h2 id="e06e1ad6-4116-42a3-8915-bb898fc89455" class="">Functions constructed by logic gates</h2><ul id="cc3c6a75-9b28-4bf5-acba-bbaec7f089d4" class="bulleted-list"><li style="list-style-type:disc">combinational logic circuit: stateless, output depends on the current inputs</li></ul><ul id="d49f448f-a4d7-4a64-95de-7855c3834407" class="bulleted-list"><li style="list-style-type:disc">sequential logic circuit: stateful, output depends on the sequence of inputs (both current inputs and previous inputs)(previous inputs will be stored somehow). E.g., ticket counter.</li></ul><p id="0617cf49-94a9-45e5-8a52-4871e971600a" class="">
+</p><p id="00afcfc3-08cd-4d9f-9627-355c3fbf6be7" class="">Combinational logic circuit: decoder, multiplexer, full adder</p><p id="5ef55c78-a644-48c3-893a-3d3c234b2802" class="">Sequential Logic circuit (storage elements): R-S latch, the gated D latch</p><h3 id="438caed9-4b94-405b-92b7-8c8470fbcb09" class="">Decoder</h3><p id="7a018177-ff61-42e6-ad52-f98db35d5317" class="">n inputs (n-bit), <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> outputs (all possible bit patterns)</p><figure id="e2d6ed1b-4d47-4b28-94d3-12b175d0ab97" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%209.png"><img style="width:445px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%209.png"/></a></figure><p id="0ae18f3f-5a3f-48c7-91c8-d37e9ee10a70" class="">
+</p><h3 id="b18c61be-5c5d-45f7-b265-18b32a502252" class="">Multiplexer (MUX)</h3><p id="2a05270e-c909-40b5-8184-3e4befa5b426" class="">n-bit selector, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> inputs, one output</p><figure id="df6d386e-990e-4b29-bbcf-c759ea8c54c5" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2010.png"><img style="width:486px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2010.png"/></a></figure><p id="dde73acb-8abd-4db2-9e15-212ab948fca9" class="">The output will be one of the inputs, depending on the bit pattern of the selector. </p><p id="ca53e9e6-b3ab-4386-bef0-96280ffc5585" class="">AND + OR</p><p id="062a91a2-1faa-4b7d-b36e-8b61fbf4da77" class="">
+</p><h3 id="f9f2ce54-0683-40af-b002-f0d4b3d54eb5" class="">Full Adder</h3><figure id="199acd1e-f2bb-427a-9b8a-cab60a1d6f59" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2011.png"><img style="width:493px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2011.png"/></a></figure><p id="c11f4b2c-a492-44c1-9d19-1320b5fb1f52" class="">sum bit + carry over the next column</p><p id="825b65d9-f9ee-4d69-9f69-49c8b955985b" class="">
+</p><h3 id="fb00f49a-9d1d-4fb7-8f9c-8a1c507ce102" class="">Logic completeness</h3><p id="a7e84bd0-ed71-4cb8-88dc-982eb64da336" class="">Can implement any truth table by AND + OR + NOT.</p><p id="2488a73c-0cf5-49fe-8a9d-55456f835e99" class="">
+</p><p id="2d92aeee-5070-4814-aa7c-fad7d991ed3f" class="">
+</p><p id="6e8c137f-1c1b-472f-a887-c1bf948ba846" class="">Sequential logic circuit:</p><h3 id="09eb6c45-010f-422e-9970-191b3b91eb0d" class="">R-S latch （门闩）</h3><p id="7ddeacb9-7e89-4947-86fe-d98017bb76b9" class="">Can store one bit of information ( 0 or 1 ).</p><p id="bb24835e-1d10-4cf3-852a-84d414d0c121" class="">Setting the latch (S): let the latch store a 1. (quiescent state / quiet state / holds the precious value)</p><p id="c97a6a65-d494-466e-a083-12cd4dc2e87c" class="">Resetting the latch (R): let the latch store a 0. Take outputs as inputs to store values in the R-S latch.</p><p id="8f298972-9482-422e-8395-67f2e41ac987" class="">R-S can be set to 1 as long as S = 0; can be set to 0 as long as R = 0; R and S are not allowed to set as 0 (be cleared) at the same time.</p><figure id="c7833b24-5a22-4e02-ae68-8e912c81579d" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2012.png"><img style="width:491px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2012.png"/></a></figure><figure id="a3903ac8-98f0-4c62-bf24-11675548defd" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2013.png"><img style="width:489px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2013.png"/></a></figure><p id="73c616d5-9674-4c17-b8cb-afbb62d77939" class="">
+</p><p id="596961ec-866c-4b84-8911-8410a0c895e1" class="">Summary of R-S Latch:</p><ul id="a2877995-f642-4d97-b434-112293a82def" class="bulleted-list"><li style="list-style-type:disc">R = S = 1, hold current value in the latch</li></ul><ul id="6a5af854-5db9-4507-80fd-21600b9399c6" class="bulleted-list"><li style="list-style-type:disc">R = 0, S = 1, reset the value, as 0 (cleared)</li></ul><ul id="8c67ecdd-e9cd-429b-9727-63cf8d0aed70" class="bulleted-list"><li style="list-style-type:disc">R = 1, S = 0, set the value as 1</li></ul><ul id="5eb8d63a-1dda-46c5-9f2e-082076f1e21a" class="bulleted-list"><li style="list-style-type:disc">R = 0, S = 0, output depends on the electrical properties of gates. Don’t do it. </li></ul><p id="5b1d58a6-2750-4dd9-8a51-b7ebe2997a5f" class="">
+</p><p id="0fe47be3-047d-4d84-91c9-de8bd1cd7909" class="">
+</p><h3 id="db8e53a0-c993-4cba-93da-0507bd02ff5e" class="">Gated D-Latch</h3><p id="f09d7814-7e4e-4b52-a333-b5a48e33bd01" class="">Inputs: WE (write enable) + D (data)</p><p id="f6c9c619-87e3-465f-9970-a49eb408699c" class="">if WE = 1, then set the R-S latch according to the value of D. Note: S = NOT(D), R = D</p><p id="17a12e0b-1595-4769-ba81-3102988771a8" class="">if WE = 0 →  S = R = 1, the value of R-S latch remain unchanged. </p><figure id="2488fb19-016a-4790-b455-404d2b76f45c" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2014.png"><img style="width:475px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2014.png"/></a></figure><p id="55c0eaf1-35e8-4084-b392-7a7154d72408" class="">
+</p><h3 id="fce210c4-a366-462f-82a4-af2f0235f0a4" class="">Register</h3><p id="11dfb66f-9cab-41be-ba2b-adf392128658" class="">To store a multi-bit value.</p><p id="b42e98d5-02dd-405d-9f43-6be6e67389d9" class="">Component:</p><ul id="17d7b9fa-7115-4864-94dd-22e7940729b2" class="bulleted-list"><li style="list-style-type:disc">a collection of D-latches</li></ul><ul id="0416c69c-1b84-43e2-9c82-0497b3ea6dfb" class="bulleted-list"><li style="list-style-type:disc">A common WE, Controlling all D-latches</li></ul><p id="199854c0-353a-4ac6-b1f2-f952b0ac4158" class="">when WE (write enable) = 1, n-bit value D is written to a register (into multiple R-S latches of those D latches)</p><p id="cdee6460-2dee-49d9-aefd-5f4ceb352b46" class="">
+</p><p id="55e04a80-7995-48d3-b67b-fefba951136f" class="">However, in LC-3, the registers are implemented by flip-flops instead of gated D. See P95.</p><p id="515a9042-aa27-4336-88db-b4b68db2c603" class="">
+</p><p id="e7733826-4b94-43ba-b003-1d0ba7a2b145" class="">Register examples in LC-3: (P93)</p><ul id="3514263c-7366-49f6-90ac-8aa5acd24b92" class="bulleted-list"><li style="list-style-type:disc">General purpose registers (in REG FILE block): R0 - R7</li></ul><ul id="e29e3c28-2219-4cf6-9164-55055745836c" class="bulleted-list"><li style="list-style-type:disc">Three single-bit condition code registers: N, Z, P</li></ul><ul id="6324d299-ecc8-4245-b280-e54bd10c5c32" class="bulleted-list"><li style="list-style-type:disc">Others: PC, MAR, MDR, IR…</li></ul><p id="903abad5-57cd-46b7-a477-6dc90d87be38" class="">
+</p><p id="6f307e7d-72db-4ac3-a11f-d7b7999644bc" class="">
+</p><p id="52ff5f74-1e01-4d91-980a-f986d87deedf" class="">
+</p><h2 id="65582b93-c4f4-4b31-a6ec-96b11e4879df" class="">Memory</h2><h3 id="c7ac54b9-e34f-468b-9663-13f2222f3b4a" class="">Outline</h3><p id="e8b5b7c7-a39a-4c73-be6f-6b026a99ce8d" class="">address space: number of locations, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> below</p><p id="f2c6e495-8ca4-4bce-84d3-5b2d42fde27e" class="">addressability: number of bits per location, m below</p><figure id="96c3d78b-5cb9-4128-ba09-0a2a51a051a7" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2015.png"><img style="width:413px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2015.png"/></a></figure><p id="e3367885-58d5-474b-b099-b8837e943b05" class="">
+</p><p id="5853d64d-a3ef-4f08-a682-add87a1dba4d" class="">Component:</p><ul id="d7e5173d-5fd0-4af6-8fd7-bf256808d6a4" class="bulleted-list"><li style="list-style-type:disc">Address Decoder (access certain line by address bits)</li></ul><ul id="1f037383-082c-4b5f-978b-4b58e20cc258" class="bulleted-list"><li style="list-style-type:disc">word WE</li></ul><ul id="b197de65-3ae6-43f8-8781-3124a5981d8e" class="bulleted-list"><li style="list-style-type:disc">word select line</li></ul><p id="efac21b0-74b7-4951-93f8-d2b1e6f29c2c" class="">
+</p><figure id="e7817780-34c1-4aed-95d9-f3f3268380bb" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2016.png"><img style="width:431px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2016.png"/></a></figure><p id="10e2b058-3c9d-411c-a5ca-a8d5e15ea661" class="">
+</p><h3 id="5ccdaa6b-5a17-4935-958a-ddce83505e21" class="">RAM, ROM</h3><p id="dcbdffc1-6a85-405e-9f00-acc4bd803f9e" class=""><a href="https://www.crucial.com/articles/about-memory/what-is-the-difference-between-ram-and-rom#:~:text=RAM%2C%20which%20stands%20for%20random,stores%20instructions%20for%20your%20computer">https://www.crucial.com/articles/about-memory/what-is-the-difference-between-ram-and-rom#:~:text=RAM%2C which stands for random,stores instructions for your computer</a>.</p><p id="4d576370-8c09-4253-80f7-c4e41d2e05a2" class="">RAM: random access memory</p><p id="8e4f14ab-44ee-40ea-ab23-246354fe0073" class="">volatile (不稳定的), temporarily stored the files that you are working on. </p><ul id="4f0625ca-c26a-4cc8-bf31-c4e5e539eb7a" class="bulleted-list"><li style="list-style-type:disc">SRAM: static RAM, fast</li></ul><ul id="e2ab2f66-1739-473b-aef8-2943c6e9eb36" class="bulleted-list"><li style="list-style-type:disc">DRAM: dynamic RAM, slower but denser</li></ul><p id="48f339a2-5177-4e29-8a29-1ea111d3b0bc" class="">
+</p><p id="824b853b-f284-4bda-abde-b33e8717eff1" class="">ROM: read-only memory</p><p id="7af0c2ac-6d86-497e-912a-a187cc7eaa1c" class="">non-volatile, permanently stores instructions for the computer. </p><p id="0678e193-19f5-416c-b2cc-59fcdf315526" class="">
+</p><h2 id="d6b67e90-ebe0-47f0-af5b-01f9a9d97d01" class="">Sequential Logic Circuits</h2><h3 id="11b6ff82-7173-47f4-9ff5-68c6ce835096" class="">State Machine</h3><p id="3f262285-eaae-469d-a300-c39fe476b3dc" class="">A kind of Sequential circuit.</p><p id="b3d22ab5-05e3-48b0-842a-5e3c6080943a" class="">Purpose of building synchronous finite state machine: to direct the behavior of our system. </p><p id="246e7d79-54b3-40dc-aeba-afd4fdfdf793" class="">
+</p><p id="6fa5bed0-2492-4a3b-b767-d999c65ed994" class="">Recall: Markov Chain</p><p id="0b924a29-ff6f-48bc-b168-320792c1bac2" class="">State: A <mark class="highlight-yellow">snapshot of all the relevant elements</mark> of the system at the moment the snapshot is taken.</p><p id="98c9adf6-c014-4d5a-a686-8c012a3ee9eb" class="">state machine: Combines combinational logic + storage. </p><p id="634c35c3-a01b-444c-b74c-8450fefffec2" class="">It can remember the state and changes output (and state) based on<mark class="highlight-yellow"> inputs and current state</mark>.</p><figure id="4ce3603f-25ce-426a-8147-509cde53a7f8" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2017.png"><img style="width:484px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2017.png"/></a></figure><p id="57b9ab72-5bd3-46d8-b522-8473531721e8" class="">The stored value can act as the input of the combinational logic circuit.</p><figure id="ce060e79-4d0f-41c3-aee1-5ded2ce247a2" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2018.png"><img style="width:504px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2018.png"/></a></figure><p id="aba1c633-a2b7-4492-9512-d7c7b1040a03" class="">
+</p><p id="94462ede-82d3-4b7f-894a-17f33013f807" class="">
+</p><h3 id="89b2fc93-164e-4a10-aeb8-01911904f11a" class="">State diagram</h3><p id="5071b7d8-4008-4e12-9f23-aab6f576d080" class="">states + actions → transition between states</p><figure id="b7fafd81-f69f-4f29-a368-ab83cf4ae4c1" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2019.png"><img style="width:415px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2019.png"/></a></figure><p id="bc57301a-d445-4ca6-ba51-a5546c4e3eaf" class="">Components of state diagrams:</p><ul id="3af54010-7ef4-4fca-986d-41d59816baeb" class="bulleted-list"><li style="list-style-type:disc">a finite number of states</li></ul><ul id="559a8fb6-f333-4238-b2e9-0b43ddbda7aa" class="bulleted-list"><li style="list-style-type:disc">a finite number of inputs</li></ul><ul id="13e18dcb-f870-4f2e-8f11-ee5db4ffb6a5" class="bulleted-list"><li style="list-style-type:disc">a finite number of outputs</li></ul><ul id="df096d31-3397-4423-9ed4-a707366a2434" class="bulleted-list"><li style="list-style-type:disc">state transitions</li></ul><ul id="d3e7a443-c0d4-4bae-b523-df299b67ab39" class="bulleted-list"><li style="list-style-type:disc">explicit specification of what determines each external output value</li></ul><p id="3550de65-8f9b-41b2-a76b-17c0ab1f32e9" class="">Input triggers state transitions.</p><p id="60e2ba82-5e64-4390-ba89-8bf029c62450" class="">But the type of the transition is determined by input (e.g., the lock example) or input + current state or current state (no input, e.g., the traffic light without the switch)</p><p id="096baf03-794b-4227-a8d2-ba43203b17f5" class="">
+</p><h3 id="06e72a5d-78ed-4a8a-b44e-afa3ac263da4" class="">The Clock</h3><p id="2a855aad-eef0-4acf-9773-99b7af1c414f" class="">A clock circuit triggers transition from one state to the next. (The running of the state machine)</p><p id="6976893d-adcd-4913-8caa-9e181fc3dcb4" class="">
+</p><h3 id="445d4468-a2d9-41f2-b529-2aa71a76776d" class="">Master-Slave Flipflop (触发器)</h3><p id="42f38254-d93e-48ce-8268-d3085695f498" class="">A pair of gated D latches. </p><p id="54517742-a21f-42ea-b1e4-7da17c7e16e5" class="">Problems of gated D latches as storage elements: the output of gated D latch would change the storage immediately in response to the input (given WE = 1). So the light would open and close fast and in repeat. We want storage elements to <mark class="highlight-yellow">read the current state throughout the current clock cycle</mark>, and <mark class="highlight-yellow">not write the next state values into the storage elements until </mark>the beginning of the next clock cycle. </p><p id="097976ab-985e-481e-a228-ae770e03ea63" class="">Solution: Master-Slave flipflop, a pair of gated D latches</p><figure id="23e6495c-cfae-4439-a6ed-86dd033eea8b" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2020.png"><img style="width:533px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2020.png"/></a></figure><p id="b7358d7a-5326-4332-9d51-53b6967c02bb" class="">Each master-slave flipflop stores one state bit.</p><p id="685b75c8-f156-4710-9e4c-a516ee5111fe" class="">The number of storage elements (flipflops) needed (number of bits) is determined by the number of states (and representation of each states).</p><p id="a8fb7de5-450a-4864-a926-1b037033fd81" class="">E.g., sequential lock, four states, → 2 bits (2 storage elements)</p><figure id="042739f5-faf9-4e90-a4da-a834d0babb4e" class="image"><a href="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2021.png"><img style="width:491px" src="Chapter%203%20Digital%20Logic%20Structures%2037524a663e1e4dffa970e03c17601dfe/Untitled%2021.png"/></a></figure><p id="39e497f9-708b-4a74-9013-a1d76ddd4f91" class="">Traffic Sign Logic: combinational logic circuits + storage element (master-slave flipflop)</p><p id="497d1b15-b155-4f42-89c9-61733a886692" class="">
+</p><p id="d428d7c8-c5e9-44e0-99f2-a6f67a8898c1" class="">
+</p><p id="df8125b5-f4ee-45ea-93d2-a4e7ec0dec93" class="">
+</p><h2 id="211ee099-ba00-4ba8-b90f-dd4cd142b7ea" class="">Data Path</h2><p id="a39e49c5-49e3-4d82-b405-b905f08ec4ac" class="">From logic circuits to data path</p><p id="5d3df6d2-964e-4634-90f2-8fab54a954d8" class="">Data path: all the logic used to process information.</p><p id="c2f4295f-ea5c-4985-b035-0ccb2502250a" class="">P714, important LC-3 data path</p><p id="1776996d-b169-49d3-9120-e535e6abcd00" class="">
+</p><h3 id="e1d27103-55b0-41ef-91d2-1b2116b0c740" class="">Combinational logic of data path</h3><ul id="309bf705-bc22-4c21-9a27-06df4e52b491" class="bulleted-list"><li style="list-style-type:disc">Decoders (convert instructions into control signals)</li></ul><ul id="b322a94c-ceed-4e25-8937-70696d9f7026" class="bulleted-list"><li style="list-style-type:disc">Multiplexers: select specific input as output (AND + OR + selector)</li></ul><ul id="65c2b9ae-307c-4830-a8ef-22e063f6c4e0" class="bulleted-list"><li style="list-style-type:disc">ALU: operations on data</li></ul><p id="6c4544fc-28b8-4937-897b-21f354017d90" class="">
+</p><h3 id="0252fdae-8dd0-4a65-867f-ac817814519e" class="">Sequential logic of data path</h3><ul id="73c5f310-3bc5-4abe-a8c0-59d69dd867a6" class="bulleted-list"><li style="list-style-type:disc">state machine: coordinate control signals and data movement</li></ul><ul id="0e830eb8-01e6-418f-8281-0265a25e39b6" class="bulleted-list"><li style="list-style-type:disc">registers and latches (R-S, gated D, master-slave flipflop): storage elements</li></ul><p id="f55abda9-df98-4eef-a0b7-b0677f9e6746" class="">
+</p><p id="dfb48abb-89b9-40c4-bc2a-931d40d28661" class="">
+</p><p id="6f6395f1-4924-4d7c-9d0d-45e285baa9f5" class="">
+</p><p id="1ece0edc-87ff-4b9a-8800-2cbd42af9342" class="">
+</p><p id="ba856b96-392e-4902-8d4c-5b8b562de750" class="">
+</p><p id="4d8d9c48-28b8-4c99-86cb-070072bbda76" class="">
+</p><p id="d272aa1f-d591-40df-9dc9-f5005c6cfbd9" class="">
+</p><p id="00091080-1102-49dd-bc7d-f99c0df955d6" class="">
+</p><p id="a09bc302-828d-4969-b196-b579f02dc8ae" class="">
+</p><p id="119e7d9f-224f-4dc4-8dcb-7647e57c2862" class="">
+</p><p id="c1febd02-1298-47ee-b7ba-21735ec80580" class="">
+</p><p id="b17b89da-1966-4fa4-bead-934097ef06e4" class="">
+</p><p id="6bd43dd0-fcfa-4eeb-a5f5-dbaad7429791" class="">
+</p><p id="985d5b22-1d23-48aa-ba19-caa35e4ac858" class="">
+</p><p id="e4cbfb18-d77f-4c29-8956-fcc1d5a4836b" class="">
+</p><p id="14b15837-04a2-4962-a09c-1cdbd3eba552" class="">
+</p><p id="bccf5b84-c0fb-47d9-bb9d-aebc0c3b2042" class="">
+</p><p id="bf3a66ff-28db-43e7-94af-81fcd2273dec" class="">
+</p><p id="71600884-a1c0-42f5-bece-bdfe646e396e" class="">
+</p><p id="da990287-21de-4be6-bb60-093c85f61dd9" class="">
+</p><p id="a372e8b3-1c0d-4017-be02-cd712b8113ac" class="">
+</p><p id="340a52fe-0d68-4b29-8c6d-a3b0b8071e37" class="">
+</p><p id="1aa1f085-888a-4c61-968e-e6f509722fb6" class="">
+</p><p id="c69ebaa2-ef89-4b4e-94dc-15e3ed1b5e01" class="">
+</p><p id="5164197d-f23b-450a-be4b-c04d3a8b4f0c" class="">
+</p><p id="041d6521-77a3-410a-b822-bb300b84079a" class="">
+</p><p id="70a26441-def7-4366-b29b-7fafe53fd214" class="">
+</p><p id="0f981383-9b97-495a-a015-0f2b6c189b9c" class="">
+</p><p id="b61385e7-1e81-430b-873a-2091e857d157" class="">
+</p><p id="91b53126-8afe-45a1-936f-12de1655fe65" class="">
+</p><p id="fa3703a9-7bb9-40f2-91dc-5469ce5712be" class="">
+</p><p id="af52808e-16aa-43c9-b7d5-b8307c57e749" class="">
+</p><p id="36810f0b-2dd1-4800-8ca9-7df0d5e951cd" class="">
+</p><p id="4438a533-2b73-40a9-adfd-24718b4c2479" class="">
+</p><p id="c149138b-9a96-4e51-b5aa-86dd808b84ff" class="">
+</p><p id="d9fb6a0a-27d4-4252-bbaa-22a06d404079" class="">
+</p><p id="c26d0481-b1b2-492a-b6a2-f808a01d1b55" class="">
+</p><p id="b1598d22-3f33-4ae4-830a-1c9baff7f402" class="">
+</p><p id="7221ccd7-30b9-46d6-83a7-ff51fcf0ad9b" class="">
+</p><p id="0b83fba3-521d-43a3-8a83-dd77954bf7bd" class="">
+</p><p id="359d9025-f942-4f25-91a7-37eb92843b10" class="">
+</p><p id="99589be6-c1ef-484e-bb29-730c6a81d7a8" class="">
+</p><p id="06919168-70df-4e6f-bbd0-cf7fffa72dd0" class="">
+</p><p id="52ecc23f-c1b6-417c-a3ca-d1892a41dcb9" class="">
+</p><p id="b6c8e20b-073f-4a97-85fe-0e6232f7e5ff" class="">
+</p><p id="3b1bf8ce-f0ea-4092-8bf8-24d737d14879" class="">
+</p><p id="a79caac8-a9d5-48d5-9d88-97e0086eee78" class="">
+</p><p id="a7baba2a-446e-4b90-8987-2cadab85ab42" class="">
+</p><p id="e4af8913-a325-424c-ae58-83907688d584" class="">
+</p><p id="ad2f8425-000a-4d85-87e2-ab44b4c5a280" class="">
+</p><p id="69d0f4bf-895a-4646-b2e8-9827eee1489a" class="">
+</p><p id="7aa9169d-d325-44a8-977b-f8e150ee9644" class="">
+</p><p id="fc49f3e0-eb7c-4e73-8700-6661982f8215" class="">
+</p><p id="9092a9d9-3b2e-41df-81c5-6fffead98fae" class="">
+</p><p id="4d528f8f-78f9-4992-a607-7eb1176fa7ba" class="">
+</p><p id="d4b36acf-743c-4d2d-930c-4c2137a84b61" class="">
+</p><p id="48e169e9-3237-4810-a946-cf38efe9748d" class="">
+</p><p id="c14d8b6d-b8ad-4162-81d5-881b72e85e71" class="">
+</p><p id="83cdb485-80a0-4437-b58c-518a09183956" class="">
+</p><p id="f981073e-8379-4954-84d1-cdcdb6d56d1d" class="">
+</p><p id="4fbd4ea2-64d2-4393-88ef-8601590dc858" class="">
+</p><p id="01cd7b96-7225-4f86-9ed3-dd6521728f84" class="">
+</p><p id="c35e471c-d9ca-48ef-840d-a2eb235a2996" class="">
+</p><p id="ee35fce8-a371-4a95-967d-0ba53f53d8f5" class="">
+</p><p id="2b5b8534-ff5c-435b-bd77-f62114371a8f" class="">
+</p><p id="600ecc0b-2088-46ae-8a06-0afe31223e86" class="">
+</p><p id="30e7a239-2025-4961-bca9-ab7f7f0c28a6" class="">
+</p><p id="51c2d584-178f-4adc-a2c5-7bbb0f144b30" class="">
+</p><p id="48f67459-b4a9-4aa6-8396-b9c7673a0d5e" class="">
+</p><p id="9c1fcd7c-f94a-4127-bc16-1b633b25a0b0" class="">
+</p><p id="b316cdb6-2ef6-41aa-aa7e-06c42c2a9e34" class="">
+</p><p id="e86403d7-b98a-48d6-9f72-40be0ed108bf" class="">
+</p></div></article></body></html>

@@ -1,0 +1,776 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Chapter 9 I/O</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="502e80ae-f9c6-4e17-b0ea-e34d51dcf5c0" class="page serif"><header><div class="page-header-icon undefined"><span class="icon">🎍</span></div><h1 class="page-title">Chapter 9 I/O</h1><p class="page-description"></p></header><div class="page-body"><nav id="d7a9f32b-78c9-42a7-851b-447982421e5f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f3a654ba-4279-4857-a132-bfb812d10f73">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#efd70703-31d4-45ac-9285-03055ccdcc70">Privilege, Priority, Memory Address Space</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1457339a-d9e4-4fc7-9e9a-bd2a940e81b8">Privilege</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c113ac1b-818e-423d-ab7b-bc7f3e016205">Priority</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#98f5ae14-511a-479e-846a-ffa09df2dce6">PSR (Processor Status Register)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#264d614a-8c22-49f8-bd79-4240175e7698">Organization of Memory</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c1a1f177-7c35-4e13-9f5a-e726e7a76e77">I / O</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#35d6f6d2-283e-4d7d-a779-f498fab9b3c8">Memory Mapped I/O vs Special I/O</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cb7ec6ea-a2c5-4f8f-abf1-ef97803ee3ff">Asynchronous vs Synchronous</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bf729e13-f092-4186-9287-483743704329">Interrupt-Driven vs Polling</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2cda2d87-157d-4a21-b094-ba9c50fee4e9">Input from the keyboard</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d3341f9e-3853-486d-b9a7-ffaef92373f6">Output to Monitor</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#07307a68-637d-4463-adf8-9a27b5c112e0">Complete Picture of memory-mapped I/O</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e2be280c-4e32-4298-b47d-aea7e05c1dc4">Operating System Service Routines (LC-3 TRAP)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#79f58498-629b-479e-b5dd-804e6cea5ce3">Trap Mechanism</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2073f152-ed89-46ac-9688-e82189253235">Trap instruction</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2d141453-77e7-4864-a122-6765a272e9c8">Example, TRAPx21 (OUT)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9c34d062-d660-4ba0-8dd3-51b7a8482cab">Subroutine (function/procedure/method)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#36053f60-5a10-4787-86db-1b7ae64dccb1">Library Routines</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1e512006-70eb-42ba-9cbc-f878c1c3f315">Interrupts, Interrupt-Driven I / O</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7f644631-d502-4960-922b-2a412c7d09ba">Generating Signal</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#03da4953-a3e6-44cf-af82-04dcbf48270b">Priority</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a23b2558-4f8c-41b3-b861-e01925a13fc4">INT signal</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d321952f-d5ff-410f-9beb-8c612e04c9ad">Handling the interrupt</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3b84ef26-488a-4413-9544-957137a50ad8">INT Example</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#01ef145d-d83e-4330-a5ec-7d28286319a4">Exception</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#70f4951b-41d4-4986-aea0-ec28cb5e3558">1 Privilege mode violation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a38ac0f5-72f3-4636-afb7-686d9ef9dfa1">2 Illegal opcode</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#04bf2ce4-b703-4fb4-91c0-8eb6b8237a8a">3 ACV (access control violation)</a></div></nav><p id="c6c178ba-c444-4651-b49e-f473aeaabd66" class="">
+</p><h2 id="f3a654ba-4279-4857-a132-bfb812d10f73" class="">Overview</h2><figure id="b059dfb2-c36d-4c4e-bd1f-872c75e24cca" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled.png"><img style="width:781px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled.png"/></a></figure><p id="c1b39201-1be9-4d25-9381-277f3dcd4977" class="">TRAP instruction: system call. TRAP is calling on the operating system to do something for us while allowing us not to understand the details on how it is realized. </p><p id="aaa78bba-5072-45b3-9916-09985b566a2d" class="">The prompt of OS: enable us to utilize the resources of the computers and prevent us from doing something harmful to the computer or data (by privilege). </p><p id="85eb0ebb-4240-4511-993c-e253a41e69f7" class="">
+</p><h2 id="efd70703-31d4-45ac-9285-03055ccdcc70" class="">Privilege, Priority, Memory Address Space</h2><h3 id="1457339a-d9e4-4fc7-9e9a-bd2a940e81b8" class="">Privilege</h3><p id="929ac46b-776d-4203-a42b-3deecbf07cdb" class="">The right to<mark class="highlight-orange"> execute instructions</mark> or <mark class="highlight-orange">access particular memories</mark>. Every program is designated as privileged or unprivileged.</p><ul id="05021179-73f5-4427-b2a0-faf41cd955bf" class="toggle"><li><details open=""><summary>Not all computer programs have the right to execute all instructions (like HALT) nor access all the memories. Some memory are only available to the OS.</summary></details></li></ul><p id="dbd99ff4-5277-47bf-986a-23d430a3f04b" class="">
+</p><ul id="215257c1-6ed7-4a09-985c-5338ee177226" class="bulleted-list"><li style="list-style-type:disc">Privileged: <mark class="highlight-blue">Supervisor privilege, supervisor mode</mark>. <mark class="highlight-orange">It can execute all instructions and access all the memories.</mark></li></ul><ul id="90f6d12b-a360-4e40-9e40-4a6bc5d35ace" class="bulleted-list"><li style="list-style-type:disc">Unprivileged: User Mode.</li></ul><p id="694b600f-8602-47aa-af3d-833133c4c5d2" class="">
+</p><h3 id="c113ac1b-818e-423d-ab7b-bc7f3e016205" class="">Priority</h3><p id="89977c34-a696-43d1-a8c7-4fc87c0f4a78" class="">A program with low priority would be interrupted by higher ones. </p><p id="663a7b47-476d-4b11-aeea-f78798c6d1b2" class="">
+</p><h3 id="98f5ae14-511a-479e-846a-ffa09df2dce6" class="">PSR (Processor Status Register)</h3><p id="940e320c-906f-4032-8054-b44485a819c6" class="">A program would associate with two important registers: PC and PSR.</p><figure id="3fb9d401-6feb-4b65-b15b-3cd09906cba8" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%201.png"><img style="width:779px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%201.png"/></a></figure><ul id="69539772-9243-4565-8140-fcf2b6ff46bb" class="bulleted-list"><li style="list-style-type:disc">PSR[15]: Privilege. PSR[15] = 1, unprivileged, user mode; PSR[15] = 0, privileged, Supervisor mode.</li></ul><ul id="c704299f-8aa5-46aa-a531-d24aefbdc983" class="bulleted-list"><li style="list-style-type:disc">PSR[10:8]: Priority. PL0 ~ PL7.</li></ul><ul id="c36e2a7d-7b1e-4c92-a33a-3fb837ad8d9a" class="bulleted-list"><li style="list-style-type:disc">Condition codes.</li></ul><p id="f3c04b55-2531-4d25-a8f5-dcb14b7afb5b" class="">
+</p><h3 id="264d614a-8c22-49f8-bd79-4240175e7698" class="">Organization of Memory</h3><figure id="15364de8-8b27-4b4d-b47b-b78bd3b46a66" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%202.png"><img style="width:781px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%202.png"/></a><figcaption>SSP: supervisor stack pointer; USP: user stack pointer, indicating top of the stacks. Only one is active at any one time. R6 is usually set as the pointer.</figcaption></figure><p id="a0f8e380-e5d5-46e9-a950-92b36b9a3ebc" class="">x0000 - x2FFF: privileged memory locations,<mark class="highlight-orange"> System space</mark>. Contain data structures and code of the<mark class="highlight-yellow"> OS</mark>. Need <mark class="highlight-blue">Supervisor mod</mark>e to access. </p><p id="f5b005d7-fc61-4dab-9980-e52dd9b09fa8" class="">x3000 - xFDFF: unprivileged memory locations,<mark class="highlight-yellow"> User space</mark>. Don’t need supervisor mode to access user space. Contain user programs and data.</p><p id="d8151497-ec4e-4ec7-8552-8251e1e3b72d" class="">xFE00 - xFFFF: used to identify registers relating to I/O functions and special registers. P654, KBSR, KBDR, DSR, DDR, PSR, MCR (Machine control register).<mark class="highlight-teal"> These are I/O device registers.  </mark>N<mark class="highlight-yellow">eed supervisor mode to access</mark>.</p><p id="dbf61ff0-d59f-4f99-9dcf-5d8a1e813955" class="">
+</p><p id="8e862f3a-50b6-4222-a09b-ec168c4b65a6" class="">Two registers,<mark class="highlight-yellow"> Saved_SSP and Saved_USP are used to save the S</mark>P not in use.</p><p id="deb448dd-1498-489b-87d4-fcd2f5f9c418" class="">E.g., Privilege change from supervisor mod<mark class="highlight-yellow">e → user mode, then SP → Saved_SSP and Saved_USP → SP</mark>.</p><h2 id="c1a1f177-7c35-4e13-9f5a-e726e7a76e77" class="">I / O</h2><h3 id="35d6f6d2-283e-4d7d-a779-f498fab9b3c8" class="">Memory Mapped I/O vs Special I/O</h3><p id="f1e866ed-dc94-41b5-927e-e653cbbd916d" class="">Special I/O: some computers use special I/O instructions.</p><p id="d90f751a-5796-49df-ae35-1b44ce697ad9" class="">Memory-mapped I/O: use data movement instructions (LD, ST) to transfer data between memory and GPRs. Device registers are assigned addresses from the memory address space. Those device registers (KBDR, DDR…) are mapped to a set of addresses that are allocated to I/O device registers rather than to memory locations. </p><p id="6ec24be9-ce67-43cf-a476-632dd8cfed46" class="">在memory中，专门留出一段地址用于device registers的标识映射，即I/O设备的registers被映射到一组地址。这些地址是分给I/O device registers的，不能再当成内存的位置用。（I/O专用位置）</p><p id="33e63c53-f4e6-408c-8881-d78a8d2f2e83" class="">LC-3 employs memory mapped I/O. In the I/O page of memory, there are ….. P654.</p><p id="1ba8caa0-7f35-4e79-9624-a12a4e263485" class="">
+</p><h3 id="cb7ec6ea-a2c5-4f8f-abf1-ef97803ee3ff" class="">Asynchronous vs Synchronous</h3><p id="23d8a83e-a52d-4cfe-999e-1b1ce299030b" class="">I/O processes are much slower than processor. (asynchronous)</p><p id="13590fad-2d51-4d75-a70d-1c868e37ffaa" class="">Synchronization mechanism: handshaking, r<mark class="highlight-pink">eady bit. </mark></p><p id="61835bc9-17b9-4d50-bb7a-0257b86eff9f" class="">
+</p><h3 id="bf729e13-f092-4186-9287-483743704329" class="">Interrupt-Driven vs Polling</h3><p id="7fc80644-3ea4-4b79-bbf9-bce2493e351c" class="">Interrupt-driven: the processor continue doing its own thing until being interrupted by announcements from the keyboard. <mark class="highlight-yellow">(Keyboard controls the interaction).</mark></p><p id="68553af1-51af-4c3e-80ab-e5c0ef8fde35" class="">Polling:<mark class="highlight-purple"> processor controls the interaction.</mark> The processor interrogate the ready bit again and again until the processor detects that the ready bit is set, and then read the device register. </p><p id="3cea023a-922e-4c01-b93b-eaab7d588d8d" class="">
+</p><h3 id="2cda2d87-157d-4a21-b094-ba9c50fee4e9" class="">Input from the keyboard</h3><p id="6545a927-ed1b-43a8-89de-b0f0e8e1c802" class="">KBDR: keyboard data register</p><p id="fd607e0a-a0d1-445f-b2cf-d06b9721dc92" class="">KBSR: keyboard status register, KBSR[15] as ready bit</p><p id="d412fd7b-1743-440b-a8ba-f84325b1663b" class="">
+</p><p id="c471336f-1cd1-4b84-b23c-9a0bfede7961" class="">Keyboard input routine:</p><p id="3652fc9c-8c15-4a23-a10d-591aff92ced1" class="">key struck → ASCII loaded into KBDR [7:0], setting KBSR[15] as 1 (indicating that there is something the processor should deal with) → LC-3 (processor) <mark class="highlight-purple">reads / loads </mark>KBDR, clearing KBSR[15] (KBSR[15] = 0 means the key struck has been processed) → another key struck….. (输入KBDR之后为1，处理之后为0. 为0的时候才接受key struck到KBDR中）</p><ul id="c5564545-6c7b-434e-bb36-293d7670ab8e" class="toggle"><li><details open=""><summary>Only when KBSR[15] == 0, key struck will be allowed. If KBSR[15] == 1, it indicates that there is a key being processing, disabling the keyboard.</summary></details></li></ul><ul id="08a933bc-dd69-4730-8481-2bf4ca320cc5" class="toggle"><li><details open=""><summary>The processor only reads / loads data from KBDR when KBSR[15] == 1 to one of LC-3 registers.</summary></details></li></ul><p id="b8999854-29ee-4949-904d-7e1f7ee0678b" class="">
+</p><p id="b9fe6f01-fdc1-41a8-ae2d-1af893dda904" class="">For polling, the program repeatedly check the KBSR[15].</p><figure id="858fbf07-f74c-4dfe-bddc-7a6c018c9360" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%203.png"><img style="width:592px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%203.png"/></a></figure><p id="fd604fc6-549d-44c1-88cc-35f65bae064c" class="">Only when negative (KBSR[15] == 1) can we load/read the KBDR into R0.</p><p id="dc570cdb-6a0f-4369-9cdb-2ec0e28703da" class="">
+</p><p id="d8d3f80b-69f5-4a7d-8e6c-7a5de87f7833" class="">In memory-mapped Input, MAR is loaded with the address of the device register (instead of address of a memory location).</p><p id="9b104b81-847b-4cb0-928d-ee7ec69bb113" class="">The address control logic would select the corresponding device register (DDR, KBDR) to provide input to MDR.</p><figure id="b281fe8a-4e3c-4adb-a810-02da376e1761" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%204.png"><img style="width:583px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%204.png"/></a><figcaption>Address control logic controls whether MDR receive data from memory or KBDR/KBSR.</figcaption></figure><p id="67aa2212-3eeb-49b3-a54c-0d030119e100" class="">
+</p><h3 id="d3341f9e-3853-486d-b9a7-ffaef92373f6" class="">Output to Monitor</h3><p id="111d83b3-eaed-4f77-9a0e-8a5ee75df188" class="">DSR: display status register, DSR[15] …. ready bit to synchronizing the fast processor and slow monitor display.</p><p id="1b94fcf6-929d-4338-9269-55efa84bf8c4" class="">DDR: display data register</p><p id="27da6db2-8f8b-47a0-877c-0a1dd92072de" class="">
+</p><p id="0bddf2f3-03ac-4c59-b2c9-984762f419b8" class="">Synchronization mechanism: </p><p id="a6551f4c-f1ff-4fe7-840b-9a1cc83c1052" class="">LC-3 transfers an ASCII code to DDR for outputting → Clear DSR[15] → finishes the processing (displaying) →<mark class="highlight-yellow"> set DSR[15] </mark>→ transfers to the monitor display.</p><p id="f040694d-a26a-4f25-bea4-7fc31340f84b" class="">（也是开始处理时为0，但在处理之后为1；对比KBSR在key进入KBDR为1，开始处理为0，处理完成也是0）</p><p id="191d0130-caf9-4484-9fab-909a94dad3ac" class="">When <mark class="highlight-yellow">DSR[15] == 1, </mark>another ASCII code would be transferred by the processor to the DDR for outputting.</p><p id="1dc920c8-71ee-42d4-a617-36f5ed70886a" class="">When KBSR[15] == 0, another key struck would be loaded into KBDR, setting KBSR[15] = 1, processing begins.</p><p id="8ed08400-ea2a-4f98-a3ca-050d071a13b5" class="">O<mark class="highlight-red">nly when DSR[15] / KBSR[15] == 1, ca</mark>n the processor begins to input into registers (input, LDI) / output to the monitor (output, STI).</p><figure id="6735d8de-013b-4b2b-ab13-cf32c22657da" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%205.png"><img style="width:655px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%205.png"/></a></figure><p id="5362689a-5ea1-4f96-a77c-d6b8cd8290b6" class="">Compared to KBDR/KBSR.</p><figure id="42b7fc9c-b188-45cc-a0db-661e50d12fd1" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%206.png"><img style="width:588px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%206.png"/></a></figure><p id="a021a3a9-fe8d-49fc-9646-adeffaea01fe" class="">
+</p><p id="93553794-b8cc-45e5-a1ac-e5b6924d4a3d" class="">For memory-mapped output, </p><ul id="7ba48346-3d7f-49d2-8283-361cc9bba747" class="bulleted-list"><li style="list-style-type:disc">MAR ← address of a device register</li></ul><ul id="2873d03d-5e90-464a-9392-2d52ccd519f2" class="bulleted-list"><li style="list-style-type:disc">Address control logic enabling memory to write, asserts the load enable signal of DDR.</li></ul><p id="8feedd51-cfa9-4c7e-916f-ef72dd445e54" class="">
+</p><h3 id="07307a68-637d-4463-adf8-9a27b5c112e0" class="">Complete Picture of memory-mapped I/O</h3><figure id="e414d86a-be8c-418d-bbed-8602937db6fc" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%207.png"><img style="width:609px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%207.png"/></a></figure><p id="c5a36472-03a2-468d-82e9-cc3b1dd03c07" class="">Address control logic: controls the Input or Output operation. </p><p id="41dcf922-b790-4ce7-8ed2-4737e676a19d" class="">Three inputs:</p><ul id="c08ac8ce-f1ff-48c4-b48d-7779161b344f" class="bulleted-list"><li style="list-style-type:disc">MIO.EN: Whether a data movement is to take place in this clock cycle.</li></ul><ul id="fa4764cb-c169-497b-81ca-46d6c2845967" class="bulleted-list"><li style="list-style-type:disc">R.W: indicates whether a load (memory or I/O → MDR) or store (MDR → written to memory or device registers) to take place.</li></ul><ul id="d05d1e29-34da-4806-9817-920c6604287f" class="bulleted-list"><li style="list-style-type:disc">MAR: addre<mark class="highlight-orange">ss of memory location</mark> or <mark class="highlight-yellow">memory-mapped address of I/O devic</mark>e register.</li></ul><p id="cb7de5a0-34a0-4ce2-8eda-1072b0d9f0e5" class="">
+</p><p id="9c882bfd-d500-40bf-baa6-34f1ce6f37e0" class="">
+</p><h2 id="e2be280c-4e32-4298-b47d-aea7e05c1dc4" class="">Operating System Service Routines (LC-3 TRAP)</h2><h3 id="79f58498-629b-479e-b5dd-804e6cea5ce3" class="">Trap Mechanism</h3><p id="1e95309f-894b-42f5-9c3d-6b7ed2d359c3" class="">P675</p><p id="da518f48-6b21-4a8a-bf59-00ef4eef3d17" class="">System Service Routines, having OS to execute some mission.</p><p id="c384b106-0c37-42c9-b8f6-08915797ca4b" class="">x0000 - x00FF (x0021, x0022, x0025…)</p><ul id="5d068f3a-dac5-439c-8dba-cc66fe033649" class="toggle"><li><details open=""><summary><mark class="highlight-blue">System Space: x0000 - x2FFF</mark></summary><p id="34b9aebc-acf2-4042-bf83-adb81bf45812" class="">
+</p></details></li></ul><p id="42e1c61a-5d3a-4d6d-ab37-58fba39dbd65" class="">Trap Vector Table (LC-3)</p><figure id="2ee972f9-d7a4-4842-8922-a8e94cbca502" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%208.png"><img style="width:305px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%208.png"/></a></figure><p id="f8052958-f5dd-44d1-b3fe-6ed5a8b67d97" class="">The TRAPx21 <mark class="highlight-teal">calls the output routine in x0420 (still in system space)</mark>. x04A0: keyboard input service routine. x0520: halt service routine. </p><p id="2f880f04-adb7-4b01-8dd1-c640077a31f7" class="">
+</p><h2 id="2073f152-ed89-46ac-9688-e82189253235" class="">Trap instruction</h2><ul id="ba23c34e-eb45-428f-8626-19229b9d9bb8" class="bulleted-list"><li style="list-style-type:disc">Change the PC to the address specified by the trapvector (zero-extended to 16 bits as an address)</li></ul><ul id="1d42c293-f87a-4c61-bfe5-8b5cf1113a35" class="bulleted-list"><li style="list-style-type:disc">return, linkage back. PC contains the way back (next instruction).</li></ul><ul id="aabe7c95-22b9-49d8-b7dc-3fb728b3a2b4" class="bulleted-list"><li style="list-style-type:disc">System call requires privilege mode switching. E.g., in User mode, a program asks TRAP and then: R6 → Saved_USP; R6 ← Saved_SSP.</li></ul><ul id="e6d2c8da-1313-4d2d-8b44-d84783d9ff4f" class="bulleted-list"><li style="list-style-type:disc">PSR[15] should be 0 to get privilege.</li></ul><p id="2202ba7a-4f14-46c2-8e68-5f8c6393210b" class="">
+</p><p id="5900c992-1ee6-4f29-8335-4e7aacb07fbf" class="">TRAP:</p><p id="3148a910-826f-457f-af5f-adef9a788656" class="">If user mode: switch user stack to system stack.</p><ul id="2487708e-b700-4027-b3d9-b4972f835f58" class="bulleted-list"><li style="list-style-type:disc">Saved_USP ← SP; SP ← Saved_SSP</li></ul><ul id="8c14eed1-0e35-429f-a4d3-041b414b2508" class="bulleted-list"><li style="list-style-type:disc">Push PSR, Push PC + 1</li></ul><ul id="290786cf-4ee1-4194-a36b-d85b3e749927" class="bulleted-list"><li style="list-style-type:disc">PSR[15] ← 0 (switch to privileged mode)</li></ul><ul id="69159799-8a55-4115-9eaa-579a3587b45c" class="bulleted-list"><li style="list-style-type:disc">PC ← MEM[0x00yy] (switch to trap vector table)</li></ul><p id="1a746f56-494b-4262-8001-a55ac782f7df" class="">
+</p><p id="b460b67a-53e9-45e8-8580-f34a6d0c7b76" class="">RTI: Return from Trap or Interrupt</p><p id="f802b170-e0bf-4541-b604-0174f12e864a" class="">If the processor is in User Mode (PSR[15] == 1), then initiate a privilege mode exception.</p><p id="bf048799-3211-4b86-bca1-bf3c851ad921" class="">Otherwise, (in supervisor mode), pop two elements on the system stack into PC and PSR (SSP: R6). After PSR is restored, if the processor is running in User Mode, then: R6 → Saved_SSP; Saved_USP → R6 (switch from supervisor mode to user mode).</p><p id="198fa867-751b-468c-8ea1-3471bd73129c" class="">
+</p><h3 id="2d141453-77e7-4864-a122-6765a272e9c8" class="">Example, TRAPx21 (OUT)</h3><figure id="b627f78a-6aad-4189-a0e4-b83b7ffaff36" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%209.png"><img style="width:599px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%209.png"/></a></figure><p id="9648a339-e90b-4aa4-81b4-2b56c8a949c9" class="">x0430, in system space, OS-related code / data structures.</p><p id="99a68780-fced-4096-941a-c4e67379b91c" class="">RET: return from TRAP routine.</p><p id="cbaf8978-2e57-43a3-9049-4e46a1109bf8" class="">
+</p><h3 id="9c34d062-d660-4ba0-8dd3-51b7a8482cab" class="">Subroutine (function/procedure/method)</h3><ul id="b5e1a3af-94d1-48fb-a255-6e407af778c4" class="bulleted-list"><li style="list-style-type:disc">In user mode</li></ul><ul id="69d083f0-1334-4473-9046-b441df7065a1" class="bulleted-list"><li style="list-style-type:disc">invoked by another user program</li></ul><ul id="143349b8-2439-4d33-95b5-6e0721e986c4" class="bulleted-list"><li style="list-style-type:disc">returns control to the calling program</li></ul><ul id="0686f8a8-9a45-4aa2-9710-513eaa53fc87" class="bulleted-list"><li style="list-style-type:disc">Similar to a service routine, but not part of OS.</li></ul><ul id="0678436c-e45d-4c11-975e-ff8f75a71594" class="bulleted-list"><li style="list-style-type:disc">JSR / JSRR, save the address of the next instruction in R7 and go to subroutine</li></ul><ul id="26cca12b-5ea5-4a70-bda9-fbff57518bed" class="bulleted-list"><li style="list-style-type:disc">RET: return from subroutine (JMP R7).</li></ul><p id="dcfa69c0-b807-4f33-a02c-9374cc52ef57" class="">Save:</p><ul id="f96ef86a-b8c3-4918-8e8a-d4aa1e416e7c" class="bulleted-list"><li style="list-style-type:disc">Generally use callee-save, except for return values.</li></ul><ul id="df43d78c-8185-4baf-9602-fb72b9339a59" class="bulleted-list"><li style="list-style-type:disc">You <mark class="highlight-yellow">must save R7 if</mark> you call any other subroutine or service routine (TRAP)</li></ul><p id="b8256c63-1e59-413d-9bdc-98dcb96ac22a" class="">
+</p><h3 id="36053f60-5a10-4787-86db-1b7ae64dccb1" class="">Library Routines</h3><ul id="42cc375d-394f-419d-968a-7bd73c56effa" class="bulleted-list"><li style="list-style-type:disc">.EXTERNAL</li></ul><ul id="97ff27fd-e0a9-468f-a11a-13411600a425" class="bulleted-list"><li style="list-style-type:disc">use JSRR, because we don’t know how far we are from the library.</li></ul><p id="0801c568-5b7f-43a7-9412-8ab033ba60fb" class="">
+</p><h2 id="1e512006-70eb-42ba-9cbc-f878c1c3f315" class="">Interrupts, Interrupt-Driven I / O</h2><h3 id="7f644631-d502-4960-922b-2a412c7d09ba" class="">Generating Signal</h3><p id="a90ade84-92bd-4f06-bedc-1b7b965adee5" class="">ready bit[15] (KBSR/DSR[15]) + IE[14]</p><p id="6bb01d96-a663-4d2b-b032-838d86bb3f3a" class="">IE[14], interrupt-enable. E.g., KBSR[14]</p><p id="eba1da72-4f3d-459a-96a8-377f420c6f0a" class="">Only both ready bit and IE[14] is set, the interrupt is signaled.</p><figure id="92d67cef-09de-4944-b3a6-b95cf08e48cb" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2010.png"><img style="width:481px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2010.png"/></a></figure><figure id="db795bc4-b75f-463c-bb16-15228e691484" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2011.png"><img style="width:481px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2011.png"/></a></figure><p id="cb1c7629-0e01-4c94-a493-7483a3e80c9d" class="">
+</p><h3 id="03da4953-a3e6-44cf-af82-04dcbf48270b" class="">Priority</h3><p id="4bf4250e-a356-459d-b3d6-bbe731c585a1" class="">PL0 - PL7</p><p id="a814bfb5-fb3c-477e-b7f0-853073e9adad" class="">Priority encoder selects the highest-priority device, compared with the current processor priority level.</p><figure id="23ffeff5-dac3-45dd-8674-d01bb91bdf17" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2012.png"><img style="width:526px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2012.png"/></a></figure><p id="dbc55af5-142d-4239-82f3-4df5a3a3a96b" class="">
+</p><h3 id="a23b2558-4f8c-41b3-b861-e01925a13fc4" class="">INT signal</h3><p id="b7fe5f75-d479-4c6e-8665-20694ff7b77f" class="">INT, Interrupt signal.</p><p id="c8107c1c-f71f-41d9-8658-affb9f773127" class="">After the selection of the highest device PL, the processor would compare it with the PL of the current program. If device PL is higher, then INT signal is asserted. (Generate INT signal).</p><p id="6b1dbb12-d28b-43b7-81da-44bcf212ffda" class="">In instruction cycle, the next state depends on the INT signal. If INT is asserted, the next state would be handling the interrupt request instead of normal business.</p><p id="8c2ba847-b194-4a44-b9ca-ed871bb67de8" class="">
+</p><h3 id="d321952f-d5ff-410f-9beb-8c612e04c9ad" class="">Handling the interrupt</h3><p id="63ad7fac-f787-4d95-a16c-d3509453cbce" class="">Three stages:</p><ul id="815d0f75-7f13-4ef8-9de0-647f979fdb7a" class="bulleted-list"><li style="list-style-type:disc">Initiate the interrupt</li></ul><ul id="115655de-d31e-49a8-b4da-e6d96be22919" class="bulleted-list"><li style="list-style-type:disc">Service the interrupt</li></ul><ul id="805cd6cd-3e46-4341-a9c1-7f410dda59f0" class="bulleted-list"><li style="list-style-type:disc">Return from the interrupt</li></ul><p id="7855411e-5214-4924-bbb3-bd8be1e4ff7f" class="">1 <strong>Initiate the interrupt:</strong></p><p id="66f9a10b-aca3-461c-88fe-91d25d74301b" class="">1) Save the state information of interrupted program: </p><ul id="376b2c9a-83ad-4cee-9387-d802e2d8f009" class="bulleted-list"><li style="list-style-type:disc">PC, PSR (for LC-3)</li></ul><ul id="5c5be181-6d6d-4d0c-ab47-28871fc9883d" class="bulleted-list"><li style="list-style-type:disc">USP/SSP switch → PSR, PC pushed…</li></ul><p id="47e3c2f3-097e-4015-a07a-ca9c26129fc2" class="">2) Load the state information of the Interrupt Service Routine. (Similar to Trap routine)</p><ul id="758311fa-e791-4a85-8074-c99dc308a219" class="bulleted-list"><li style="list-style-type:disc">I/O device generates Vectored interrupts (INTV, 8-bit): interrupt request signal + priority level</li></ul><ul id="c0db857a-a4da-46ba-a81d-049f8a8900e9" class="bulleted-list"><li style="list-style-type:disc">Processor takes that INTV and expands it to 16-bit address, indicating the address in the I<mark class="highlight-red">nterrupt Vector Table</mark> (similar to Trap Vector Table) (x0100 - x01FF, each containing the start address of interrupt routine) <mark class="highlight-red">(Interrupt request signa</mark>l). </li></ul><p id="a6038d5a-6426-41e1-900b-8d058e91c418" class="">2 S<strong>ervice the Interrupt</strong></p><p id="7ad8a0fa-f6f8-4e91-b5fb-e41a306cfb5e" class="">…</p><p id="27a6afbc-b258-4142-ae53-c7ec7d6b1c74" class=""><strong>3 Return from the interrupt</strong></p><p id="dc9d38a6-3919-41dc-8fb6-10daeed320d0" class="">RTI (return from TRAP or Interrupt).</p><ul id="69a3cab8-1490-4a58-bcc5-81fd66263d4f" class="bulleted-list"><li style="list-style-type:disc">PSR[15] switch, pop PC, PSR, …</li></ul><p id="3be90d3b-0095-43d4-85b0-4135d6d0b94e" class="">
+</p><h3 id="3b84ef26-488a-4413-9544-957137a50ad8" class="">INT Example</h3><p id="dc2903bb-8177-408d-942d-ff0db2e8368a" class="">You are running A and at this time device B sent its interrupt signal and accompanying interrupt vector xF2. When at the routine B, another device C called another interrupt routine.</p><figure id="e5adf8e9-e85a-4d0d-81d4-ab1cea9bb699" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2013.png"><img style="width:549px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2013.png"/></a></figure><p id="05bf5c55-efb2-4c3c-80b5-5910e916e20a" class="">
+</p><figure id="354869d7-e664-42ee-bcd6-9db40c4303c0" class="image"><a href="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2014.png"><img style="width:552px" src="Chapter%209%20I%20O%20502e80aef9c64e17b0eae34d51dcf5c0/Untitled%2014.png"/></a></figure><p id="8410029f-c105-47a3-9504-3b4ef5db3687" class="">(a) Switch from user mode to supervisor mode. Saved_USP ← SP; SP ← Saved_SSP; PC is the next instruction to be executed.</p><p id="a9059fca-b901-4eae-9e82-a6e4dd887be0" class="">(b) Pop PSR and PC of A (state information of A). The INTV is expanded as address and was loaded into PC. Execute that service routine. </p><p id="caf21146-6a0e-4cd5-836d-94f529ca6059" class="">(c)…</p><p id="b1f6db16-acff-40bf-85a6-4ab61d4e5f7a" class="">(d) RTI, pop PC and PSR, restoring the state, including the condition codes for ADD/AND….</p><p id="5bb82bce-5845-4a93-8af5-c305a3e56c91" class="">(e) RTI, pop twice, switch mode to user mode.</p><h2 id="01ef145d-d83e-4330-a5ec-7d28286319a4" class="">Exception</h2><p id="769e67d5-e8df-425a-a4d0-b153009ddf51" class="">Half (128) of the 256-entry interrupt vector table. x0100 - x017F.</p><p id="ca4ead94-0361-4d5a-a104-5e353a222635" class="">They are handled as soon as detected. </p><h3 id="70f4951b-41d4-4986-aea0-ec28cb5e3558" class="">1 Privilege mode violation</h3><p id="50551194-cba1-4bcf-9281-1b5bde47bd02" class="">Occurs when the processor attempts to execute the RTI instruction in User Mode.</p><p id="30a9af82-d553-468d-a2b2-a7a08c526c1d" class="">
+</p><h3 id="a38ac0f5-72f3-4636-afb7-686d9ef9dfa1" class="">2 Illegal opcode</h3><p id="bddc0880-eeea-48d4-bb24-443dd26adc49" class="">Occurs when the processor attempts to execute an instruction with the unused opcode (1101).</p><p id="a3c155ec-974b-430e-9351-f6d941b613d2" class="">
+</p><h3 id="04bf2ce4-b703-4fb4-91c0-8eb6b8237a8a" class="">3 ACV (access control violation)</h3><p id="4d7e6ae0-71b5-4f58-9581-442776f95a6b" class="">The processor attempts to access privileged memory while still in User Mode.</p><p id="39b11c8d-4fc6-421f-8871-0d0f3de3a66f" class="">
+</p><p id="24bc1a2c-a666-406f-b6a1-95303d17826b" class="">
+</p><p id="be8c57b0-36b0-45e8-9159-aa765b74e0b7" class="">
+</p><p id="e6f3d1fa-6c7e-495f-b63a-55e066679331" class="">
+</p><p id="119d4b0b-4112-414c-a2f5-ce1b48c62702" class="">
+</p><p id="5deb70b1-4705-4d7c-bab2-086676b759e1" class="">
+</p><p id="b90eabe7-c959-4aa3-9fb5-5e1c132e0be1" class="">
+</p><p id="54df6bcf-29bc-413b-9dea-6bd629bf310d" class="">
+</p><p id="92abc28f-b067-4613-90cf-91be957fe8b9" class="">
+</p><p id="c52f4b68-7c51-4e85-8873-077fa3be3bd4" class="">
+</p><p id="31d3d8cf-6ed1-485e-98d5-e9caa590c229" class="">
+</p><p id="53241073-6e34-467d-93ef-94dd83c7e225" class="">
+</p><p id="b635bd06-be9b-4de0-af68-311da5485560" class="">
+</p><p id="768afd53-11e8-4bc4-8d77-c230c74831b3" class="">
+</p><p id="07f320ae-b8b0-439a-8c0d-a58ad8ab41a3" class="">
+</p><p id="bdc96769-a9de-4d49-b710-ed8cbdbc3550" class="">
+</p><p id="ad7def0c-ad41-4cb9-9546-995234fbd89b" class="">
+</p><p id="5eb04c15-67af-4710-83f4-c34683aff373" class="">
+</p><p id="c78fba2b-f69e-48fb-a729-f76fcdf95fa5" class="">
+</p><p id="3ab7cb01-c66c-47bc-b1a5-a258fb81c8ce" class="">
+</p><p id="aef56630-5a7e-484e-b29c-14de821d09a3" class="">
+</p><p id="7d8dbc85-626d-4e9b-8862-5c6deb85f4bf" class="">
+</p><p id="12c88e5d-e68a-4dda-8340-72781167d147" class="">
+</p><p id="07e8affc-2409-45b6-b0f1-03b31c4e0254" class="">
+</p><p id="d96d267e-5352-4664-9e0b-cd0aac472a72" class="">
+</p><p id="595552d8-98d0-4b2f-a551-a67cc517fb2c" class="">
+</p><p id="9a01ff71-8cbf-4041-9450-0675a745e911" class="">
+</p><p id="5994056b-4799-4349-b877-1fe91067f919" class="">
+</p><p id="9bd218af-dbd2-4140-8d7a-deec08ac1c6b" class="">
+</p><p id="5fc71136-dcc8-4e48-9aa4-96772037b065" class="">
+</p><p id="f44064ce-80db-46c6-8515-0b0b05812db4" class="">
+</p><p id="1b837a34-9802-4998-b170-f982ac3f5f67" class="">
+</p><p id="d06f23ff-27f1-405f-82f6-ca5f066e7e22" class="">
+</p><p id="1d5a46d7-a59d-41e6-be2a-6c8893d05d43" class="">
+</p><p id="bcbd5317-248b-45d0-848b-dc643e6fada9" class="">
+</p><p id="2b5e22d2-77e3-4a9a-9eb8-52f6bf785619" class="">
+</p><p id="d6d79564-fad0-4b95-b13c-19758bd76098" class="">
+</p><p id="95990353-73a4-46f3-a93f-7dbe220ffa36" class="">
+</p><p id="49cb4c30-4923-4248-a42f-d777ed7d6889" class="">
+</p><p id="8a1db7ce-cb62-4fc8-9309-79e332230c31" class="">
+</p><p id="35ac4396-6374-43b9-b16a-9a85b01cf26c" class="">
+</p><p id="43469252-36b9-465f-816d-3d3713b2c11e" class="">
+</p><p id="cbf4cd65-55e1-4749-acb9-15e616d3c9a2" class="">
+</p><p id="3b70130c-2892-44a8-a104-3a40369b896e" class="">
+</p><p id="686556cf-f2c0-4586-9514-9645957e3819" class="">
+</p><p id="7ac24488-30a6-4cb5-9e18-4b0c2179a99a" class="">
+</p><p id="698b582a-147c-4276-83eb-fca180ea1756" class="">
+</p><p id="d50ba084-244e-4d1b-8ff6-fee0d0711d9b" class="">
+</p><p id="73a0b583-92a1-445e-87ae-d44414205224" class="">
+</p><p id="6e3b65eb-5973-4111-bfbb-4adf948b1a2d" class="">
+</p><p id="59c68335-5f50-4ec4-85c5-cb9130ebd735" class="">
+</p><p id="a27008cf-51e7-41a3-8481-89641c128784" class="">
+</p><p id="51acf240-a5d1-44d1-98b0-26174db57948" class="">
+</p><p id="640fee94-e0f2-4550-bd5a-2bc08497df26" class="">
+</p><p id="87ce6990-62d2-48c7-b407-a15386e0c049" class="">
+</p><p id="8b5c8c72-22bf-42a5-aa78-0c49d35e935c" class="">
+</p><p id="205e4071-212d-408b-8a71-a7c5252dd9e9" class="">
+</p><p id="a0bedd5f-68fb-48fa-8c3f-e2864c566372" class="">
+</p><p id="adef4127-42cf-40ee-93ef-434b533e0644" class="">
+</p><p id="8ce8ec7d-305d-4990-8555-7957d73d57d0" class="">
+</p><p id="1b677939-21fe-4d8e-be18-067ef870b0c6" class="">
+</p><p id="f73996da-8ffa-49c4-8536-8896b2dca92c" class="">
+</p><p id="c9a4d336-2062-44b7-8412-9a4aae49ea2b" class="">
+</p><p id="55b35959-7c22-4ee4-9f19-1b1842e86a52" class="">
+</p><p id="4a961613-b03d-4d99-b358-114c43719750" class="">
+</p><p id="b180258b-f3d7-4977-9771-a8bba170f6ff" class="">
+</p></div></article></body></html>
