@@ -1,14 +1,3 @@
----
-title: 'Introduction to Computing System'
-date: 2022-09-01
-permalink: /posts/2023/09/ICS/
-tags:
-  - ICS
-  - Course
-  - Notes
----
-
-
 # Chapter 3 Digital Logic Structures
 
 ## Important
