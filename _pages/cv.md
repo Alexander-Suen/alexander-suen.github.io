@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-[Download](http://alexander-suen.github.io/files/CV_M.H.Sun_Mar_2023.pdf)
+[Download](http://alexander-suen.github.io/files/CV_MHSun_Sep_2023.pdf)
 
 Education
 ======
@@ -18,7 +18,7 @@ Education
 
 Research Experience
 ======
-* Oct. 2019 - Dec. 2021: Research Assistant
+* Sep. 2019 - Dec. 2021: Research Assistant
   * Zhejiang University, Department of Veterinary Medicine (ZhuangLab)
   * Performed phylogenetic analysis on gene family ADTRP, mining the evolutinary relation by maximum likelihood.
   * Incorporated scripts using Python and Shell to aggregate RNA sequencing results into an organized format and to load
@@ -27,7 +27,7 @@ the latest results onto the server, so that automatic analysis can be performed.
   * Performed RNA-seq analysis on Ischemic Cardiomyopathy samples and recognized potential transcriptional regulators.
   * Supervisor: Prof. Jin He & Lenan Zhuang
 
-* May. 2020 - Aug. 2021: Student Research Training Program (SRTP)
+* May 2020 - June 2021: Student Research Training Program (SRTP)
   * Zhejiang University, School of Medicine
   * Assisted in development of a kidney disease grading system based on the stained pathological sections.
   * Worked with clinical doctors to pick suitable metrics and complete pathological grading of biopsies.
