@@ -7,5 +7,5 @@ In the RV32I instruction set, there are four core formats: R-type, I-type, S-typ
 
 This mini CPU can execute core RV32I instructions based on pipeline technology. I implemented this RISC-V CPU in Nexys Video and it had a running speed higher than 25MHz.
 
-[Project Link](http://alexander-suen.github.io/files/xxxx.pdf)
+[Project Link](https://github.com/Alexander-Suen/LC-3_Executor)
 

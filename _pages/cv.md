@@ -13,8 +13,30 @@ redirect_from:
 
 Education
 ======
-* B.S. in Zhejiang University, China, 2018 - 2024 (Expected)
+* B.S. in Zhejiang University, China, 2018 - 2024 (Expected) | GPA: 3.88 / 4.00
 * Major in Veterinary Medicine and Statistics, Minor in Computer Science
+
+Awards & Scholarships
+======
+* 2018 - 2019
+  * Student Leadership Award
+  * Academic Excellence Award
+  * Zhejiang University Scholarship - Second Prize
+  * Scholarship for Excellence in Special Major
+
+* 2019 - 2020
+  * Academic Excellence Award
+  * Scholarship for Excellence in Special Major
+  * Zhejiang University Scholarship - Third Prize
+  * Sophia Yang Scholarship
+
+* 2020 - 2021
+  * Student Innovation and Entrepreneurship Award
+  * Academic Excellence Award
+  * Scholarship for Excellence in Special Major
+  * Zhejiang University Scholarship - Second Prize
+  * Yiming Scholarship
+
 
 Research Experience
 ======
