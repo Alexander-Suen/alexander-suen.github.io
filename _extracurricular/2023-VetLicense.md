@@ -4,7 +4,7 @@ collection: extracurricular
 type: "Certification"
 permalink: /extracurricular/2023-VetLicense
 venue: "China"
-date: 2023-07
+date: 2023-07-15
 location: "City, Country"
 ---
 
