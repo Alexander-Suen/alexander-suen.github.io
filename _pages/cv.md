@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-[Download](http://alexander-suen.github.io/files/CV_Minghao_Sun.pdf)
+[Download](http://alexander-suen.github.io/files/cv-minghao-sun.pdf)
 
 Education
 ======
