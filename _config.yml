@@ -7,9 +7,9 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Alexander Suen"
+title                    : "Matthew Suen"
 title_separator          : "-"
-name                     : &name "Alexander Suen"   # left lower side
+name                     : &name "Matthew Suen"   # left lower side
 description              : &description "personal description"
 url                      : https://alexander-suen.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -80,14 +80,14 @@ analytics:
 
 # Site Author
 author:
-  name             : "Alexander Suen (Minghao Sun)"
+  name             : "Minghao Sun (Matthew)"
   avatar           : "profile_sun.png"
-  bio              : "An undergraduate in Zhejiang University"
-  location         : "Hangzhou, China"
+  bio              : "PhD candidate, National University of Singapore"
+  location         : "Singapore"
   employer         :
   pubmed           : # "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com/citations?hl=en&user=zazS_RwAAAAJ"
-  email            : "b.sun.med@gmail.com"
+  email            : "minghao.sun.sc@gmail.com"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -96,7 +96,7 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : "Alexander-Suen"
+  github           : "Minghao Sun"
   google_plus      :
   keybase          :
   instagram        :

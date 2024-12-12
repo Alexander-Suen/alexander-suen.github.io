@@ -1,5 +1,5 @@
 
-# Alexander Suen's Academic GitHub Personal Webpage
+# matthew's Academic GitHub Personal Webpage
 
 Welcome to my academic GitHub personal webpage repository! This repository serves as the source code and content for my personal webpage showcasing my academic achievements, projects, and interests. See [My Homepage](https://alexander-suen.github.io/).
 
@@ -12,7 +12,7 @@ Welcome to my academic GitHub personal webpage repository! This repository serve
 - [Contact Information](#contact-information)
 
 ## About Me
-I am Alexander Suen, a passionate and dedicated individual pursuing my academic journey in [insert your field or program of study]. I am deeply interested in [mention your areas of interest or specialization]. With a strong foundation in [include relevant skills or knowledge], I aim to contribute to the advancement of knowledge in my field.
+I am Minghao Sun (Matthew), a passionate and dedicated individual pursuing my academic journey in [insert your field or program of study]. I am deeply interested in [mention your areas of interest or specialization]. With a strong foundation in [include relevant skills or knowledge], I aim to contribute to the advancement of knowledge in my field.
 
 ## Education
 - [Insert your degree and major] - [Insert University Name], [Insert year of completion]

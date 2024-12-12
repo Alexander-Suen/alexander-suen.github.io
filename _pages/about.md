@@ -9,8 +9,9 @@ redirect_from:
 ---
 
 
-I am currently an undergraduate student at [Zhejiang University](https://www.zju.edu.cn/english/) (ZJU), specializing in Veterinary Medicine & Statistics with a minor in Computer Science. I am expected to obtain my B.S. degree in 2024. My academic path was shaped by an intrinsic curiosity about modern computational methods for medicine as well as data science and an aspiration to leave a tangible mark on our world. After completing my medical research & coursework in 2022, I pursued advanced studies in statistics and computer science at ZJU, with a specific focus on conducting research in the domain of computational and data-driven medicine.
 
-My academic interest is shaped by my strong ambition to contribute to the cure of cancer. I enjoy problem-driven research so my research interest encompasses a wide range of disciplines, spanning from data science to the intricacies of medicine. In particular, I have a deep curiosity for computational biology, bioinformatics, AI-assisted medical research, precision medicine, and any technique that could help me to gain a deep understanding towards biology and medicine. By achieving this, I believe that medicine would be reshaped by modern computational technology, leading to a deeper intepretation of diseases. 
+I am currently a PhD student at the National University of Singapore (NUS). I hold a bachelor’s degree in Veterinary Medicine and Statistics, with a minor in Computer Science, from Zhejiang University, China. My academic path was shaped by an intrinsic curiosity about modern computational methods for medicine as well as Artificial Intelligence and an aspiration to leave a tangible mark on our world. My research interests lie at the intersection of computational biology, bioinformatics, and artificial intelligence, with a particular focus on applying Large Language Models (LLMs) to solve real-world problems in biology and medicine. I am passionate about transforming cutting-edge AI technologies into practical applications that advance biological data processing and medical insights. Currently, I am exploring innovative ways to leverage LLMs for tasks such as genome pattern recognition, biomedical data analysis, and predictive modeling in healthcare.
 
-Currently, I am also actively exploring opportunities to serve as a Research Assistant (RA) in fields that align with my areas of interest. My goal is to commit one year to immerse myself in research activities before embarking on a doctoral program. 
+
+
+

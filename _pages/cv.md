@@ -13,8 +13,9 @@ redirect_from:
 
 Education
 ======
-* B.S. in Zhejiang University, China, 2018 - 2024 (Expected), GPA: 3.88 / 4.00
+* B.S. in Zhejiang University, China, 2018 - 2024, GPA: 3.88 / 4.00
 * Major in Veterinary Medicine, Minor in Statistics & Computer Science
+* Ph.D. candidate in National University of Singapore (NUS)
 
 Research Experience
 ======
